@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gold Calculator</title>
+
+<style>
+body{
+  background:#110b08;
+  color:#f6ead8;
+  font-family:Arial;
+  padding:30px;
+  max-width:900px;
+  margin:auto;
+}
+
+h1{
+  color:#d9a13d;
+}
+
+.box{
+  background:#1d1510;
+  padding:20px;
+  border-radius:18px;
+  margin-top:20px;
+}
+
+input{
+  width:100%;
+  padding:12px;
+  margin-top:10px;
+  margin-bottom:20px;
+  border:none;
+  border-radius:12px;
+  background:#281b13;
+  color:#f6ead8;
+}
+
+button{
+  padding:12px 18px;
+  border:none;
+  border-radius:12px;
+  background:#d9a13d;
+  color:#140a04;
+  font-weight:bold;
+  cursor:pointer;
+}
+
+.result{
+  margin-top:20px;
+  color:#f5c876;
+  font-size:22px;
+  font-weight:bold;
+}
+</style>
+<link rel="stylesheet" href="../assets/network.css">
+
+  <link rel="canonical" href="https://gamecoachhub.com/red-dead-online/gold-calculator.html">
+  <link rel="alternate" hreflang="en" href="https://gamecoachhub.com/red-dead-online/gold-calculator.html?lang=en">
+  <link rel="alternate" hreflang="da" href="https://gamecoachhub.com/red-dead-online/gold-calculator.html?lang=da">
+  <link rel="alternate" hreflang="x-default" href="https://gamecoachhub.com/red-dead-online/gold-calculator.html">
+  <meta property="og:url" content="https://gamecoachhub.com/red-dead-online/gold-calculator.html">
+  <meta name="description" content="Gold Calculator from the Red Dead Online Guide network.">
+  <meta property="og:title" content="Gold Calculator">
+  <meta property="og:description" content="Gold Calculator from the Red Dead Online Guide network.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://gamecoachhub.com/assets/gch-editorial-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://gamecoachhub.com/assets/gch-editorial-cover.png">
+</head>
+
+<body data-site="rdo">
+
+<h1>Gold Calculator</h1>
+
+<div class="box">
+
+<label>Daily Challenges Completed</label>
+<input type="number" id="daily" value="0">
+
+<label>Bounties Completed</label>
+<input type="number" id="bounty" value="0">
+
+<button onclick="calculateGold()">Calculate Gold</button>
+
+<div class="result" id="result"></div>
+
+</div>
+
+<script>
+function calculateGold(){
+
+const daily = Number(document.getElementById('daily').value);
+const bounty = Number(document.getElementById('bounty').value);
+
+const total =
+(daily * 0.1) +
+(bounty * 0.32);
+
+document.getElementById('result').innerText =
+'Estimated Gold: ' + total.toFixed(2);
+
+}
+</script>
+
+<script src="../assets/network-layout.js" defer></script>
+<script src="../assets/network-i18n.js" defer></script>
+<script src="../assets/monetization.js" defer></script>
+</body>
+</html>

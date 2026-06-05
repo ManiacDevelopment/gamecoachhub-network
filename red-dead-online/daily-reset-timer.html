@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Daily Reset Timer</title>
+
+<style>
+body{
+background:#110b08;
+color:#f6ead8;
+font-family:Arial;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+flex-direction:column;
+}
+
+.timer{
+font-size:60px;
+color:#d9a13d;
+font-weight:bold;
+}
+</style>
+<link rel="stylesheet" href="../assets/network.css">
+
+  <link rel="canonical" href="https://gamecoachhub.com/red-dead-online/daily-reset-timer.html">
+  <link rel="alternate" hreflang="en" href="https://gamecoachhub.com/red-dead-online/daily-reset-timer.html?lang=en">
+  <link rel="alternate" hreflang="da" href="https://gamecoachhub.com/red-dead-online/daily-reset-timer.html?lang=da">
+  <link rel="alternate" hreflang="x-default" href="https://gamecoachhub.com/red-dead-online/daily-reset-timer.html">
+  <meta property="og:url" content="https://gamecoachhub.com/red-dead-online/daily-reset-timer.html">
+  <meta name="description" content="Daily Reset Timer from the Red Dead Online Guide network.">
+  <meta property="og:title" content="Daily Reset Timer">
+  <meta property="og:description" content="Daily Reset Timer from the Red Dead Online Guide network.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://gamecoachhub.com/assets/gch-editorial-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://gamecoachhub.com/assets/gch-editorial-cover.png">
+</head>
+
+<body data-site="rdo">
+
+<h1>Daily Reset Timer</h1>
+
+<div class="timer" id="timer"></div>
+
+<script>
+
+function updateTimer(){
+
+const now = new Date();
+
+const reset = new Date();
+
+reset.setUTCHours(6,0,0,0);
+
+if(now > reset){
+reset.setUTCDate(reset.getUTCDate()+1);
+}
+
+const diff = reset - now;
+
+const hours =
+Math.floor(diff / 1000 / 60 / 60);
+
+const minutes =
+Math.floor(diff / 1000 / 60) % 60;
+
+const seconds =
+Math.floor(diff / 1000) % 60;
+
+document.getElementById('timer')
+.innerText =
+`${hours}h ${minutes}m ${seconds}s`;
+
+}
+
+setInterval(updateTimer,1000);
+
+</script>
+
+<script src="../assets/network-layout.js" defer></script>
+<script src="../assets/network-i18n.js" defer></script>
+<script src="../assets/monetization.js" defer></script>
+</body>
+</html>

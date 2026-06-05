@@ -1,0 +1,262 @@
+.deadlock-app {
+  width: min(1320px, calc(100% - 32px));
+  margin-inline: auto;
+  padding: 24px 0 64px;
+}
+
+.deadlock-topbar,
+.deadlock-network,
+.deadlock-panel,
+.deadlock-card,
+.deadlock-search,
+.deadlock-phase,
+.deadlock-footer {
+  border: 1px solid var(--gch-line);
+  border-radius: var(--gch-radius);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.064), rgba(255, 255, 255, 0.02)),
+    var(--gch-panel);
+  box-shadow: 0 14px 38px rgba(0, 0, 0, 0.26);
+}
+
+.deadlock-topbar {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: flex-start;
+  padding: 22px;
+}
+
+.deadlock-actions,
+.deadlock-network-actions,
+.deadlock-tabs {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.deadlock-network {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 18px;
+  align-items: center;
+  margin: 18px 0;
+  padding: 18px;
+}
+
+.deadlock-network-actions a {
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  padding: 0 12px;
+  border: 1px solid var(--gch-line);
+  border-radius: var(--gch-radius);
+  color: var(--gch-muted);
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.deadlock-tabs {
+  margin: 18px 0;
+}
+
+.deadlock-tabs button,
+.deadlock-action {
+  min-height: 42px;
+  border: 1px solid var(--gch-line-strong);
+  border-radius: var(--gch-radius);
+  background: rgba(255, 255, 255, 0.058);
+  color: var(--gch-text);
+  cursor: pointer;
+  font-weight: 950;
+  padding: 0 14px;
+}
+
+.deadlock-tabs button.active {
+  border: 0;
+  background: linear-gradient(135deg, var(--gch-accent), var(--gch-accent-2));
+  color: #07090f;
+}
+
+.deadlock-grid {
+  display: grid;
+  grid-template-columns: 310px 310px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.deadlock-grid.hero-mode {
+  grid-template-columns: 310px minmax(0, 1fr);
+}
+
+.deadlock-panel {
+  padding: 16px;
+  min-width: 0;
+}
+
+.deadlock-search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0;
+  padding: 10px;
+  background: rgba(0, 0, 0, 0.22);
+}
+
+.deadlock-search input,
+.tracker-form input,
+.tracker-form textarea {
+  width: 100%;
+  border: 1px solid var(--gch-line);
+  border-radius: var(--gch-radius);
+  background: rgba(0, 0, 0, 0.26);
+  color: var(--gch-text);
+  padding: 10px;
+}
+
+.deadlock-list {
+  display: grid;
+  gap: 10px;
+  max-height: 560px;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.deadlock-card {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--gch-line);
+  cursor: pointer;
+  color: var(--gch-text);
+  padding: 10px;
+  text-align: left;
+}
+
+.deadlock-card.active {
+  border-color: color-mix(in srgb, var(--gch-accent) 52%, transparent);
+  background: color-mix(in srgb, var(--gch-accent) 12%, transparent);
+}
+
+.deadlock-card img,
+.deadlock-portrait {
+  width: 54px;
+  height: 54px;
+  border-radius: var(--gch-radius);
+  object-fit: cover;
+  flex: 0 0 54px;
+}
+
+.deadlock-card small,
+.mini-label {
+  color: var(--gch-muted-2);
+  font-weight: 800;
+}
+
+.duel-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: center;
+}
+
+.difficulty {
+  padding: 7px 10px;
+  border: 1px solid var(--gch-line);
+  border-radius: var(--gch-radius);
+  color: var(--gch-accent);
+  font-weight: 950;
+}
+
+.overview-grid,
+.ability-grid,
+.build-grid,
+.phase-grid,
+.counter-grid,
+.tracker-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.overview-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin: 16px 0;
+}
+
+.ability-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.build-grid,
+.phase-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.counter-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.deadlock-phase,
+.tracker-form,
+.history-item {
+  padding: 14px;
+  border: 1px solid var(--gch-line);
+  border-radius: var(--gch-radius);
+  background: rgba(0, 0, 0, 0.18);
+}
+
+.tracker-form {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.tracker-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.history-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.deadlock-footer {
+  margin-top: 22px;
+  padding: 18px;
+}
+
+@media (max-width: 1120px) {
+  .deadlock-grid,
+  .deadlock-grid.hero-mode {
+    grid-template-columns: 1fr;
+  }
+
+  .deadlock-list {
+    max-height: 360px;
+  }
+}
+
+@media (max-width: 760px) {
+  .deadlock-topbar,
+  .deadlock-network {
+    grid-template-columns: 1fr;
+    display: grid;
+  }
+
+  .deadlock-actions,
+  .deadlock-network-actions,
+  .deadlock-tabs {
+    flex-direction: column;
+  }
+
+  .overview-grid,
+  .ability-grid,
+  .build-grid,
+  .phase-grid,
+  .counter-grid,
+  .tracker-grid {
+    grid-template-columns: 1fr;
+  }
+}

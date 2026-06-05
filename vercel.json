@@ -1,0 +1,46 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": true,
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/deadlock/heroes/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/red-dead-online",
+      "destination": "/red-dead-online/index.html"
+    },
+    {
+      "source": "/dayz",
+      "destination": "/dayz/index.html"
+    },
+    {
+      "source": "/deadlock",
+      "destination": "/deadlock/index.html"
+    },
+    {
+      "source": "/grounded",
+      "destination": "/grounded/index.html"
+    },
+    {
+      "source": "/stardew-valley",
+      "destination": "/stardew-valley/index.html"
+    }
+  ]
+}

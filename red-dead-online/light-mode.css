@@ -1,0 +1,18 @@
+.light-mode{
+background:#f3ede3;
+color:#1a120d;
+}
+
+.light-mode .card{
+background:#ffffff;
+color:#1a120d;
+}
+
+.light-mode .navbar{
+background:#e2d4bf;
+}
+
+.light-mode .footer{
+background:#e2d4bf;
+color:#1a120d;
+}

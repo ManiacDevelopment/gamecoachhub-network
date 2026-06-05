@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Role Profit Tracker</title>
+
+<style>
+body{
+background:#110b08;
+color:#f6ead8;
+font-family:Arial;
+padding:30px;
+max-width:900px;
+margin:auto;
+}
+
+input{
+width:100%;
+padding:12px;
+margin-top:10px;
+margin-bottom:20px;
+border:none;
+border-radius:12px;
+background:#281b13;
+color:#f6ead8;
+}
+
+button{
+padding:12px 18px;
+border:none;
+border-radius:12px;
+background:#d9a13d;
+font-weight:bold;
+}
+</style>
+<link rel="stylesheet" href="../assets/network.css">
+
+  <link rel="canonical" href="https://gamecoachhub.com/red-dead-online/role-profit-tracker.html">
+  <link rel="alternate" hreflang="en" href="https://gamecoachhub.com/red-dead-online/role-profit-tracker.html?lang=en">
+  <link rel="alternate" hreflang="da" href="https://gamecoachhub.com/red-dead-online/role-profit-tracker.html?lang=da">
+  <link rel="alternate" hreflang="x-default" href="https://gamecoachhub.com/red-dead-online/role-profit-tracker.html">
+  <meta property="og:url" content="https://gamecoachhub.com/red-dead-online/role-profit-tracker.html">
+  <meta name="description" content="Role Profit Tracker from the Red Dead Online Guide network.">
+  <meta property="og:title" content="Role Profit Tracker">
+  <meta property="og:description" content="Role Profit Tracker from the Red Dead Online Guide network.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://gamecoachhub.com/assets/gch-editorial-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://gamecoachhub.com/assets/gch-editorial-cover.png">
+</head>
+
+<body data-site="rdo">
+
+<h1 style="color:#d9a13d;">Role Profit Tracker</h1>
+
+<label>Collector Income</label>
+<input type="number" id="collector">
+
+<label>Trader Income</label>
+<input type="number" id="trader">
+
+<button onclick="calculate()">Calculate</button>
+
+<h2 id="result"></h2>
+
+<script>
+
+function calculate(){
+
+const collector =
+Number(document.getElementById('collector').value);
+
+const trader =
+Number(document.getElementById('trader').value);
+
+const total =
+collector + trader;
+
+document.getElementById('result')
+.innerText =
+'Total Profit: $' + total;
+
+}
+
+</script>
+
+<script src="../assets/network-layout.js" defer></script>
+<script src="../assets/network-i18n.js" defer></script>
+<script src="../assets/monetization.js" defer></script>
+</body>
+</html>

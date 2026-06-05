@@ -1,0 +1,229 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Build Generator | Red Dead Online Guide</title>
+
+  <style>
+    body{
+      background:#110b08;
+      color:#f6ead8;
+      font-family:Arial,sans-serif;
+      max-width:1000px;
+      margin:auto;
+      padding:30px;
+      line-height:1.7;
+    }
+
+    h1,h2{
+      color:#d9a13d;
+    }
+
+    .section{
+      background:#1d1510;
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:18px;
+      padding:22px;
+      margin-bottom:24px;
+    }
+
+    label{
+      display:block;
+      margin-top:14px;
+      margin-bottom:6px;
+      color:#f5c876;
+      font-weight:bold;
+    }
+
+    select{
+      width:100%;
+      padding:12px;
+      border-radius:12px;
+      border:none;
+      background:#281b13;
+      color:#f6ead8;
+      margin-bottom:12px;
+    }
+
+    button{
+      background:#d9a13d;
+      color:#140a04;
+      border:none;
+      border-radius:12px;
+      padding:12px 18px;
+      font-weight:bold;
+      cursor:pointer;
+      margin-top:10px;
+    }
+
+    .result{
+      background:#281b13;
+      padding:18px;
+      border-radius:14px;
+      margin-top:20px;
+    }
+
+    .highlight{
+      color:#f5c876;
+      font-weight:bold;
+    }
+
+    ul{
+      padding-left:20px;
+    }
+  </style>
+<link rel="stylesheet" href="../assets/network.css">
+
+  <link rel="canonical" href="https://gamecoachhub.com/red-dead-online/build-generator.html">
+  <link rel="alternate" hreflang="en" href="https://gamecoachhub.com/red-dead-online/build-generator.html?lang=en">
+  <link rel="alternate" hreflang="da" href="https://gamecoachhub.com/red-dead-online/build-generator.html?lang=da">
+  <link rel="alternate" hreflang="x-default" href="https://gamecoachhub.com/red-dead-online/build-generator.html">
+  <meta property="og:url" content="https://gamecoachhub.com/red-dead-online/build-generator.html">
+  <meta name="description" content="Choose your playstyle and get a recommended Red Dead Online build with weapons, ability cards and role focus.">
+  <meta property="og:title" content="Build Generator | Red Dead Online Guide">
+  <meta property="og:description" content="Choose your playstyle and get a recommended Red Dead Online build with weapons, ability cards and role focus.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://gamecoachhub.com/assets/gch-editorial-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://gamecoachhub.com/assets/gch-editorial-cover.png">
+</head>
+<body data-site="rdo">
+
+<h1>Build Generator</h1>
+
+<p>
+Choose your playstyle and get a recommended Red Dead Online build with weapons,
+ability cards and role focus.
+</p>
+
+<div class="section">
+  <h2>Your Playstyle</h2>
+
+  <label for="style">Playstyle</label>
+  <select id="style">
+    <option value="pve">PvE / Missions</option>
+    <option value="pvp">PvP</option>
+    <option value="sniper">Sniper</option>
+    <option value="tank">Tank</option>
+    <option value="money">Money Farming</option>
+    <option value="gold">Gold Farming</option>
+  </select>
+
+  <label for="level">Your Level</label>
+  <select id="level">
+    <option value="early">Rank 1–20</option>
+    <option value="mid">Rank 21–50</option>
+    <option value="late">Rank 51+</option>
+  </select>
+
+  <button onclick="generateBuild()">Generate Build</button>
+
+  <div class="result" id="result">
+    Choose your playstyle and click generate.
+  </div>
+</div>
+
+<div class="section">
+  <h2>Build Tips</h2>
+
+  <ul>
+    <li>Do not buy every weapon early.</li>
+    <li>Focus on one strong ability card build first.</li>
+    <li>Paint It Black is one of the safest early choices.</li>
+    <li>Use defensive cards if you struggle to survive.</li>
+    <li>Your role choice should match your main goal.</li>
+  </ul>
+</div>
+
+<script>
+function generateBuild(){
+  const style = document.getElementById('style').value;
+  const level = document.getElementById('level').value;
+
+  let title = '';
+  let weapons = [];
+  let cards = [];
+  let role = '';
+  let advice = '';
+
+  if(style === 'pve'){
+    title = 'PvE Mission Build';
+    weapons = ['Lancaster Repeater', 'Bolt Action Rifle', 'Pump Action Shotgun'];
+    cards = ['Paint It Black', 'Iron Lung', 'Strange Medicine', 'Cold Blooded'];
+    role = 'Bounty Hunter or Trader';
+    advice = 'Strong all-around build for missions, bounties and Call to Arms.';
+  }
+
+  if(style === 'pvp'){
+    title = 'PvP Build';
+    weapons = ['Lancaster Repeater', 'Carcano Rifle', 'Pump Action Shotgun'];
+    cards = ['Paint It Black', 'Never Without One', 'Fool Me Once', 'Sharpshooter'];
+    role = 'Any role';
+    advice = 'Designed for player fights and competitive modes.';
+  }
+
+  if(style === 'sniper'){
+    title = 'Sniper Build';
+    weapons = ['Carcano Rifle', 'Lancaster Repeater', 'LeMat Revolver'];
+    cards = ['Paint It Black', 'Sharpshooter', 'Peak Condition', 'Iron Lung'];
+    role = 'Bounty Hunter';
+    advice = 'Best for long-range combat and open areas.';
+  }
+
+  if(style === 'tank'){
+    title = 'Tank Build';
+    weapons = ['Lancaster Repeater', 'Pump Action Shotgun', 'Bolt Action Rifle'];
+    cards = ['Slow and Steady', 'Iron Lung', 'Fool Me Once', 'Strange Medicine'];
+    role = 'Bounty Hunter or Call to Arms';
+    advice = 'Built for surviving large fights.';
+  }
+
+  if(style === 'money'){
+    title = 'Money Farming Build';
+    weapons = ['Lancaster Repeater', 'Varmint Rifle', 'Bolt Action Rifle'];
+    cards = ['Paint It Black', 'Iron Lung', 'Eye for an Eye', 'Strange Medicine'];
+    role = 'Collector or Trader';
+    advice = 'Best for earning cash and XP efficiently.';
+  }
+
+  if(style === 'gold'){
+    title = 'Gold Farming Build';
+    weapons = ['Lancaster Repeater', 'Bolt Action Rifle', 'Pump Action Shotgun'];
+    cards = ['Paint It Black', 'Iron Lung', 'Strange Medicine', 'Eye for an Eye'];
+    role = 'Bounty Hunter';
+    advice = 'Best for farming gold through bounties and dailies.';
+  }
+
+  if(level === 'early'){
+    weapons = weapons.map(w => {
+      if(w === 'Carcano Rifle') return 'Rolling Block Rifle or Bolt Action Rifle';
+      if(w === 'LeMat Revolver') return 'Schofield Revolver';
+      return w;
+    });
+
+    advice += ' Since you are low rank, use cheaper alternatives until stronger weapons unlock.';
+  }
+
+  document.getElementById('result').innerHTML = `
+    <h2>${title}</h2>
+
+    <p><span class="highlight">Recommended role:</span> ${role}</p>
+
+    <h3>Weapons</h3>
+    <ul>${weapons.map(w => `<li>${w}</li>`).join('')}</ul>
+
+    <h3>Ability Cards</h3>
+    <ul>${cards.map(c => `<li>${c}</li>`).join('')}</ul>
+
+    <p>${advice}</p>
+  `;
+}
+</script>
+
+<script src="../assets/network-layout.js" defer></script>
+<script src="../assets/network-i18n.js" defer></script>
+<script src="../assets/monetization.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grounded Survival Guide | Backyard Strategy, Bases, Labs & Boss Prep</title>
+  <meta name="description" content="Grounded Survival Guide for first-day survival, safe base planning, insect prep, weapons, armor, mutations, lab progression, resource routes, bosses and multiplayer roles.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#090704">
+  <link rel="canonical" href="https://gamecoachhub.com/grounded/">
+  <link rel="alternate" hreflang="en" href="https://gamecoachhub.com/grounded/?lang=en">
+  <link rel="alternate" hreflang="da" href="https://gamecoachhub.com/grounded/?lang=da">
+  <link rel="alternate" hreflang="x-default" href="https://gamecoachhub.com/grounded/">
+  <meta property="og:site_name" content="Game Coach Hub">
+  <meta property="og:title" content="Grounded Survival Guide | Backyard Strategy, Bases, Labs & Boss Prep">
+  <meta property="og:description" content="A dark premium strategy guide for Grounded survival routes, base planning, lab order, weapon progression and boss preparation.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://gamecoachhub.com/grounded/">
+  <meta property="og:image" content="https://gamecoachhub.com/assets/gch-editorial-cover.png">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="da_DK">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Grounded Survival Guide | Backyard Strategy, Bases, Labs & Boss Prep">
+  <meta name="twitter:description" content="Grounded survival routes, base planning, labs, weapons, armor, mutations, resources, bosses and multiplayer strategy.">
+  <meta name="twitter:image" content="https://gamecoachhub.com/assets/gch-editorial-cover.png">
+  <link rel="stylesheet" href="/assets/network.css">
+  <script>
+    window.GCH_PAGE_META = {
+      en: {
+        title: "Grounded Survival Guide | Backyard Strategy, Bases, Labs & Boss Prep",
+        description: "Grounded Survival Guide for first-day survival, safe base planning, insect prep, weapons, armor, mutations, lab progression, resource routes, bosses and multiplayer roles."
+      },
+      da: {
+        title: "Grounded Survival Guide | Backyard strategi, baser, labs og boss prep",
+        description: "Grounded Survival Guide til first-day survival, sikre baseplaceringer, insect prep, våben, armor, mutations, lab progression, resource routes, bosses og multiplayer-roller."
+      }
+    };
+
+    window.GCH_PAGE_TRANSLATIONS = {
+      en: {
+        "hero.kicker": "Backyard Survival Strategy Guide",
+        "hero.title": "Grounded Survival Guide",
+        "hero.lede": "A structured strategy hub for surviving the backyard without publishing unverified weakness tables or unverified tool outputs.",
+        "hero.primary": "Start with the first day plan",
+        "hero.secondary": "Review future tools",
+        "panel.title": "Route priority",
+        "panel.copy": "Grounded rewards preparation. Move from food and water into safe height, measured combat, lab unlocks and boss-specific prep.",
+        "panel.item1": "First 30 minutes: water, food, fiber, sprigs, pebbles and a safe lean-to.",
+        "panel.item2": "Early base: raised, close to water and not directly in insect patrol paths.",
+        "panel.item3": "Progression: build gear for the next lab instead of wandering into high-risk zones.",
+        "nav.beginner": "Beginner",
+        "nav.bases": "Bases",
+        "nav.insects": "Insects",
+        "nav.weapons": "Weapons",
+        "nav.labs": "Labs",
+        "nav.bosses": "Bosses",
+        "intro.kicker": "Opening route",
+        "intro.title": "Survive your first day before chasing the whole yard.",
+        "intro.copy": "The first objective is not damage. It is a repeatable loop: collect safe materials, secure clean water, craft basic tools, mark useful resources and avoid fights that drain healing.",
+        "intro.step1": "Collect plant fiber, sprigs, pebblets, sap and dry grass before pushing into risky areas.",
+        "intro.step2": "Use dew, juice drops and safe food sources before combat routes become your main focus.",
+        "intro.step3": "Place the first lean-to and storage near a route you can recognize at night.",
+        "intro.step4": "Fight small threats for practice, but do not force Wolf Spider encounters early.",
+        "topics.kicker": "Guide structure",
+        "topics.title": "Grounded guide tracks ready for expansion.",
+        "topics.copy": "The page is built as a strong guide front page first. Detailed tables can be added later when exact values are verified.",
+        "card.beginner.title": "Beginner Guide",
+        "card.beginner.body": "<ul><li>First 30 minute route</li><li>Water, food and safe materials</li><li>First base, first weapon and first armor priorities</li></ul>",
+        "card.bases.title": "Best Base Locations",
+        "card.bases.body": "<ul><li>Early, mid and late-game base logic</li><li>Height, water, resources and lab access</li><li>Raid and insect defense tradeoffs</li></ul>",
+        "card.insects.title": "Insect Weakness Guide",
+        "card.insects.body": "<ul><li>Weakness checker structure</li><li>Recommended tactics and drops framework</li><li>Exact weaknesses held until verified</li></ul>",
+        "card.weapons.title": "Best Weapons Guide",
+        "card.weapons.body": "<ul><li>Early, mid and late-game weapon roles</li><li>Ranged vs melee planning</li><li>Elemental upgrade and enemy-type routing</li></ul>",
+        "card.armor.title": "Armor Progression Guide",
+        "card.armor.body": "<ul><li>Armor for early safety, farming, combat and bosses</li><li>Set bonus decision points</li><li>When to swap instead of over-upgrading</li></ul>",
+        "card.mutations.title": "Mutation Guide",
+        "card.mutations.body": "<ul><li>Combat, farming and exploration builds</li><li>Unlock path structure</li><li>Mutation Build Planner ready for later</li></ul>",
+        "feature.kicker": "Strategy route",
+        "feature.title": "Lab progression should feel like a route, not a wiki list.",
+        "feature.copy": "Each lab section is prepared around recommended gear, local dangers, boss or mini-boss preparation and the unlocks that meaningfully change your next decision.",
+        "feature.route1": "Scout the route before carrying rare materials.",
+        "feature.route2": "Upgrade gear for the next hazard instead of every item you own.",
+        "feature.route3": "Use markers for resources, labs and safe return paths.",
+        "feature.route4": "Split boss preparation into healing, weapon role, armor role and mutation role.",
+        "tool.kicker": "Future tools",
+        "tool.title": "Interactive tools are prepared without invented outputs.",
+        "tool.copy": "Tool surfaces are ready for later verified datasets. Until then, they explain the input model without pretending to calculate real recommendations.",
+        "tool.base.title": "Base Location Finder",
+        "tool.base.body": "<ul><li>Inputs: safe, central, resource rich, multiplayer, late game</li><li>Output later: recommended base profile and route notes</li></ul>",
+        "tool.insect.title": "Insect Weakness Checker",
+        "tool.insect.body": "<ul><li>Inputs: insect, weapon type, armor role</li><li>Output later: verified weakness, resistance, tactics and drops</li></ul>",
+        "tool.mutation.title": "Mutation Build Planner",
+        "tool.mutation.body": "<ul><li>Inputs: combat, farming, exploration or boss prep</li><li>Output later: verified mutation combo and unlock notes</li></ul>",
+        "ad.label": "Advertisement",
+        "ad.copy": "Reserved for a clearly labeled in-content ad after approval. No ad is active right now.",
+        "more.kicker": "Bosses, resources and multiplayer",
+        "more.title": "The next expansion layer is already mapped.",
+        "resource.title": "Resource Farming",
+        "resource.body": "Routes will cover important materials, respawn logic, what to save and what new players usually run short on.",
+        "boss.title": "Boss Guides",
+        "boss.body": "Broodmother, Mantis, Wasp Queen and Director Schmector cards are structured around requirements, prep, patterns and rewards.",
+        "multi.title": "Multiplayer Guide",
+        "multi.body": "Role split, base jobs, combat setup, resource runs, revive habits and shared progression are ready as a dedicated section.",
+        "verify.title": "Verification policy",
+        "verify.copy": "Exact insect weaknesses, resistances, drop tables and numerical recommendations are not published here until they are verified. The strategy structure is live; precise datasets can be added later.",
+        "tips.kicker": "Tips and habits",
+        "tips.title": "Grounded tips worth teaching early.",
+        "tip1": "Build the first base raised from the ground so small insects do not reach it easily.",
+        "tip2": "Place markers at important resource spots and safe return routes.",
+        "tip3": "Use enemy weaknesses intentionally instead of only chasing the highest raw damage.",
+        "tip4": "Keep multiple armor sets for different jobs once resources allow it.",
+        "tip5": "Do not challenge Wolf Spiders too early.",
+        "tip6": "Build a zipline network later to reduce risky travel time.",
+        "tip7": "Save rare materials until your build direction is clearer.",
+        "tip8": "In multiplayer, let one player focus on base/crafting while another scouts and handles combat."
+      },
+      da: {
+        "hero.kicker": "Backyard Survival Strategy Guide",
+        "hero.title": "Grounded Survival Guide",
+        "hero.lede": "Et struktureret strategy hub til at overleve baghaven uden at udgive uverificerede weakness-tabeller eller falske tool-resultater.",
+        "hero.primary": "Start med first day-planen",
+        "hero.secondary": "Se fremtidige tools",
+        "panel.title": "Route-prioritet",
+        "panel.copy": "Grounded belønner forberedelse. Gå fra mad og vand til sikker højde, kontrolleret combat, lab unlocks og boss-specifik prep.",
+        "panel.item1": "Første 30 minutter: vand, mad, fiber, sprigs, pebblets og en sikker lean-to.",
+        "panel.item2": "Early base: hævet, tæt på vand og ikke direkte i insect patrol paths.",
+        "panel.item3": "Progression: byg gear til næste lab i stedet for at vandre ind i high-risk zones.",
+        "nav.beginner": "Begynder",
+        "nav.bases": "Baser",
+        "nav.insects": "Insekter",
+        "nav.weapons": "Våben",
+        "nav.labs": "Labs",
+        "nav.bosses": "Bosses",
+        "intro.kicker": "Opening route",
+        "intro.title": "Overlev første dag, før du prøver at eje hele baghaven.",
+        "intro.copy": "Det første mål er ikke damage. Det er et gentageligt loop: saml sikre materialer, find rent vand, craft basic tools, marker ressourcer og undgå fights der bruger healing.",
+        "intro.step1": "Saml plant fiber, sprigs, pebblets, sap og dry grass, før du går mod farlige områder.",
+        "intro.step2": "Brug dew, juice drops og sikre food sources, før combat routes bliver hovedfokus.",
+        "intro.step3": "Placer den første lean-to og storage tæt på en route, du kan genkende om natten.",
+        "intro.step4": "Kæmp mod små trusler for øvelse, men tving ikke Wolf Spider encounters tidligt.",
+        "topics.kicker": "Guide-struktur",
+        "topics.title": "Grounded guide tracks klar til udvidelse.",
+        "topics.copy": "Siden er bygget som en stærk guideforside først. Detaljerede tabeller kan tilføjes senere, når konkrete værdier er verificeret.",
+        "card.beginner.title": "Beginner Guide",
+        "card.beginner.body": "<ul><li>First 30 minute route</li><li>Vand, mad og sikre materialer</li><li>Første base, første våben og første armor-prioriteter</li></ul>",
+        "card.bases.title": "Best Base Locations",
+        "card.bases.body": "<ul><li>Early, mid og late-game base-logik</li><li>Højde, vand, ressourcer og lab-adgang</li><li>Raid og insect defense tradeoffs</li></ul>",
+        "card.insects.title": "Insect Weakness Guide",
+        "card.insects.body": "<ul><li>Weakness checker-struktur</li><li>Framework til tactics og drops</li><li>Præcise weaknesses holdes tilbage indtil verificering</li></ul>",
+        "card.weapons.title": "Best Weapons Guide",
+        "card.weapons.body": "<ul><li>Early, mid og late-game weapon roles</li><li>Ranged vs melee planning</li><li>Elemental upgrades og enemy-type routing</li></ul>",
+        "card.armor.title": "Armor Progression Guide",
+        "card.armor.body": "<ul><li>Armor til early safety, farming, combat og bosses</li><li>Set bonus decision points</li><li>Hvornår du bør skifte i stedet for at over-upgrade</li></ul>",
+        "card.mutations.title": "Mutation Guide",
+        "card.mutations.body": "<ul><li>Combat, farming og exploration builds</li><li>Unlock path-struktur</li><li>Mutation Build Planner klar til senere</li></ul>",
+        "feature.kicker": "Strategy route",
+        "feature.title": "Lab progression skal føles som en route, ikke en wiki-liste.",
+        "feature.copy": "Hver lab-sektion er forberedt omkring anbefalet gear, lokale farer, boss eller mini-boss prep og unlocks, der ændrer dit næste valg.",
+        "feature.route1": "Scout ruten, før du bærer sjældne materialer.",
+        "feature.route2": "Upgrade gear til næste hazard i stedet for alt du ejer.",
+        "feature.route3": "Brug markers til ressourcer, labs og sikre returruter.",
+        "feature.route4": "Del boss prep op i healing, weapon role, armor role og mutation role.",
+        "tool.kicker": "Fremtidige tools",
+        "tool.title": "Interaktive tools er forberedt uden falske outputs.",
+        "tool.copy": "Tool-flader er klar til senere verificerede datasæt. Indtil da forklarer de inputmodellen uden at foregive at beregne rigtige anbefalinger.",
+        "tool.base.title": "Base Location Finder",
+        "tool.base.body": "<ul><li>Inputs: safe, central, resource rich, multiplayer, late game</li><li>Output senere: anbefalet baseprofil og route-notes</li></ul>",
+        "tool.insect.title": "Insect Weakness Checker",
+        "tool.insect.body": "<ul><li>Inputs: insect, weapon type, armor role</li><li>Output senere: verificeret weakness, resistance, tactics og drops</li></ul>",
+        "tool.mutation.title": "Mutation Build Planner",
+        "tool.mutation.body": "<ul><li>Inputs: combat, farming, exploration eller boss prep</li><li>Output senere: verificeret mutation combo og unlock-notes</li></ul>",
+        "ad.label": "Annonce",
+        "ad.copy": "Reserveret til en tydeligt markeret in-content annonce efter godkendelse. Ingen annonce er aktiv lige nu.",
+        "more.kicker": "Bosses, ressourcer og multiplayer",
+        "more.title": "Næste udvidelseslag er allerede kortlagt.",
+        "resource.title": "Resource Farming",
+        "resource.body": "Routes kommer til at dække vigtige materialer, respawn-logik, hvad du bør gemme, og hvad nye spillere typisk løber tør for.",
+        "boss.title": "Boss Guides",
+        "boss.body": "Broodmother, Mantis, Wasp Queen og Director Schmector-kort er struktureret omkring krav, prep, patterns og rewards.",
+        "multi.title": "Multiplayer Guide",
+        "multi.body": "Rollefordeling, base jobs, combat setup, resource runs, revive-vaner og fælles progression er klar som dedikeret sektion.",
+        "verify.title": "Verificeringspolitik",
+        "verify.copy": "Præcise insect weaknesses, resistances, drop tables og numeriske anbefalinger udgives ikke her, før de er verificeret. Strategistrukturen er live; præcise datasæt kan tilføjes senere.",
+        "tips.kicker": "Tips og vaner",
+        "tips.title": "Grounded tips der er værd at lære tidligt.",
+        "tip1": "Byg den første base hævet fra jorden, så små insekter ikke nemt når den.",
+        "tip2": "Lav markeringspunkter ved vigtige ressourcer og sikre returruter.",
+        "tip3": "Brug fjendens svagheder aktivt i stedet for kun at jagte højeste rå damage.",
+        "tip4": "Hav flere armor-sæt til forskellige opgaver, når ressourcerne tillader det.",
+        "tip5": "Tag ikke Wolf Spiders for tidligt.",
+        "tip6": "Lav zipline-netværk senere for at reducere farlig rejsetid.",
+        "tip7": "Gem sjældne materialer, indtil din build-retning er tydeligere.",
+        "tip8": "I multiplayer fungerer det bedst, hvis én fokuserer på base/crafting, mens en anden scouter og håndterer combat."
+      }
+    };
+  </script>
+  <script src="/assets/network-layout.js" defer></script>
+  <script src="/assets/network-i18n.js" defer></script>
+  <script src="/assets/monetization.js" defer></script>
+</head>
+<body data-site="grounded">
+  <main class="guide-magazine">
+    <section class="guide-hero">
+      <div class="guide-magazine-shell guide-hero-grid">
+        <div class="guide-hero-copy">
+          <p class="eyebrow" data-page-i18n="hero.kicker">Backyard Survival Strategy Guide</p>
+          <h1 data-page-i18n="hero.title">Grounded Survival Guide</h1>
+          <p class="guide-lede" data-page-i18n="hero.lede">A structured strategy hub for surviving the backyard without publishing unverified weakness tables or unverified tool outputs.</p>
+          <div class="guide-actions">
+            <a class="btn btn-primary" href="#beginner" data-page-i18n="hero.primary">Start with the first day plan</a>
+            <a class="btn btn-secondary" href="#future-tools" data-page-i18n="hero.secondary">Review future tools</a>
+          </div>
+        </div>
+
+        <aside class="guide-hero-panel">
+          <span class="eyebrow" data-page-i18n="panel.title">Route priority</span>
+          <p data-page-i18n="panel.copy">Grounded rewards preparation. Move from food and water into safe height, measured combat, lab unlocks and boss-specific prep.</p>
+          <ul class="guide-panel-list">
+            <li data-page-i18n="panel.item1">First 30 minutes: water, food, fiber, sprigs, pebbles and a safe lean-to.</li>
+            <li data-page-i18n="panel.item2">Early base: raised, close to water and not directly in insect patrol paths.</li>
+            <li data-page-i18n="panel.item3">Progression: build gear for the next lab instead of wandering into high-risk zones.</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <nav class="guide-magazine-shell guide-anchor-nav" aria-label="Grounded guide sections">
+      <a href="#beginner" data-page-i18n="nav.beginner">Beginner</a>
+      <a href="#bases" data-page-i18n="nav.bases">Bases</a>
+      <a href="#insects" data-page-i18n="nav.insects">Insects</a>
+      <a href="#weapons" data-page-i18n="nav.weapons">Weapons</a>
+      <a href="#labs" data-page-i18n="nav.labs">Labs</a>
+      <a href="#bosses" data-page-i18n="nav.bosses">Bosses</a>
+    </nav>
+
+    <section class="guide-magazine-shell guide-feature" id="beginner">
+      <div class="guide-feature-grid">
+        <div>
+          <p class="eyebrow" data-page-i18n="intro.kicker">Opening route</p>
+          <h2 data-page-i18n="intro.title">Survive your first day before chasing the whole yard.</h2>
+          <p data-page-i18n="intro.copy">The first objective is not damage. It is a repeatable loop: collect safe materials, secure clean water, craft basic tools, mark useful resources and avoid fights that drain healing.</p>
+        </div>
+        <ol class="guide-route-list">
+          <li data-page-i18n="intro.step1">Collect plant fiber, sprigs, pebblets, sap and dry grass before pushing into risky areas.</li>
+          <li data-page-i18n="intro.step2">Use dew, juice drops and safe food sources before combat routes become your main focus.</li>
+          <li data-page-i18n="intro.step3">Place the first lean-to and storage near a route you can recognize at night.</li>
+          <li data-page-i18n="intro.step4">Fight small threats for practice, but do not force Wolf Spider encounters early.</li>
+        </ol>
+      </div>
+    </section>
+
+    <aside class="gch-monetization-zone gch-content-slot guide-magazine-shell" data-gch-slot="content" data-ad-slot="grounded-content">
+      <span class="slot-label" data-page-i18n="ad.label">Advertisement</span>
+      <p data-page-i18n="ad.copy">Reserved for a clearly labeled in-content ad after approval. No ad is active right now.</p>
+    </aside>
+
+    <section class="guide-magazine-shell guide-section" id="bases">
+      <div class="guide-section-head">
+        <p class="eyebrow" data-page-i18n="topics.kicker">Guide structure</p>
+        <h2 data-page-i18n="topics.title">Grounded guide tracks ready for expansion.</h2>
+        <p data-page-i18n="topics.copy">The page is built as a strong guide front page first. Detailed tables can be added later when exact values are verified.</p>
+      </div>
+
+      <div class="guide-card-grid">
+        <article class="guide-topic-card">
+          <span class="guide-chip">01</span>
+          <h3 data-page-i18n="card.beginner.title">Beginner Guide</h3>
+          <div data-page-i18n-html="card.beginner.body"><ul><li>First 30 minute route</li><li>Water, food and safe materials</li><li>First base, first weapon and first armor priorities</li></ul></div>
+        </article>
+        <article class="guide-topic-card">
+          <span class="guide-chip">02</span>
+          <h3 data-page-i18n="card.bases.title">Best Base Locations</h3>
+          <div data-page-i18n-html="card.bases.body"><ul><li>Early, mid and late-game base logic</li><li>Height, water, resources and lab access</li><li>Raid and insect defense tradeoffs</li></ul></div>
+        </article>
+        <article class="guide-topic-card" id="insects">
+          <span class="guide-chip">03</span>
+          <h3 data-page-i18n="card.insects.title">Insect Weakness Guide</h3>
+          <div data-page-i18n-html="card.insects.body"><ul><li>Weakness checker structure</li><li>Recommended tactics and drops framework</li><li>Exact weaknesses held until verified</li></ul></div>
+        </article>
+        <article class="guide-topic-card" id="weapons">
+          <span class="guide-chip">04</span>
+          <h3 data-page-i18n="card.weapons.title">Best Weapons Guide</h3>
+          <div data-page-i18n-html="card.weapons.body"><ul><li>Early, mid and late-game weapon roles</li><li>Ranged vs melee planning</li><li>Elemental upgrade and enemy-type routing</li></ul></div>
+        </article>
+        <article class="guide-topic-card">
+          <span class="guide-chip">05</span>
+          <h3 data-page-i18n="card.armor.title">Armor Progression Guide</h3>
+          <div data-page-i18n-html="card.armor.body"><ul><li>Armor for early safety, farming, combat and bosses</li><li>Set bonus decision points</li><li>When to swap instead of over-upgrading</li></ul></div>
+        </article>
+        <article class="guide-topic-card">
+          <span class="guide-chip">06</span>
+          <h3 data-page-i18n="card.mutations.title">Mutation Guide</h3>
+          <div data-page-i18n-html="card.mutations.body"><ul><li>Combat, farming and exploration builds</li><li>Unlock path structure</li><li>Mutation Build Planner ready for later</li></ul></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="guide-magazine-shell guide-feature" id="labs">
+      <div class="guide-feature-grid">
+        <div>
+          <p class="eyebrow" data-page-i18n="feature.kicker">Strategy route</p>
+          <h2 data-page-i18n="feature.title">Lab progression should feel like a route, not a wiki list.</h2>
+          <p data-page-i18n="feature.copy">Each lab section is prepared around recommended gear, local dangers, boss or mini-boss preparation and the unlocks that meaningfully change your next decision.</p>
+        </div>
+        <ul class="guide-checklist">
+          <li data-page-i18n="feature.route1">Scout the route before carrying rare materials.</li>
+          <li data-page-i18n="feature.route2">Upgrade gear for the next hazard instead of every item you own.</li>
+          <li data-page-i18n="feature.route3">Use markers for resources, labs and safe return paths.</li>
+          <li data-page-i18n="feature.route4">Split boss preparation into healing, weapon role, armor role and mutation role.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="guide-magazine-shell guide-section" id="future-tools">
+      <div class="guide-section-head">
+        <p class="eyebrow" data-page-i18n="tool.kicker">Future tools</p>
+        <h2 data-page-i18n="tool.title">Interactive tools are prepared without invented outputs.</h2>
+        <p data-page-i18n="tool.copy">Tool surfaces are ready for later verified datasets. Until then, they explain the input model without pretending to calculate real recommendations.</p>
+      </div>
+      <div class="guide-tool-grid">
+        <article class="guide-tool-card">
+          <h3 data-page-i18n="tool.base.title">Base Location Finder</h3>
+          <div data-page-i18n-html="tool.base.body"><ul><li>Inputs: safe, central, resource rich, multiplayer, late game</li><li>Output later: recommended base profile and route notes</li></ul></div>
+        </article>
+        <article class="guide-tool-card">
+          <h3 data-page-i18n="tool.insect.title">Insect Weakness Checker</h3>
+          <div data-page-i18n-html="tool.insect.body"><ul><li>Inputs: insect, weapon type, armor role</li><li>Output later: verified weakness, resistance, tactics and drops</li></ul></div>
+        </article>
+        <article class="guide-tool-card">
+          <h3 data-page-i18n="tool.mutation.title">Mutation Build Planner</h3>
+          <div data-page-i18n-html="tool.mutation.body"><ul><li>Inputs: combat, farming, exploration or boss prep</li><li>Output later: verified mutation combo and unlock notes</li></ul></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="guide-magazine-shell guide-section" id="bosses">
+      <div class="guide-section-head">
+        <p class="eyebrow" data-page-i18n="more.kicker">Bosses, resources and multiplayer</p>
+        <h2 data-page-i18n="more.title">The next expansion layer is already mapped.</h2>
+      </div>
+      <div class="guide-category-grid">
+        <article class="guide-category-card">
+          <h3 data-page-i18n="resource.title">Resource Farming</h3>
+          <p data-page-i18n="resource.body">Routes will cover important materials, respawn logic, what to save and what new players usually run short on.</p>
+        </article>
+        <article class="guide-category-card">
+          <h3 data-page-i18n="boss.title">Boss Guides</h3>
+          <p data-page-i18n="boss.body">Broodmother, Mantis, Wasp Queen and Director Schmector cards are structured around requirements, prep, patterns and rewards.</p>
+        </article>
+        <article class="guide-category-card">
+          <h3 data-page-i18n="multi.title">Multiplayer Guide</h3>
+          <p data-page-i18n="multi.body">Role split, base jobs, combat setup, resource runs, revive habits and shared progression are ready as a dedicated section.</p>
+        </article>
+      </div>
+      <aside class="guide-verification-note">
+        <strong data-page-i18n="verify.title">Verification policy</strong>
+        <p data-page-i18n="verify.copy">Exact insect weaknesses, resistances, drop tables and numerical recommendations are not published here until they are verified. The strategy structure is live; precise datasets can be added later.</p>
+      </aside>
+    </section>
+
+    <aside class="gch-affiliate-block guide-magazine-shell" data-gch-slot="affiliate">
+      <span class="slot-label" data-network-i18n="net.affiliateLabel">Recommended tools</span>
+      <h3 data-network-i18n="net.affiliateTitle">Affiliate-ready recommendations</h3>
+      <p data-network-i18n="net.affiliateCopy">Reserved for reviewed gaming tools, servers or gear. No affiliate recommendation is active right now.</p>
+    </aside>
+
+    <section class="guide-magazine-shell guide-section">
+      <div class="guide-section-head">
+        <p class="eyebrow" data-page-i18n="tips.kicker">Tips and habits</p>
+        <h2 data-page-i18n="tips.title">Grounded tips worth teaching early.</h2>
+      </div>
+      <ul class="guide-tip-list">
+        <li data-page-i18n="tip1">Build the first base raised from the ground so small insects do not reach it easily.</li>
+        <li data-page-i18n="tip2">Place markers at important resource spots and safe return routes.</li>
+        <li data-page-i18n="tip3">Use enemy weaknesses intentionally instead of only chasing the highest raw damage.</li>
+        <li data-page-i18n="tip4">Keep multiple armor sets for different jobs once resources allow it.</li>
+        <li data-page-i18n="tip5">Do not challenge Wolf Spiders too early.</li>
+        <li data-page-i18n="tip6">Build a zipline network later to reduce risky travel time.</li>
+        <li data-page-i18n="tip7">Save rare materials until your build direction is clearer.</li>
+        <li data-page-i18n="tip8">In multiplayer, let one player focus on base/crafting while another scouts and handles combat.</li>
+      </ul>
+    </section>
+
+    <aside class="gch-premium-cta guide-magazine-shell" data-gch-slot="premium">
+      <span class="slot-label" data-network-i18n="net.premiumLabel">Premium</span>
+      <h3 data-network-i18n="net.premiumTitle">Future premium path</h3>
+      <p data-network-i18n="net.premiumCopy">Prepared for future ad-free access, saved builds or advanced tools without changing the page structure.</p>
+    </aside>
+  </main>
+</body>
+</html>

@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calculators | Red Dead Online Guide</title>
+  <meta name="description" content="Red Dead Online calculators for gold, cash, XP and role planning.">
+
+  <style>
+    body{
+      background:#110b08;
+      color:#f6ead8;
+      font-family:Arial,sans-serif;
+      max-width:900px;
+      margin:auto;
+      padding:30px;
+      line-height:1.6;
+    }
+
+    h1,h2{
+      color:#d9a13d;
+    }
+
+    .box{
+      background:#1d1510;
+      border:1px solid rgba(255,255,255,.1);
+      border-radius:18px;
+      padding:20px;
+      margin-bottom:20px;
+    }
+
+    input,select{
+      width:100%;
+      padding:12px;
+      margin-top:6px;
+      margin-bottom:14px;
+      border-radius:10px;
+      border:none;
+      background:#2a1e16;
+      color:#fff;
+    }
+
+    button{
+      padding:12px 18px;
+      background:#d9a13d;
+      color:#140a04;
+      border:none;
+      border-radius:12px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .result{
+      margin-top:15px;
+      color:#f5c876;
+      font-weight:bold;
+    }
+  </style>
+<link rel="stylesheet" href="../assets/network.css">
+
+  <link rel="canonical" href="https://gamecoachhub.com/red-dead-online/calculators.html">
+  <link rel="alternate" hreflang="en" href="https://gamecoachhub.com/red-dead-online/calculators.html?lang=en">
+  <link rel="alternate" hreflang="da" href="https://gamecoachhub.com/red-dead-online/calculators.html?lang=da">
+  <link rel="alternate" hreflang="x-default" href="https://gamecoachhub.com/red-dead-online/calculators.html">
+  <meta property="og:url" content="https://gamecoachhub.com/red-dead-online/calculators.html">
+  <meta property="og:title" content="Calculators | Red Dead Online Guide">
+  <meta property="og:description" content="Red Dead Online calculators for gold, cash, XP and role planning.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://gamecoachhub.com/assets/gch-editorial-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://gamecoachhub.com/assets/gch-editorial-cover.png">
+</head>
+<body data-site="rdo">
+
+<h1>Red Dead Online Calculators</h1>
+
+<p>
+Use these tools to estimate gold farming, XP progression and role planning.
+</p>
+
+<div class="box">
+  <h2>Gold Planner</h2>
+
+  <label>Current Gold</label>
+  <input type="number" id="goldCurrent" value="2">
+
+  <label>Target Gold</label>
+  <input type="number" id="goldTarget" value="15">
+
+  <label>Gold Earned Per Day</label>
+  <input type="number" id="goldPerDay" value="0.5" step="0.1">
+
+  <button onclick="calcGold()">Calculate</button>
+
+  <div class="result" id="goldResult"></div>
+</div>
+
+<div class="box">
+  <h2>Cash Planner</h2>
+
+  <label>Current Cash</label>
+  <input type="number" id="cashCurrent" value="150">
+
+  <label>Target Item Price</label>
+  <input type="number" id="cashTarget" value="500">
+
+  <label>Cash Per Session</label>
+  <input type="number" id="cashSession" value="100">
+
+  <button onclick="calcCash()">Calculate</button>
+
+  <div class="result" id="cashResult"></div>
+</div>
+
+<div class="box">
+  <h2>XP Planner</h2>
+
+  <label>XP Needed</label>
+  <input type="number" id="xpNeed" value="5000">
+
+  <label>XP Per Session</label>
+  <input type="number" id="xpSession" value="900">
+
+  <button onclick="calcXP()">Calculate</button>
+
+  <div class="result" id="xpResult"></div>
+</div>
+
+<div class="box">
+  <h2>Role Recommender</h2>
+
+  <label>What do you want most?</label>
+
+  <select id="goal">
+    <option value="gold">Gold</option>
+    <option value="cash">Cash</option>
+    <option value="combat">Combat</option>
+    <option value="passive">Passive Income</option>
+    <option value="hunting">Hunting</option>
+  </select>
+
+  <button onclick="recommendRole()">Recommend</button>
+
+  <div class="result" id="roleResult"></div>
+</div>
+
+<script>
+function calcGold(){
+  const current = Number(document.getElementById('goldCurrent').value);
+  const target = Number(document.getElementById('goldTarget').value);
+  const perDay = Number(document.getElementById('goldPerDay').value);
+
+  const missing = Math.max(target - current, 0);
+  const days = Math.ceil(missing / perDay);
+
+  document.getElementById('goldResult').innerText =
+    missing === 0
+      ? 'You already have enough gold.'
+      : `You need about ${days} days to reach your goal.`;
+}
+
+function calcCash(){
+  const current = Number(document.getElementById('cashCurrent').value);
+  const target = Number(document.getElementById('cashTarget').value);
+  const session = Number(document.getElementById('cashSession').value);
+
+  const missing = Math.max(target - current, 0);
+  const sessions = Math.ceil(missing / session);
+
+  document.getElementById('cashResult').innerText =
+    missing === 0
+      ? 'You already have enough cash.'
+      : `You need about ${sessions} sessions.`;
+}
+
+function calcXP(){
+  const need = Number(document.getElementById('xpNeed').value);
+  const session = Number(document.getElementById('xpSession').value);
+
+  const sessions = Math.ceil(need / session);
+
+  document.getElementById('xpResult').innerText =
+    `You need about ${sessions} sessions.`;
+}
+
+function recommendRole(){
+  const goal = document.getElementById('goal').value;
+
+  let result = '';
+
+  if(goal === 'gold'){
+    result = 'Bounty Hunter — best for gold and combat.';
+  }
+
+  if(goal === 'cash'){
+    result = 'Collector — best solo cash and XP.';
+  }
+
+  if(goal === 'combat'){
+    result = 'Bounty Hunter — action-focused role.';
+  }
+
+  if(goal === 'passive'){
+    result = 'Moonshiner — strong passive income.';
+  }
+
+  if(goal === 'hunting'){
+    result = 'Trader — perfect for hunting gameplay.';
+  }
+
+  document.getElementById('roleResult').innerText = result;
+}
+</script>
+
+<script src="../assets/network-layout.js" defer></script>
+<script src="../assets/network-i18n.js" defer></script>
+<script src="../assets/monetization.js" defer></script>
+</body>
+</html>

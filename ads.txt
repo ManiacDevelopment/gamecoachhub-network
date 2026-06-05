@@ -1,0 +1,3 @@
+# Game Coach Hub ads.txt template
+# AdSense is not active yet.
+# Add the approved AdSense publisher record here after the domain is approved in Google AdSense.

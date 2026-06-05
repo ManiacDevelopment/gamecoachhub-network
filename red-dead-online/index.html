@@ -1,0 +1,646 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Red Dead Online Guide</title>
+
+<meta name="description" content="Complete Red Dead Online guide with money farming, gold farming, weapons, roles, builds, trackers, calculators and tools.">
+
+<style>
+
+:root{
+  --bg:#110b08;
+  --panel:#1d1510;
+  --panel2:#281b13;
+  --text:#f6ead8;
+  --muted:#bca990;
+  --gold:#d9a13d;
+  --border:rgba(255,255,255,.13);
+  --shadow:0 22px 70px rgba(0,0,0,.42);
+  --radius:22px;
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  margin:0;
+  color:var(--text);
+  font-family:Arial,sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(217,161,61,.20), transparent 32rem),
+    radial-gradient(circle at top right, rgba(142,33,25,.18), transparent 35rem),
+    linear-gradient(180deg, #180f0a 0%, var(--bg) 48%, #070403 100%);
+  line-height:1.7;
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+.topbar{
+  position:sticky;
+  top:0;
+  z-index:50;
+  backdrop-filter:blur(16px);
+  background:rgba(17,11,8,.92);
+  border-bottom:1px solid var(--border);
+}
+
+.nav{
+  max-width:1180px;
+  margin:auto;
+  padding:14px 18px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  font-weight:900;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+}
+
+.brand-mark{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:radial-gradient(circle,#ffd37b,var(--gold) 50%,#7b4318);
+  color:#190b04;
+  box-shadow:0 0 0 3px rgba(217,161,61,.18);
+}
+
+.nav-links{
+  display:flex;
+  gap:9px;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  font-size:13px;
+}
+
+.nav-links a{
+  padding:8px 10px;
+  border-radius:999px;
+  border:1px solid transparent;
+  color:var(--muted);
+}
+
+.nav-links a:hover{
+  border-color:rgba(217,161,61,.38);
+  color:var(--text);
+  background:rgba(217,161,61,.10);
+}
+
+main{
+  max-width:1180px;
+  margin:auto;
+  padding:56px 18px 76px;
+}
+
+.hero{
+  display:grid;
+  grid-template-columns:1fr .52fr;
+  gap:24px;
+  align-items:stretch;
+  margin-bottom:42px;
+}
+
+.hero-box,
+.side-box{
+  border-radius:30px;
+  border:1px solid var(--border);
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.015)),
+    var(--panel);
+  box-shadow:var(--shadow);
+  padding:28px;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:999px;
+  background:rgba(217,161,61,.12);
+  border:1px solid rgba(217,161,61,.30);
+  color:#f5c876;
+  font-size:13px;
+  margin-bottom:18px;
+  font-weight:700;
+}
+
+h1{
+  margin:0 0 16px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(46px,7vw,88px);
+  line-height:.92;
+  letter-spacing:-.055em;
+  text-transform:uppercase;
+}
+
+h2{
+  margin:0 0 14px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(30px,4vw,50px);
+  line-height:1;
+  letter-spacing:-.04em;
+  text-transform:uppercase;
+}
+
+h3{
+  margin:0 0 8px;
+  font-size:24px;
+  color:var(--text);
+}
+
+p,
+li{
+  color:var(--muted);
+}
+
+.hero-buttons{
+  display:flex;
+  flex-wrap:wrap;
+  gap:12px;
+  margin-top:24px;
+}
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:50px;
+  padding:0 18px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.05);
+  color:var(--text);
+  font-weight:700;
+  transition:.2s ease;
+}
+
+.btn:hover{
+  transform:translateY(-2px);
+  border-color:rgba(217,161,61,.45);
+}
+
+.btn.primary{
+  background:linear-gradient(180deg,#d9a13d,#9b5d1f);
+  color:#140a04;
+  border:none;
+}
+
+.quick-stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-top:22px;
+}
+
+.stat{
+  padding:15px;
+  border-radius:18px;
+  border:1px solid var(--border);
+  background:rgba(0,0,0,.18);
+}
+
+.stat strong{
+  display:block;
+  color:var(--gold);
+  font-size:28px;
+}
+
+.stat span{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.side-box ul{
+  margin:12px 0 0;
+  padding-left:18px;
+}
+
+.section{
+  margin-top:44px;
+}
+
+.section-head{
+  margin-bottom:18px;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:16px;
+}
+
+.card{
+  border-radius:var(--radius);
+  border:1px solid var(--border);
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.015)),
+    var(--panel);
+  padding:20px;
+  box-shadow:0 10px 32px rgba(0,0,0,.20);
+  transition:.2s ease;
+  display:flex;
+  flex-direction:column;
+  min-height:250px;
+}
+
+.card:hover{
+  transform:translateY(-4px);
+  border-color:rgba(217,161,61,.42);
+}
+
+.icon{
+  width:56px;
+  height:56px;
+  border-radius:18px;
+  display:grid;
+  place-items:center;
+  margin-bottom:14px;
+  font-size:26px;
+  background:rgba(217,161,61,.13);
+  border:1px solid rgba(217,161,61,.22);
+}
+
+.card p{
+  margin-bottom:0;
+}
+
+.card-footer{
+  margin-top:auto;
+  padding-top:16px;
+}
+
+.mini-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 12px;
+  border-radius:12px;
+  background:rgba(217,161,61,.10);
+  border:1px solid rgba(217,161,61,.22);
+  color:#f3c878;
+  font-size:13px;
+  font-weight:700;
+}
+
+.footer{
+  margin-top:70px;
+  padding-top:24px;
+  border-top:1px solid var(--border);
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.7;
+}
+
+@media(max-width:1040px){
+  .cards{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:900px){
+  .hero{
+    grid-template-columns:1fr;
+  }
+
+  .nav{
+    align-items:flex-start;
+    flex-direction:column;
+  }
+
+  .nav-links{
+    justify-content:flex-start;
+  }
+}
+
+@media(max-width:640px){
+  main{
+    padding-top:34px;
+  }
+
+  .cards,
+  .quick-stats{
+    grid-template-columns:1fr;
+  }
+
+  .hero-buttons{
+    flex-direction:column;
+  }
+}
+
+</style>
+
+<link rel="stylesheet" href="../assets/network.css">
+
+  <link rel="canonical" href="https://gamecoachhub.com/red-dead-online/">
+  <link rel="alternate" hreflang="en" href="https://gamecoachhub.com/red-dead-online/?lang=en">
+  <link rel="alternate" hreflang="da" href="https://gamecoachhub.com/red-dead-online/?lang=da">
+  <link rel="alternate" hreflang="x-default" href="https://gamecoachhub.com/red-dead-online/">
+  <meta property="og:url" content="https://gamecoachhub.com/red-dead-online/">
+  <meta property="og:title" content="Red Dead Online Guide">
+  <meta property="og:description" content="Complete Red Dead Online guide with money farming, gold farming, weapons, roles, builds, trackers, calculators and tools.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://gamecoachhub.com/assets/gch-editorial-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://gamecoachhub.com/assets/gch-editorial-cover.png">
+</head>
+
+<body data-site="rdo">
+
+<header class="topbar">
+  <nav class="nav">
+
+    <a class="brand" href="index.html">
+      <span class="brand-mark">RDO</span>
+      <span>RDO Guide</span>
+    </a>
+
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="unlocks.html">Unlocks</a>
+      <a href="money-guide.html">Money</a>
+      <a href="ability-cards.html">Ability Cards</a>
+      <a href="activities.html">Activities</a>
+      <a href="weapons.html">Weapons</a>
+      <a href="beginner-roadmap.html">Roadmap</a>
+      <a href="build-generator.html">Build Generator</a>
+      <a href="daily-tracker.html">Daily Tracker</a>
+      <a href="income-planner.html">Income Planner</a>
+      <a href="tier-lists.html">Tier Lists</a>
+      <a href="calculators.html">Calculators</a>
+      <a href="progress-tracker.html">Progress</a>
+      <a href="weekly-bonuses.html">Weekly</a>
+    </div>
+
+  </nav>
+</header>
+
+<main>
+
+<section class="hero">
+
+  <div class="hero-box">
+
+    <div class="badge">Ultimate Red Dead Online Hub</div>
+
+    <h1>The Ultimate Red Dead Online Guide</h1>
+
+    <p>
+      Guides, builds, trackers, calculators, weapons, roles, ability cards,
+      money farming and progression tools for Red Dead Redemption 2 Online.
+    </p>
+
+    <div class="hero-buttons">
+      <a class="btn primary" href="beginner-roadmap.html">Beginner Roadmap</a>
+      <a class="btn" href="income-planner.html">Income Planner</a>
+      <a class="btn" href="build-generator.html">Build Generator</a>
+      <a class="btn" href="daily-tracker.html">Daily Tracker</a>
+    </div>
+
+    <div class="quick-stats">
+
+      <div class="stat">
+        <strong>30+</strong>
+        <span>Guide pages</span>
+      </div>
+
+      <div class="stat">
+        <strong>8+</strong>
+        <span>Tools & trackers</span>
+      </div>
+
+      <div class="stat">
+        <strong>5</strong>
+        <span>Role guides</span>
+      </div>
+
+      <div class="stat">
+        <strong>100%</strong>
+        <span>Free</span>
+      </div>
+
+    </div>
+
+  </div>
+
+  <aside class="side-box">
+
+    <h3>What you'll find here</h3>
+
+    <ul>
+      <li>Beginner roadmap from rank 1–50</li>
+      <li>Best weapons and loadouts</li>
+      <li>Ability card builds for every playstyle</li>
+      <li>Gold, cash and XP guides</li>
+      <li>Trader, Moonshiner and Bounty planning tools</li>
+      <li>Daily tracker and progress tracker</li>
+      <li>Tier lists, calculators and weekly bonuses</li>
+    </ul>
+
+  </aside>
+
+</section>
+
+<section class="section">
+
+  <div class="section-head">
+    <h2>Featured Tools</h2>
+    <p>Interactive tools to help you plan progression and income.</p>
+  </div>
+
+  <div class="cards">
+
+    <article class="card">
+      <div class="icon">01</div>
+      <h3>Income Planner</h3>
+      <p>Track Trader Wagon, Moonshine and Legendary Bounty timing in one place.</p>
+      <div class="card-footer">
+        <a class="mini-btn" href="income-planner.html">Open planner</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="icon">02</div>
+      <h3>Daily Tracker</h3>
+      <p>Daily checklist for gold, role tasks, routines and efficient grinding.</p>
+      <div class="card-footer">
+        <a class="mini-btn" href="daily-tracker.html">Open tracker</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="icon">03</div>
+      <h3>Build Generator</h3>
+      <p>Generate recommended builds based on your playstyle and rank.</p>
+      <div class="card-footer">
+        <a class="mini-btn" href="build-generator.html">Open generator</a>
+      </div>
+    </article>
+
+  </div>
+
+</section>
+
+<section class="section">
+
+  <div class="section-head">
+    <h2>Guides</h2>
+    <p>Core guides for progression, money, weapons, roles and builds.</p>
+  </div>
+
+  <div class="cards">
+
+    <article class="card">
+      <div class="icon">04</div>
+      <h3>Beginner Roadmap</h3>
+      <p>Level from rank 1–50 without wasting money or gold.</p>
+      <div class="card-footer">
+        <a class="mini-btn" href="beginner-roadmap.html">Open roadmap</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="icon">05</div>
+      <h3>Money & Gold</h3>
+      <p>The best methods for cash, gold and XP farming.</p>
+      <div class="card-footer">
+        <a class="mini-btn" href="money-guide.html">Money guide</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="icon">06</div>
+      <h3>Ability Cards</h3>
+      <p>Builds for PvE, PvP, sniper, tank and support playstyles.</p>
+      <div class="card-footer">
+        <a class="mini-btn" href="ability-cards.html">View builds</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="icon">07</div>
+      <h3>Weapons</h3>
+      <p>Which weapons are worth buying and which to avoid early.</p>
+      <div class="card-footer">
+        <a class="mini-btn" href="weapons.html">Weapon guide</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="icon">08</div>
+      <h3>Tier Lists</h3>
+      <p>Tier lists for weapons, roles, horses and ability cards.</p>
+      <div class="card-footer">
+        <a class="mini-btn" href="tier-lists.html">View tiers</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="icon">09</div>
+      <h3>Weekly Bonuses</h3>
+      <p>Weekly bonus planning, discounts and recommended focus.</p>
+      <div class="card-footer">
+        <a class="mini-btn" href="weekly-bonuses.html">View weekly</a>
+      </div>
+    </article>
+
+  </div>
+
+</section>
+
+<section class="section">
+
+  <div class="section-head">
+    <h2>Role Guides</h2>
+    <p>Master every Red Dead Online specialist role.</p>
+  </div>
+
+  <div class="cards">
+
+    <article class="card">
+      <div class="icon">10</div>
+      <h3>Bounty Hunter</h3>
+      <p>Best role for gold, combat and legendary bounty gameplay.</p>
+      <div class="card-footer">
+        <a class="mini-btn" href="bounty-hunter-guide.html">Open guide</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="icon">11</div>
+      <h3>Collector</h3>
+      <p>One of the strongest solo money and XP methods.</p>
+      <div class="card-footer">
+        <a class="mini-btn" href="collector-guide.html">Open guide</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="icon">12</div>
+      <h3>Trader</h3>
+      <p>Passive income through hunting, camp production and deliveries.</p>
+      <div class="card-footer">
+        <a class="mini-btn" href="trader-guide.html">Open guide</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="icon">13</div>
+      <h3>Moonshiner</h3>
+      <p>Passive cash with moonshine production and short deliveries.</p>
+      <div class="card-footer">
+        <a class="mini-btn" href="moonshiner-guide.html">Open guide</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="icon">14</div>
+      <h3>Naturalist</h3>
+      <p>Animal samples, legendary animals and exploration gameplay.</p>
+      <div class="card-footer">
+        <a class="mini-btn" href="naturalist-guide.html">Open guide</a>
+      </div>
+    </article>
+
+    <article class="card">
+      <div class="icon">15</div>
+      <h3>Madam Nazar</h3>
+      <p>Live links and guide for finding Madam Nazar and collector maps.</p>
+      <div class="card-footer">
+        <a class="mini-btn" href="madam-nazar.html">Open map</a>
+      </div>
+    </article>
+
+  </div>
+
+</section>
+
+<footer class="footer">
+  Red Dead Online Guide is a fan-made project created to help players understand progression,
+  builds, money farming and efficient gameplay in Red Dead Redemption 2 Online.
+</footer>
+
+</main>
+
+<script src="../assets/network-layout.js" defer></script>
+<script src="../assets/network-i18n.js" defer></script>
+<script src="../assets/monetization.js" defer></script>
+</body>
+</html>

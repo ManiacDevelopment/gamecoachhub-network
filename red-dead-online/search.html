@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search</title>
+
+<style>
+body{
+background:#110b08;
+color:#f6ead8;
+font-family:Arial;
+padding:30px;
+max-width:1000px;
+margin:auto;
+}
+
+input{
+width:100%;
+padding:14px;
+border:none;
+border-radius:14px;
+background:#281b13;
+color:#f6ead8;
+font-size:18px;
+}
+
+.result{
+background:#1d1510;
+padding:16px;
+border-radius:16px;
+margin-top:16px;
+}
+
+a{
+color:#f5c876;
+font-weight:bold;
+text-decoration:none;
+}
+</style>
+<link rel="stylesheet" href="../assets/network.css">
+
+  <link rel="canonical" href="https://gamecoachhub.com/red-dead-online/search.html">
+  <link rel="alternate" hreflang="en" href="https://gamecoachhub.com/red-dead-online/search.html?lang=en">
+  <link rel="alternate" hreflang="da" href="https://gamecoachhub.com/red-dead-online/search.html?lang=da">
+  <link rel="alternate" hreflang="x-default" href="https://gamecoachhub.com/red-dead-online/search.html">
+  <meta property="og:url" content="https://gamecoachhub.com/red-dead-online/search.html">
+  <meta name="description" content="Search from the Red Dead Online Guide network.">
+  <meta property="og:title" content="Search">
+  <meta property="og:description" content="Search from the Red Dead Online Guide network.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://gamecoachhub.com/assets/gch-editorial-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://gamecoachhub.com/assets/gch-editorial-cover.png">
+</head>
+
+<body data-site="rdo">
+
+<h1 style="color:#d9a13d;">Search Guides</h1>
+
+<input
+type="text"
+id="search"
+placeholder="Search guides..."
+onkeyup="searchGuides()">
+
+<div id="results"></div>
+
+<script>
+
+const guides = [
+
+{name:'Weapons Guide',link:'weapons.html'},
+{name:'Money Guide',link:'money-guide.html'},
+{name:'Gold Guide',link:'gold-guide.html'},
+{name:'Collector Guide',link:'collector-guide.html'},
+{name:'Trader Guide',link:'trader-guide.html'},
+{name:'Ability Cards',link:'ability-cards.html'},
+{name:'PvP Guide',link:'pvp-guide.html'},
+{name:'Beginner Roadmap',link:'beginner-roadmap.html'}
+
+];
+
+function searchGuides(){
+
+const query =
+document.getElementById('search')
+.value.toLowerCase();
+
+const results =
+document.getElementById('results');
+
+results.innerHTML = '';
+
+guides.forEach(guide => {
+
+if(
+guide.name.toLowerCase().includes(query)
+){
+
+results.innerHTML += `
+<div class="result">
+<a href="${guide.link}">
+${guide.name}
+</a>
+</div>
+`;
+
+}
+
+});
+
+}
+
+</script>
+
+<script src="../assets/network-layout.js" defer></script>
+<script src="../assets/network-i18n.js" defer></script>
+<script src="../assets/monetization.js" defer></script>
+</body>
+</html>

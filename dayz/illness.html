@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>DayZ Illness Guide | Interactive Symptom & Cure Finder</title>
+  <meta name="description" content="Interactive DayZ illness guide. Select symptoms and causes to find the likely disease, cure, medicine and survival steps.">
+  <link rel="stylesheet" href="style.css">
+<script src="js/illness-guide.js" defer></script>
+
+<link rel="stylesheet" href="../assets/network.css">
+  <link rel="canonical" href="https://gamecoachhub.com/dayz/illness.html">
+  <link rel="alternate" hreflang="en" href="https://gamecoachhub.com/dayz/illness.html?lang=en">
+  <link rel="alternate" hreflang="da" href="https://gamecoachhub.com/dayz/illness.html?lang=da">
+  <link rel="alternate" hreflang="x-default" href="https://gamecoachhub.com/dayz/illness.html">
+  <meta property="og:url" content="https://gamecoachhub.com/dayz/illness.html">
+  <meta property="og:title" content="DayZ Illness Guide | Interactive Symptom & Cure Finder">
+  <meta property="og:description" content="Interactive DayZ illness guide. Select symptoms and causes to find the likely disease, cure, medicine and survival steps.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://gamecoachhub.com/assets/gch-editorial-cover.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://gamecoachhub.com/assets/gch-editorial-cover.png">
+</head>
+
+<body data-site="dayz">
+  <div id="site-navbar"></div>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <span class="badge">Interactive Medical Guide</span>
+        <h1>DayZ Illness Guide</h1>
+        <p class="section-text">
+          Choose your symptoms first. The guide filters possible causes, then shows the most likely illness and cure.
+        </p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container illness-tool">
+        <div class="illness-panel">
+          <h2>1. Select symptoms</h2>
+          <p>Pick everything you notice in-game.</p>
+
+          <div class="choice-grid" id="symptomChoices"></div>
+        </div>
+
+        <div class="illness-panel">
+          <h2>2. Possible causes</h2>
+          <p>Filtered by your selected symptoms.</p>
+
+          <div class="choice-grid" id="causeChoices"></div>
+        </div>
+
+        <div class="illness-panel illness-result">
+          <h2>3. Diagnosis & cure</h2>
+          <div id="illnessResult">
+            <p class="empty-state">Select symptoms to begin.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container content-layout">
+        <aside class="sidebar">
+          <a href="#cholera">Cholera</a>
+          <a href="#salmonella">Salmonella</a>
+          <a href="#cold">Cold / Flu</a>
+          <a href="#infection">Wound infection</a>
+          <a href="#poisoning">Poisoning</a>
+          <a href="#kuru">Kuru</a>
+        </aside>
+
+        <article class="article">
+          <h2 id="cholera">Cholera</h2>
+          <p><strong>Cause:</strong> Dirty water, unsafe bottles or contaminated containers.</p>
+          <p><strong>Cure:</strong> Tetracycline pills. Multivitamins can help your immune system. Drink tiny sips and eat tiny bites to avoid vomiting.</p>
+
+          <h2 id="salmonella">Salmonella / food poisoning</h2>
+          <p><strong>Cause:</strong> Raw meat, rotten food, bloody hands or unsafe animal products.</p>
+          <p><strong>Cure:</strong> Charcoal tablets or multivitamins. Eat and drink slowly.</p>
+
+          <h2 id="cold">Common cold / influenza</h2>
+          <p><strong>Cause:</strong> Being cold, wet, low immunity or close contact with sick survivors.</p>
+          <p><strong>Cure:</strong> Stay warm, dry your clothes, eat, drink, use tetracycline or multivitamins.</p>
+
+          <h2 id="infection">Wound infection</h2>
+          <p><strong>Cause:</strong> Dirty rags, dirty bandages or letting bleeding heal untreated.</p>
+          <p><strong>Cure:</strong> Early stage: disinfect wound. Later stage: tetracycline. Use clean bandages next time.</p>
+
+          <h2 id="poisoning">Poisoning / chemical sickness</h2>
+          <p><strong>Cause:</strong> Toxic zones, chemicals, gasoline, disinfectant or contaminated exposure.</p>
+          <p><strong>Cure:</strong> Charcoal tablets where relevant, clean food/water, leave the toxic area and stabilize stats.</p>
+
+          <h2 id="kuru">Kuru / brain prion disease</h2>
+          <p><strong>Cause:</strong> Eating human meat or human fat.</p>
+          <p><strong>Cure:</strong> No practical cure. Avoid cannibalism unless you accept permanent symptoms.</p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <div id="site-footer"></div>
+<script src="../assets/network-layout.js" defer></script>
+<script src="../assets/network-i18n.js" defer></script>
+<script src="../assets/monetization.js" defer></script>
+</body>
+</html>
