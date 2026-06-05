@@ -20,11 +20,33 @@
 }
 
 .deadlock-topbar {
+  position: relative;
+  overflow: hidden;
   display: flex;
   justify-content: space-between;
   gap: 18px;
-  align-items: flex-start;
+  align-items: center;
   padding: 22px;
+}
+
+.deadlock-topbar::after,
+.deadlock-network::after,
+.deadlock-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(110deg, rgba(93, 149, 232, 0.14), transparent 34%),
+    repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.026) 0 1px, transparent 1px 18px);
+  opacity: 0.52;
+}
+
+.deadlock-topbar > *,
+.deadlock-network > *,
+.deadlock-panel > * {
+  position: relative;
+  z-index: 1;
 }
 
 .deadlock-actions,
@@ -35,7 +57,45 @@
   flex-wrap: wrap;
 }
 
+.deadlock-showcase {
+  display: grid;
+  grid-template-columns: 82px 42px 82px;
+  align-items: center;
+  gap: 10px;
+  min-width: 236px;
+  padding: 10px;
+  border: 1px solid var(--gch-line);
+  border-radius: var(--gch-radius);
+  background:
+    linear-gradient(135deg, rgba(93, 149, 232, 0.14), rgba(212, 164, 75, 0.08)),
+    rgba(0, 0, 0, 0.22);
+}
+
+.deadlock-showcase img {
+  width: 82px;
+  height: 82px;
+  border-radius: var(--gch-radius);
+  border: 1px solid color-mix(in srgb, var(--gch-accent) 28%, transparent);
+  object-fit: cover;
+  background: rgba(0, 0, 0, 0.24);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.32);
+}
+
+.deadlock-showcase span {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--gch-line);
+  border-radius: var(--gch-radius);
+  color: var(--gch-accent);
+  background: rgba(0, 0, 0, 0.28);
+  font-weight: 950;
+}
+
 .deadlock-network {
+  position: relative;
+  overflow: hidden;
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 18px;
@@ -90,6 +150,8 @@
 }
 
 .deadlock-panel {
+  position: relative;
+  overflow: hidden;
   padding: 16px;
   min-width: 0;
 }
@@ -132,6 +194,8 @@
   color: var(--gch-text);
   padding: 10px;
   text-align: left;
+  position: relative;
+  overflow: hidden;
 }
 
 .deadlock-card.active {
@@ -141,11 +205,12 @@
 
 .deadlock-card img,
 .deadlock-portrait {
-  width: 54px;
-  height: 54px;
+  width: 62px;
+  height: 62px;
   border-radius: var(--gch-radius);
   object-fit: cover;
-  flex: 0 0 54px;
+  flex: 0 0 62px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .deadlock-card small,
@@ -243,6 +308,12 @@
   .deadlock-network {
     grid-template-columns: 1fr;
     display: grid;
+  }
+
+  .deadlock-showcase {
+    grid-template-columns: 1fr 42px 1fr;
+    min-width: 0;
+    width: 100%;
   }
 
   .deadlock-actions,

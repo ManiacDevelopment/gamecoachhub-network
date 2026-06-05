@@ -109,6 +109,7 @@ body::before {
 
 a {
   color: inherit;
+  text-decoration: none;
 }
 
 .container,
@@ -890,5 +891,570 @@ li,
   .gch-footer-sponsor {
     max-width: 100%;
     overflow-x: hidden;
+  }
+}
+
+/* Premium visual pass: shared across the guide network. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.035), transparent 14%, transparent 86%, rgba(255, 255, 255, 0.026)),
+    repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 18px);
+  opacity: 0.46;
+  mask-image: linear-gradient(to bottom, black 0%, black 42%, transparent 92%);
+}
+
+.hero-box,
+.hero-panel,
+.side-box,
+.panel,
+.guide-hero-copy,
+.guide-hero-panel,
+.guide-feature,
+.deadlock-topbar,
+.deadlock-network,
+.deadlock-panel {
+  backdrop-filter: blur(16px);
+}
+
+.hero-box::after,
+.hero-panel::after,
+.side-box::after,
+.panel::after,
+.guide-hero-copy::after,
+.guide-hero-panel::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: min(46%, 360px);
+  height: 58%;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, transparent 0 42%, color-mix(in srgb, var(--gch-accent) 16%, transparent) 42% 44%, transparent 44%),
+    repeating-linear-gradient(90deg, color-mix(in srgb, var(--gch-accent) 18%, transparent) 0 1px, transparent 1px 18px);
+  opacity: 0.5;
+  mask-image: linear-gradient(135deg, transparent 0%, black 34%, black 100%);
+}
+
+.gch-monetization-zone,
+.gch-affiliate-block,
+.gch-premium-cta,
+.gch-footer-sponsor {
+  position: relative;
+  overflow: hidden;
+}
+
+.gch-monetization-zone::after,
+.gch-affiliate-block::after,
+.gch-premium-cta::after,
+.gch-footer-sponsor::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, var(--gch-accent) 12%, transparent), transparent 34%),
+    repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.026) 0 1px, transparent 1px 14px);
+  opacity: 0.42;
+}
+
+.gch-monetization-zone > *,
+.gch-affiliate-block > *,
+.gch-premium-cta > *,
+.gch-footer-sponsor > * {
+  position: relative;
+  z-index: 1;
+}
+
+.gch-top-slot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  min-height: 58px;
+  padding: 10px 14px !important;
+}
+
+.gch-top-slot p {
+  margin: 0 !important;
+}
+
+.guide-actions .btn {
+  min-width: min(100%, 170px);
+  text-align: center;
+  white-space: normal;
+}
+
+body[data-site="hub"] .hero-section {
+  position: relative;
+  overflow: hidden;
+  padding-top: 54px;
+}
+
+body[data-site="hub"] .hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(110deg, rgba(230, 183, 95, 0.14), transparent 32%),
+    linear-gradient(250deg, rgba(93, 149, 232, 0.12), transparent 38%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 32px);
+  opacity: 0.7;
+}
+
+body[data-site="hub"] .hero-grid,
+body[data-site="hub"] .hero-copy,
+body[data-site="hub"] .hero-media {
+  position: relative;
+}
+
+body[data-site="hub"] .hero-copy {
+  align-self: stretch;
+  padding: clamp(24px, 4vw, 42px);
+  border: 1px solid var(--gch-line);
+  border-radius: var(--gch-radius);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.072), rgba(255, 255, 255, 0.024)),
+    rgba(10, 13, 19, 0.74);
+  box-shadow: var(--gch-shadow);
+  overflow: hidden;
+}
+
+body[data-site="hub"] .hero-copy::after {
+  content: "";
+  position: absolute;
+  right: 18px;
+  bottom: 18px;
+  width: 44%;
+  height: 42%;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, transparent 0 46%, rgba(230, 183, 95, 0.22) 46% 48%, transparent 48%),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 16px);
+  opacity: 0.44;
+}
+
+body[data-site="hub"] .hero-media {
+  border-color: color-mix(in srgb, var(--gch-accent) 34%, transparent) !important;
+  box-shadow: 0 28px 86px rgba(0, 0, 0, 0.5) !important;
+}
+
+body[data-site="hub"] .hero-media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, 0.5)),
+    linear-gradient(100deg, rgba(230, 183, 95, 0.16), transparent 42%);
+}
+
+body[data-site="hub"] .hero-media::after {
+  content: "";
+  position: absolute;
+  inset: 16px;
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: calc(var(--gch-radius) - 2px);
+  pointer-events: none;
+}
+
+body[data-site="hub"] .hero-media figcaption {
+  z-index: 3;
+}
+
+body[data-site="hub"] .guide-grid {
+  grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+  gap: 16px !important;
+}
+
+body[data-site="hub"] .guide-card {
+  grid-column: span 2;
+  min-height: 380px;
+  padding: 14px 16px 18px !important;
+  gap: 14px;
+  isolation: isolate;
+}
+
+body[data-site="hub"] .guide-card-rdo,
+body[data-site="hub"] .guide-card-dayz {
+  grid-column: span 3;
+}
+
+.guide-card-art {
+  position: relative;
+  min-height: 144px;
+  margin: 0 0 4px;
+  border: 1px solid var(--gch-line);
+  border-radius: var(--gch-radius);
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.guide-card-art::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.11), transparent 45%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 22px);
+  mix-blend-mode: screen;
+  opacity: 0.52;
+}
+
+.guide-card-art span,
+.guide-card-art i,
+.guide-card-art b,
+.guide-hero-art span,
+.guide-hero-art i,
+.guide-hero-art b {
+  position: absolute;
+  display: block;
+}
+
+.guide-art-rdo {
+  background: linear-gradient(180deg, #2a120b 0%, #5d2815 48%, #120806 100%);
+}
+
+.guide-art-rdo span {
+  inset: auto 0 0;
+  height: 48%;
+  background: linear-gradient(135deg, #744019, #1f0f08);
+  clip-path: polygon(0 44%, 20% 24%, 36% 38%, 56% 12%, 74% 30%, 100% 18%, 100% 100%, 0 100%);
+}
+
+.guide-art-rdo i {
+  left: 8%;
+  right: 8%;
+  bottom: 18%;
+  height: 1px;
+  background: rgba(246, 200, 95, 0.56);
+  box-shadow: 0 18px 0 rgba(246, 200, 95, 0.2), 0 36px 0 rgba(246, 200, 95, 0.13);
+}
+
+.guide-art-rdo b {
+  right: 13%;
+  top: 16%;
+  width: 26%;
+  height: 32%;
+  border: 1px solid rgba(230, 183, 95, 0.36);
+  background: linear-gradient(135deg, rgba(230, 183, 95, 0.32), rgba(200, 79, 54, 0.12));
+  transform: skewX(-10deg);
+}
+
+.guide-art-dayz {
+  background: linear-gradient(180deg, #11180f 0%, #1c2a18 48%, #060806 100%);
+}
+
+.guide-art-dayz span {
+  inset: auto 0 0;
+  height: 58%;
+  background:
+    repeating-linear-gradient(100deg, rgba(190, 181, 126, 0.3) 0 2px, transparent 2px 16px),
+    linear-gradient(135deg, #26371e, #090d08);
+}
+
+.guide-art-dayz i {
+  left: 10%;
+  top: 18%;
+  width: 68%;
+  height: 54%;
+  border-left: 2px solid rgba(190, 181, 126, 0.42);
+  border-bottom: 2px solid rgba(190, 181, 126, 0.22);
+  transform: skewX(-18deg);
+}
+
+.guide-art-dayz b {
+  right: 12%;
+  bottom: 16%;
+  width: 34%;
+  height: 18%;
+  background: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.16) 0 1px, transparent 1px 10px);
+}
+
+.guide-art-deadlock {
+  background: linear-gradient(135deg, #080d21 0%, #192250 52%, #050713 100%);
+}
+
+.guide-art-deadlock span {
+  inset: 16% 12% auto;
+  height: 36%;
+  border: 1px solid rgba(93, 149, 232, 0.42);
+  background:
+    linear-gradient(135deg, rgba(93, 149, 232, 0.28), rgba(212, 164, 75, 0.12)),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.1) 0 1px, transparent 1px 13px);
+  transform: skewX(-14deg);
+}
+
+.guide-art-deadlock i {
+  left: 16%;
+  bottom: 16%;
+  width: 68%;
+  height: 2px;
+  background: rgba(93, 149, 232, 0.8);
+  box-shadow: 0 18px 0 rgba(212, 164, 75, 0.56), 0 36px 0 rgba(93, 149, 232, 0.34);
+}
+
+.guide-art-deadlock b {
+  right: 12%;
+  top: 18%;
+  width: 22%;
+  height: 52%;
+  border: 1px solid rgba(212, 164, 75, 0.35);
+  transform: skewX(12deg);
+}
+
+.guide-art-grounded {
+  background: linear-gradient(180deg, #17200d 0%, #3b3514 48%, #0a0704 100%);
+}
+
+.guide-art-grounded span {
+  inset: auto 0 0;
+  height: 42%;
+  background:
+    repeating-linear-gradient(100deg, rgba(169, 216, 63, 0.34) 0 3px, transparent 3px 18px),
+    linear-gradient(135deg, #4d4a1e, #151006);
+}
+
+.guide-art-grounded i {
+  left: 12%;
+  bottom: 24%;
+  width: 70%;
+  height: 44%;
+  border-left: 2px solid rgba(169, 216, 63, 0.5);
+  border-right: 1px solid rgba(215, 154, 58, 0.34);
+  transform: skewX(-16deg);
+}
+
+.guide-art-grounded b {
+  right: 10%;
+  top: 18%;
+  width: 32%;
+  height: 28%;
+  border: 1px solid rgba(169, 216, 63, 0.28);
+  background: repeating-linear-gradient(135deg, rgba(169, 216, 63, 0.24) 0 2px, transparent 2px 12px);
+}
+
+.guide-art-stardew {
+  background: linear-gradient(180deg, #332015 0%, #4d3520 46%, #170d10 100%);
+}
+
+.guide-art-stardew span {
+  inset: auto 0 0;
+  height: 54%;
+  background:
+    repeating-linear-gradient(0deg, rgba(143, 191, 98, 0.28) 0 8px, transparent 8px 18px),
+    linear-gradient(135deg, #624324, #21120d);
+}
+
+.guide-art-stardew i {
+  left: 10%;
+  right: 10%;
+  top: 18%;
+  height: 28%;
+  border: 1px solid rgba(232, 184, 91, 0.32);
+  background: linear-gradient(135deg, rgba(232, 184, 91, 0.22), rgba(185, 77, 94, 0.14));
+}
+
+.guide-art-stardew b {
+  left: 14%;
+  bottom: 16%;
+  width: 72%;
+  height: 2px;
+  background: rgba(232, 184, 91, 0.58);
+  box-shadow: 0 18px 0 rgba(143, 191, 98, 0.42), 0 36px 0 rgba(185, 77, 94, 0.28);
+}
+
+.guide-hero-art {
+  position: relative;
+  min-height: 172px;
+  margin: 12px 0 16px;
+  border: 1px solid var(--gch-line);
+  border-radius: var(--gch-radius);
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.28);
+}
+
+.guide-hero-art::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.1), transparent 42%),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.032) 0 1px, transparent 1px 20px);
+}
+
+.guide-hero-art-grounded {
+  background: linear-gradient(180deg, #14200c, #3a3214 52%, #090704);
+}
+
+.guide-hero-art-grounded span {
+  inset: auto 0 0;
+  height: 42%;
+  background:
+    repeating-linear-gradient(100deg, rgba(169, 216, 63, 0.34) 0 4px, transparent 4px 20px),
+    linear-gradient(135deg, #52601d, #191108);
+}
+
+.guide-hero-art-grounded i {
+  left: 12%;
+  top: 18%;
+  width: 42%;
+  height: 56%;
+  border-left: 2px solid rgba(169, 216, 63, 0.56);
+  border-bottom: 2px solid rgba(215, 154, 58, 0.34);
+  transform: skewX(-18deg);
+}
+
+.guide-hero-art-grounded b {
+  right: 10%;
+  top: 18%;
+  width: 34%;
+  height: 38%;
+  border: 1px solid rgba(215, 154, 58, 0.34);
+  background: repeating-linear-gradient(135deg, rgba(169, 216, 63, 0.22) 0 2px, transparent 2px 12px);
+}
+
+.guide-hero-art-stardew {
+  background: linear-gradient(180deg, #2b1b16, #4b3420 52%, #10080d);
+}
+
+.guide-hero-art-stardew span {
+  inset: auto 0 0;
+  height: 50%;
+  background:
+    repeating-linear-gradient(0deg, rgba(143, 191, 98, 0.3) 0 8px, transparent 8px 18px),
+    linear-gradient(135deg, #5b4023, #20100e);
+}
+
+.guide-hero-art-stardew i {
+  left: 10%;
+  top: 18%;
+  width: 80%;
+  height: 30%;
+  border: 1px solid rgba(232, 184, 91, 0.34);
+  background:
+    linear-gradient(135deg, rgba(232, 184, 91, 0.2), rgba(185, 77, 94, 0.12)),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.08) 0 1px, transparent 1px 14px);
+}
+
+.guide-hero-art-stardew b {
+  left: 14%;
+  bottom: 16%;
+  width: 72%;
+  height: 2px;
+  background: rgba(232, 184, 91, 0.58);
+  box-shadow: 0 20px 0 rgba(143, 191, 98, 0.44), 0 40px 0 rgba(185, 77, 94, 0.26);
+}
+
+.guide-topic-card,
+.guide-tool-card,
+.guide-category-card,
+.article-card,
+.network-list a {
+  position: relative;
+  overflow: hidden;
+}
+
+.guide-topic-card::after,
+.guide-tool-card::after,
+.guide-category-card::after,
+.article-card::after,
+.network-list a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--gch-accent) 12%, transparent), transparent 34%),
+    repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.024) 0 1px, transparent 1px 18px);
+  opacity: 0;
+  transition: opacity 160ms ease;
+}
+
+.guide-topic-card:hover::after,
+.guide-tool-card:hover::after,
+.guide-category-card:hover::after,
+.article-card:hover::after,
+.network-list a:hover::after {
+  opacity: 1;
+}
+
+.guide-topic-card > *,
+.guide-tool-card > *,
+.guide-category-card > *,
+.article-card > *,
+.network-list a > * {
+  position: relative;
+  z-index: 1;
+}
+
+.network-rdo {
+  --network-accent: #e6b75f;
+}
+
+.network-dayz {
+  --network-accent: #b9b17c;
+}
+
+.network-deadlock {
+  --network-accent: #5d95e8;
+}
+
+.network-grounded {
+  --network-accent: #a9d83f;
+}
+
+.network-stardew {
+  --network-accent: #e8b85b;
+}
+
+.network-list a {
+  border-color: color-mix(in srgb, var(--network-accent, var(--gch-accent)) 22%, transparent) !important;
+}
+
+.network-list a span {
+  color: var(--network-accent, var(--gch-accent)) !important;
+}
+
+@media (max-width: 980px) {
+  body[data-site="hub"] .guide-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  }
+
+  body[data-site="hub"] .guide-card,
+  body[data-site="hub"] .guide-card-rdo,
+  body[data-site="hub"] .guide-card-dayz {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 760px) {
+  body[data-site="hub"] .guide-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  body[data-site="hub"] .guide-card {
+    min-height: 0;
+  }
+
+  .guide-card-art {
+    min-height: 126px;
+  }
+
+  .guide-hero-art {
+    min-height: 140px;
+  }
+
+  .gch-top-slot {
+    display: grid;
+    justify-items: start;
   }
 }

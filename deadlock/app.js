@@ -263,6 +263,11 @@ function render() {
         <h1>Deadlock Coach</h1>
         <p class="subtitle">Hero guides, builds, matchup guides, abilities and counter-items.</p>
       </div>
+      <div class="deadlock-showcase" aria-hidden="true">
+        <img src="${hero.image}" alt="" loading="eager">
+        <span>VS</span>
+        <img src="${enemy.image}" alt="" loading="eager">
+      </div>
       <div class="deadlock-actions">
         <div class="gch-language-switch" data-no-i18n="true" aria-label="Language">
           <button class="gch-lang-btn" type="button" data-lang="en">EN</button>
