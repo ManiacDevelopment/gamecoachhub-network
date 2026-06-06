@@ -27,6 +27,10 @@
       "destination": "/red-dead-online/index.html"
     },
     {
+      "source": "/red-dead-online/ability-card-generator",
+      "destination": "/red-dead-online/ability-card-generator/index.html"
+    },
+    {
       "source": "/dayz",
       "destination": "/dayz/index.html"
     },

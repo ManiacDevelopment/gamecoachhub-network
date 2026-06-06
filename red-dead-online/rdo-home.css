@@ -1,0 +1,458 @@
+body[data-site="rdo"] {
+  background:
+    linear-gradient(180deg, rgba(218, 154, 67, 0.08), transparent 320px),
+    linear-gradient(145deg, #160906 0%, #0e0705 44%, #050403 100%) !important;
+}
+
+body[data-site="rdo"]::before {
+  background-image:
+    repeating-linear-gradient(90deg, rgba(230, 183, 95, 0.035) 0 1px, transparent 1px 48px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.018) 0 1px, transparent 1px 32px);
+  opacity: 0.55;
+}
+
+.rdo-page {
+  width: min(var(--gch-max), calc(100% - 32px));
+  margin-inline: auto;
+  padding: 32px 0 76px;
+}
+
+.rdo-hero {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.72fr);
+  gap: 18px;
+  align-items: stretch;
+  padding-block: 28px;
+}
+
+.rdo-hero-copy,
+.rdo-hero-panel,
+.rdo-card,
+.rdo-guide-card,
+.rdo-path,
+.rdo-stat-strip article {
+  border: 1px solid var(--gch-line);
+  border-radius: var(--gch-radius);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.075), rgba(255, 255, 255, 0.022)),
+    rgba(31, 18, 11, 0.88);
+  box-shadow: 0 18px 52px rgba(0, 0, 0, 0.34);
+}
+
+.rdo-hero-copy,
+.rdo-hero-panel {
+  position: relative;
+  overflow: hidden;
+  min-height: 520px;
+  padding: 28px;
+}
+
+.rdo-hero-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  background:
+    linear-gradient(110deg, rgba(14, 7, 4, 0.62), rgba(14, 7, 4, 0.18)),
+    radial-gradient(circle at 22% 12%, rgba(230, 183, 95, 0.2), transparent 30%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.02)),
+    rgba(32, 18, 10, 0.92);
+}
+
+.rdo-hero-copy::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(8, 4, 3, 0.42) 74%, rgba(8, 4, 3, 0.88) 100%),
+    repeating-linear-gradient(115deg, rgba(255, 255, 255, 0.028) 0 1px, transparent 1px 18px);
+}
+
+.rdo-hero-copy > * {
+  position: relative;
+  z-index: 1;
+}
+
+.rdo-hero h1 {
+  max-width: 820px;
+  margin: 14px 0 16px;
+  font-size: 4.55rem !important;
+}
+
+.rdo-lede {
+  max-width: 720px;
+  font-size: 1.08rem;
+  line-height: 1.75;
+}
+
+.rdo-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.rdo-actions .btn {
+  min-width: 172px;
+  padding-inline: 16px !important;
+}
+
+.rdo-hero-panel {
+  display: grid;
+  align-content: end;
+  gap: 12px;
+}
+
+.rdo-scene {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(161, 62, 41, 0.32), transparent 44%),
+    linear-gradient(180deg, #2b1208 0%, #120805 64%, #070403 100%);
+}
+
+.rdo-sun {
+  position: absolute;
+  top: 54px;
+  right: 54px;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffe3a2 0%, #dd8a35 52%, rgba(221, 138, 53, 0) 72%);
+  opacity: 0.86;
+}
+
+.rdo-ridge,
+.rdo-trail {
+  position: absolute;
+  inset-inline: -12%;
+  display: block;
+}
+
+.rdo-ridge {
+  bottom: 0;
+  height: 46%;
+  background: linear-gradient(140deg, transparent 0 16%, rgba(15, 6, 3, 0.92) 16% 47%, transparent 47% 60%, rgba(19, 8, 4, 0.98) 60% 100%);
+}
+
+.rdo-ridge-one {
+  bottom: 64px;
+  opacity: 0.74;
+  transform: skewY(-4deg);
+}
+
+.rdo-ridge-two {
+  bottom: 0;
+  opacity: 1;
+  transform: skewY(3deg);
+}
+
+.rdo-trail {
+  left: 22%;
+  right: 18%;
+  bottom: -38px;
+  height: 220px;
+  border-radius: 50% 50% 0 0;
+  background: linear-gradient(180deg, rgba(230, 183, 95, 0.16), rgba(230, 183, 95, 0));
+  transform: perspective(260px) rotateX(56deg);
+}
+
+.rdo-hero-panel > :not(.rdo-scene) {
+  position: relative;
+  z-index: 1;
+}
+
+.rdo-panel-list {
+  display: grid;
+  gap: 8px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.rdo-panel-list li {
+  padding: 10px 12px;
+  border: 1px solid rgba(230, 183, 95, 0.2);
+  border-radius: var(--gch-radius);
+  background: rgba(0, 0, 0, 0.24);
+  color: var(--gch-text) !important;
+  font-weight: 850;
+}
+
+.rdo-stat-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 44px;
+}
+
+.rdo-stat-strip article {
+  padding: 16px;
+}
+
+.rdo-stat-strip span {
+  display: block;
+  color: var(--gch-muted);
+  font-size: 0.82rem;
+  font-weight: 850;
+}
+
+.rdo-stat-strip strong {
+  display: block;
+  margin-top: 5px;
+  color: var(--gch-accent);
+  font-size: 1.18rem;
+}
+
+.rdo-section {
+  display: grid;
+  gap: 18px;
+  margin-top: 46px;
+}
+
+.rdo-section-head {
+  max-width: 820px;
+}
+
+.rdo-section-head h2 {
+  margin: 8px 0 10px;
+}
+
+.rdo-card-grid,
+.rdo-guide-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.rdo-card-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.rdo-guide-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.rdo-card,
+.rdo-guide-card {
+  position: relative;
+  min-height: 305px;
+  overflow: hidden;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 160ms ease, border-color 160ms ease;
+}
+
+.rdo-card:hover,
+.rdo-guide-card:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--gch-accent) 48%, transparent);
+}
+
+.rdo-card-featured {
+  grid-column: span 2;
+}
+
+.rdo-card h3,
+.rdo-guide-card h3 {
+  margin: 8px 0;
+}
+
+.rdo-card p,
+.rdo-guide-card p {
+  margin: 0;
+}
+
+.rdo-card strong {
+  width: fit-content;
+  margin-top: 18px;
+  padding: 8px 10px;
+  border: 1px solid rgba(230, 183, 95, 0.28);
+  border-radius: var(--gch-radius);
+  background: rgba(230, 183, 95, 0.12);
+  color: var(--gch-accent);
+}
+
+.rdo-card-art {
+  position: relative;
+  display: block;
+  height: 120px;
+  margin: -4px -4px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: var(--gch-radius);
+  overflow: hidden;
+  background:
+    linear-gradient(150deg, rgba(230, 183, 95, 0.22), rgba(201, 84, 57, 0.14)),
+    rgba(0, 0, 0, 0.26);
+}
+
+.rdo-card-art::before,
+.rdo-card-art::after {
+  content: "";
+  position: absolute;
+  inset: auto 12px 16px;
+  height: 2px;
+  background: rgba(230, 183, 95, 0.5);
+}
+
+.rdo-card-art::after {
+  inset: 18px auto auto 18px;
+  width: 58px;
+  height: 58px;
+  border: 2px solid rgba(230, 183, 95, 0.5);
+  border-radius: 50%;
+  background: transparent;
+}
+
+.rdo-art-cards {
+  background:
+    linear-gradient(90deg, transparent 0 14%, rgba(255, 255, 255, 0.08) 14% 17%, transparent 17% 100%),
+    linear-gradient(135deg, rgba(230, 183, 95, 0.24), rgba(110, 28, 18, 0.22)),
+    rgba(0, 0, 0, 0.28);
+}
+
+.rdo-art-income {
+  background:
+    repeating-linear-gradient(90deg, rgba(230, 183, 95, 0.18) 0 3px, transparent 3px 18px),
+    linear-gradient(135deg, rgba(230, 183, 95, 0.18), rgba(0, 0, 0, 0.22));
+}
+
+.rdo-art-tracker {
+  background:
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.06) 0 1px, transparent 1px 18px),
+    linear-gradient(135deg, rgba(201, 84, 57, 0.22), rgba(0, 0, 0, 0.2));
+}
+
+.rdo-art-weapons {
+  background:
+    linear-gradient(118deg, transparent 0 44%, rgba(230, 183, 95, 0.35) 44% 48%, transparent 48% 100%),
+    linear-gradient(135deg, rgba(95, 55, 34, 0.44), rgba(0, 0, 0, 0.2));
+}
+
+.rdo-art-money {
+  background:
+    radial-gradient(circle at 34% 50%, rgba(230, 183, 95, 0.44), transparent 22%),
+    radial-gradient(circle at 58% 48%, rgba(230, 183, 95, 0.28), transparent 20%),
+    linear-gradient(135deg, rgba(115, 75, 30, 0.32), rgba(0, 0, 0, 0.24));
+}
+
+.rdo-art-roles {
+  background:
+    repeating-linear-gradient(45deg, rgba(230, 183, 95, 0.15) 0 2px, transparent 2px 16px),
+    linear-gradient(135deg, rgba(201, 84, 57, 0.16), rgba(0, 0, 0, 0.25));
+}
+
+.rdo-guide-card {
+  min-height: 220px;
+}
+
+.rdo-guide-card span {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(230, 183, 95, 0.28);
+  border-radius: var(--gch-radius);
+  background: rgba(230, 183, 95, 0.12);
+  color: var(--gch-accent);
+  font-weight: 950;
+}
+
+.rdo-path {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(320px, 0.72fr);
+  gap: 18px;
+  margin-top: 48px;
+  padding: 22px;
+  overflow: hidden;
+}
+
+.rdo-path ol {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding-left: 22px;
+}
+
+.rdo-path li {
+  padding: 10px 12px;
+  border: 1px solid var(--gch-line);
+  border-radius: var(--gch-radius);
+  background: rgba(255, 255, 255, 0.044);
+}
+
+.footer .gch-container {
+  padding-block: 28px;
+}
+
+@media (max-width: 1040px) {
+  .rdo-hero,
+  .rdo-path {
+    grid-template-columns: 1fr;
+  }
+
+  .rdo-hero-copy,
+  .rdo-hero-panel {
+    min-height: 420px;
+  }
+
+  .rdo-card-grid,
+  .rdo-guide-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .rdo-card-featured {
+    grid-column: span 2;
+  }
+}
+
+@media (max-width: 700px) {
+  .rdo-page {
+    width: min(100% - 24px, var(--gch-max));
+    padding-top: 18px;
+  }
+
+  .rdo-hero {
+    padding-block: 18px;
+  }
+
+  .rdo-hero-copy,
+  .rdo-hero-panel {
+    min-height: auto;
+    padding: 20px;
+  }
+
+  .rdo-hero-copy {
+    padding-top: 180px;
+  }
+
+  .rdo-hero h1 {
+    font-size: 2.5rem !important;
+  }
+
+  .rdo-actions {
+    display: grid;
+  }
+
+  .rdo-actions .btn {
+    width: 100%;
+  }
+
+  .rdo-stat-strip,
+  .rdo-card-grid,
+  .rdo-guide-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rdo-card-featured {
+    grid-column: auto;
+  }
+
+  .rdo-card,
+  .rdo-guide-card {
+    min-height: auto;
+  }
+}

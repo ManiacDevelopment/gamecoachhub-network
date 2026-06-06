@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Red Dead Online Ability Card Generator | Game Coach Hub</title>
+  <meta name="description" content="Build a Red Dead Online ability-card setup with guide ratings for damage, survivability, sustain, mobility, PvP/PvE fit, weapons, strengths and recommendations.">
+  <meta name="robots" content="index, follow">
+  <meta name="theme-color" content="#120805">
+  <link rel="canonical" href="https://gamecoachhub.com/red-dead-online/ability-card-generator/">
+  <link rel="alternate" hreflang="en" href="https://gamecoachhub.com/red-dead-online/ability-card-generator/?lang=en">
+  <link rel="alternate" hreflang="da" href="https://gamecoachhub.com/red-dead-online/ability-card-generator/?lang=da">
+  <link rel="alternate" hreflang="x-default" href="https://gamecoachhub.com/red-dead-online/ability-card-generator/">
+
+  <meta property="og:site_name" content="Game Coach Hub">
+  <meta property="og:title" content="Red Dead Online Ability Card Generator | Game Coach Hub">
+  <meta property="og:description" content="Plan a Red Dead Online Dead Eye and passive-card build with clear guide ratings and practical recommendations.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://gamecoachhub.com/red-dead-online/ability-card-generator/">
+  <meta property="og:image" content="https://gamecoachhub.com/assets/gch-editorial-cover.png">
+  <meta property="og:locale" content="en_US">
+  <meta property="og:locale:alternate" content="da_DK">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Red Dead Online Ability Card Generator | Game Coach Hub">
+  <meta name="twitter:description" content="Generate RDO ability-card build ratings for sniper damage, normal damage, survivability, sustain, mobility and PvP/PvE fit.">
+  <meta name="twitter:image" content="https://gamecoachhub.com/assets/gch-editorial-cover.png">
+
+  <link rel="stylesheet" href="../../assets/network.css">
+  <link rel="stylesheet" href="ability-card-generator.css">
+  <script>
+    window.GCH_PAGE_META = {
+      en: {
+        title: "Red Dead Online Ability Card Generator | Game Coach Hub",
+        description: "Build a Red Dead Online ability-card setup with guide ratings for damage, survivability, sustain, mobility, PvP/PvE fit, weapons, strengths and recommendations."
+      },
+      da: {
+        title: "Red Dead Online Ability Card Generator | Game Coach Hub",
+        description: "Byg et Red Dead Online ability-card setup med guide ratings for damage, survivability, sustain, mobility, PvP/PvE fit, weapons, strengths og anbefalinger."
+      }
+    };
+
+    window.GCH_PAGE_TRANSLATIONS = {
+      en: {
+        "tool.eyebrow": "Red Dead Online tool",
+        "tool.title": "Ability Card Generator",
+        "tool.lede": "Choose a Dead Eye card, three passive cards, weapon type and playstyle to generate a practical build rating for Red Dead Online.",
+        "tool.primary": "Generate build",
+        "tool.reset": "Reset",
+        "tool.disclaimer": "Guide build rating only. These are not official Rockstar stats or hidden game values.",
+        "input.deadeye": "Dead Eye card",
+        "input.passive1": "Passive card 1",
+        "input.passive2": "Passive card 2",
+        "input.passive3": "Passive card 3",
+        "input.weapon": "Weapon type",
+        "input.playstyle": "Playstyle",
+        "input.focus": "PvP / PvE focus",
+        "input.stance": "Aggressive / defensive style",
+        "output.label": "Generated build",
+        "output.emptyTitle": "Pick your cards to generate a build.",
+        "output.emptyCopy": "The output updates instantly with build name, ratings, weapons, strengths, weaknesses and recommendations.",
+        "output.overall": "Overall rating",
+        "output.weapons": "Best weapons",
+        "output.strengths": "Strengths",
+        "output.weaknesses": "Weaknesses",
+        "output.recommendations": "Recommendations",
+        "output.explanation": "Explanation",
+        "method.title": "How this tool scores builds",
+        "method.copy": "The generator uses a transparent guide model: cards have tags and directional effects, then weapon type, playstyle, focus and stance adjust the final ratings. It is designed for planning, not for claiming official hidden numbers.",
+        "method.one": "Damage and survivability are separated for sniper and general combat.",
+        "method.two": "Sustain, mobility and PvP/PvE fit are weighted by your focus.",
+        "method.three": "Recommendations flag mismatch between cards, weapons and playstyle.",
+        "footer.copy": "Ability Card Generator is part of the fan-made Red Dead Online Guide on Game Coach Hub."
+      },
+      da: {
+        "tool.eyebrow": "Red Dead Online tool",
+        "tool.title": "Ability Card Generator",
+        "tool.lede": "Vælg et Dead Eye card, tre passive cards, weapon type og playstyle for at generere en praktisk build rating til Red Dead Online.",
+        "tool.primary": "Generer build",
+        "tool.reset": "Nulstil",
+        "tool.disclaimer": "Kun guide build rating. Dette er ikke officielle Rockstar stats eller skjulte game values.",
+        "input.deadeye": "Dead Eye card",
+        "input.passive1": "Passive card 1",
+        "input.passive2": "Passive card 2",
+        "input.passive3": "Passive card 3",
+        "input.weapon": "Weapon type",
+        "input.playstyle": "Playstyle",
+        "input.focus": "PvP / PvE focus",
+        "input.stance": "Aggressive / defensive style",
+        "output.label": "Genereret build",
+        "output.emptyTitle": "Vælg dine cards for at generere et build.",
+        "output.emptyCopy": "Outputtet opdateres med build name, ratings, weapons, strengths, weaknesses og recommendations.",
+        "output.overall": "Overall rating",
+        "output.weapons": "Best weapons",
+        "output.strengths": "Strengths",
+        "output.weaknesses": "Weaknesses",
+        "output.recommendations": "Recommendations",
+        "output.explanation": "Forklaring",
+        "method.title": "Sådan scorer tool'et builds",
+        "method.copy": "Generatoren bruger en transparent guide-model: cards har tags og retningsbestemte effekter, og derefter justerer weapon type, playstyle, focus og stance de endelige ratings. Den er lavet til planlægning, ikke til officielle skjulte tal.",
+        "method.one": "Damage og survivability er delt op i sniper og generel combat.",
+        "method.two": "Sustain, mobility og PvP/PvE fit vægtes efter dit focus.",
+        "method.three": "Recommendations markerer mismatch mellem cards, weapons og playstyle.",
+        "footer.copy": "Ability Card Generator er en del af den fan-made Red Dead Online Guide på Game Coach Hub."
+      }
+    };
+  </script>
+</head>
+<body data-site="rdo">
+  <main class="ability-page">
+    <section class="ability-hero" aria-labelledby="ability-title">
+      <div class="ability-hero-copy">
+        <p class="eyebrow" data-page-i18n="tool.eyebrow">Red Dead Online tool</p>
+        <h1 id="ability-title" data-page-i18n="tool.title">Ability Card Generator</h1>
+        <p class="ability-lede" data-page-i18n="tool.lede">Choose a Dead Eye card, three passive cards, weapon type and playstyle to generate a practical build rating for Red Dead Online.</p>
+        <p class="ability-disclaimer" data-page-i18n="tool.disclaimer">Guide build rating only. These are not official Rockstar stats or hidden game values.</p>
+      </div>
+      <aside class="ability-hero-meter" aria-hidden="true">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </aside>
+    </section>
+
+    <section class="ability-tool-shell" aria-label="Ability Card Generator">
+      <form class="ability-controls" id="ability-form">
+        <div class="field-group field-wide">
+          <label for="deadeye" data-page-i18n="input.deadeye">Dead Eye card</label>
+          <select id="deadeye" name="deadeye" data-card-select="deadeye"></select>
+        </div>
+
+        <div class="field-group">
+          <label for="passive-1" data-page-i18n="input.passive1">Passive card 1</label>
+          <select id="passive-1" name="passive1" data-card-select="passive"></select>
+        </div>
+
+        <div class="field-group">
+          <label for="passive-2" data-page-i18n="input.passive2">Passive card 2</label>
+          <select id="passive-2" name="passive2" data-card-select="passive"></select>
+        </div>
+
+        <div class="field-group">
+          <label for="passive-3" data-page-i18n="input.passive3">Passive card 3</label>
+          <select id="passive-3" name="passive3" data-card-select="passive"></select>
+        </div>
+
+        <div class="field-group">
+          <label for="weapon" data-page-i18n="input.weapon">Weapon type</label>
+          <select id="weapon" name="weapon" data-build-input>
+            <option value="scoped-rifle">Scoped rifle</option>
+            <option value="repeater">Repeater</option>
+            <option value="dual-sidearms">Dual sidearms</option>
+            <option value="shotgun">Shotgun</option>
+            <option value="bow">Bow</option>
+            <option value="mixed">Mixed loadout</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="playstyle" data-page-i18n="input.playstyle">Playstyle</label>
+          <select id="playstyle" name="playstyle" data-build-input>
+            <option value="sniper">Sniper</option>
+            <option value="close-range">Close range</option>
+            <option value="balanced">Balanced</option>
+            <option value="support">Support</option>
+            <option value="solo-grinder">Solo grinder</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="focus" data-page-i18n="input.focus">PvP / PvE focus</label>
+          <select id="focus" name="focus" data-build-input>
+            <option value="mixed">Mixed</option>
+            <option value="pvp">PvP</option>
+            <option value="pve">PvE</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="stance" data-page-i18n="input.stance">Aggressive / defensive style</label>
+          <select id="stance" name="stance" data-build-input>
+            <option value="flexible">Flexible</option>
+            <option value="aggressive">Aggressive</option>
+            <option value="defensive">Defensive</option>
+          </select>
+        </div>
+
+        <div class="ability-actions">
+          <button class="btn primary" type="submit" data-page-i18n="tool.primary">Generate build</button>
+          <button class="btn" type="button" data-reset-build data-page-i18n="tool.reset">Reset</button>
+        </div>
+      </form>
+
+      <section class="ability-output" aria-live="polite">
+        <p class="eyebrow" data-page-i18n="output.label">Generated build</p>
+        <div id="ability-output"></div>
+      </section>
+    </section>
+
+    <section class="ability-method" aria-labelledby="method-title">
+      <div>
+        <p class="eyebrow">Guide model</p>
+        <h2 id="method-title" data-page-i18n="method.title">How this tool scores builds</h2>
+        <p data-page-i18n="method.copy">The generator uses a transparent guide model: cards have tags and directional effects, then weapon type, playstyle, focus and stance adjust the final ratings. It is designed for planning, not for claiming official hidden numbers.</p>
+      </div>
+      <ul>
+        <li data-page-i18n="method.one">Damage and survivability are separated for sniper and general combat.</li>
+        <li data-page-i18n="method.two">Sustain, mobility and PvP/PvE fit are weighted by your focus.</li>
+        <li data-page-i18n="method.three">Recommendations flag mismatch between cards, weapons and playstyle.</li>
+      </ul>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="gch-container">
+      <strong>Red Dead Online Ability Card Generator</strong>
+      <p data-page-i18n="footer.copy">Ability Card Generator is part of the fan-made Red Dead Online Guide on Game Coach Hub.</p>
+    </div>
+  </footer>
+
+  <script src="../../assets/network-layout.js" defer></script>
+  <script src="../../assets/network-i18n.js" defer></script>
+  <script src="../../assets/monetization.js" defer></script>
+  <script src="ability-card-generator.js" defer></script>
+</body>
+</html>

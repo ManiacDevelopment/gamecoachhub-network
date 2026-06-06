@@ -7,12 +7,11 @@
       tagline: "Strategy guides and tools",
       home: "/",
       links: [
-        ["Hub", "/"],
-        ["RDO", "/red-dead-online/"],
-        ["DayZ", "/dayz/"],
-        ["Deadlock", "/deadlock/"],
-        ["Grounded", "/grounded/"],
-        ["Stardew", "/stardew-valley/"]
+        ["nav.home", "Home", "/"],
+        ["nav.games", "Games", "#guides"],
+        ["nav.tools", "Tools", "#monetization"],
+        ["nav.guides", "Guides", "#network"],
+        ["nav.about", "About", "#desk"]
       ]
     },
     rdo: {
@@ -22,11 +21,17 @@
       tagline: "Money, roles and builds",
       home: "/red-dead-online/",
       links: [
-        ["Hub", "/"],
-        ["DayZ", "/dayz/"],
-        ["Deadlock", "/deadlock/"],
-        ["Grounded", "/grounded/"],
-        ["Stardew", "/stardew-valley/"]
+        ["nav.backHub", "Back to Game Coach Hub", "/"],
+        ["nav.overview", "Overview", "/red-dead-online/"],
+        ["nav.beginner", "Beginner", "/red-dead-online/beginner-roadmap.html"],
+        ["nav.money", "Money", "/red-dead-online/money-guide.html"],
+        ["nav.abilityCards", "Ability Cards", "/red-dead-online/ability-card-generator/"],
+        ["nav.weapons", "Weapons", "/red-dead-online/weapons.html"],
+        ["nav.activities", "Activities", "/red-dead-online/activities.html"],
+        ["nav.calculators", "Calculators", "/red-dead-online/calculators.html"],
+        ["nav.trackers", "Trackers", "/red-dead-online/daily-tracker.html"],
+        ["nav.buildGenerator", "Build Generator", "/red-dead-online/build-generator.html"],
+        ["nav.incomePlanner", "Income Planner", "/red-dead-online/income-planner.html"]
       ]
     },
     dayz: {
@@ -36,11 +41,17 @@
       tagline: "Survival, illness and loot",
       home: "/dayz/",
       links: [
-        ["Hub", "/"],
-        ["RDO", "/red-dead-online/"],
-        ["Deadlock", "/deadlock/"],
-        ["Grounded", "/grounded/"],
-        ["Stardew", "/stardew-valley/"]
+        ["nav.backHub", "Back to Game Coach Hub", "/"],
+        ["nav.overview", "Overview", "/dayz/"],
+        ["nav.beginner", "Beginner", "/dayz/beginner.html"],
+        ["nav.survival", "Survival", "/dayz/survival.html"],
+        ["nav.illness", "Illness", "/dayz/illness.html"],
+        ["nav.loot", "Loot", "/dayz/loot.html"],
+        ["nav.baseBuilding", "Base Building", "/dayz/base-building.html"],
+        ["nav.weapons", "Weapons", "/dayz/weapons.html"],
+        ["nav.pvp", "PvP", "/dayz/pvp.html"],
+        ["nav.vehicles", "Vehicles", "/dayz/vehicles.html"],
+        ["nav.map", "Map", "/dayz/map-guide.html"]
       ]
     },
     deadlock: {
@@ -50,11 +61,14 @@
       tagline: "Heroes, matchups and builds",
       home: "/deadlock/",
       links: [
-        ["Hub", "/"],
-        ["RDO", "/red-dead-online/"],
-        ["DayZ", "/dayz/"],
-        ["Grounded", "/grounded/"],
-        ["Stardew", "/stardew-valley/"]
+        ["nav.backHub", "Back to Game Coach Hub", "/"],
+        ["nav.overview", "Overview", "/deadlock/"],
+        ["nav.heroes", "Heroes", "/deadlock/#heroes"],
+        ["nav.builds", "Builds", "/deadlock/#builds"],
+        ["nav.abilities", "Abilities", "/deadlock/#abilities"],
+        ["nav.items", "Items", "/deadlock/#items"],
+        ["nav.strategy", "Strategy", "/deadlock/#strategy"],
+        ["nav.coachTools", "Coach Tools", "/deadlock/#coach-tools"]
       ]
     },
     grounded: {
@@ -64,11 +78,16 @@
       tagline: "Backyard survival and labs",
       home: "/grounded/",
       links: [
-        ["Hub", "/"],
-        ["RDO", "/red-dead-online/"],
-        ["DayZ", "/dayz/"],
-        ["Deadlock", "/deadlock/"],
-        ["Stardew", "/stardew-valley/"]
+        ["nav.backHub", "Back to Game Coach Hub", "/"],
+        ["nav.overview", "Overview", "/grounded/"],
+        ["nav.beginner", "Beginner", "/grounded/#beginner"],
+        ["nav.bases", "Bases", "/grounded/#bases"],
+        ["nav.insects", "Insects", "/grounded/#insects"],
+        ["nav.weapons", "Weapons", "/grounded/#weapons"],
+        ["nav.armor", "Armor", "/grounded/#bases"],
+        ["nav.mutations", "Mutations", "/grounded/#future-tools"],
+        ["nav.labs", "Labs", "/grounded/#labs"],
+        ["nav.bosses", "Bosses", "/grounded/#bosses"]
       ]
     },
     stardew: {
@@ -78,11 +97,16 @@
       tagline: "Farm planning and economy",
       home: "/stardew-valley/",
       links: [
-        ["Hub", "/"],
-        ["RDO", "/red-dead-online/"],
-        ["DayZ", "/dayz/"],
-        ["Deadlock", "/deadlock/"],
-        ["Grounded", "/grounded/"]
+        ["nav.backHub", "Back to Game Coach Hub", "/"],
+        ["nav.overview", "Overview", "/stardew-valley/"],
+        ["nav.beginner", "Beginner", "/stardew-valley/#beginner"],
+        ["nav.year1", "Year 1", "/stardew-valley/#year-1"],
+        ["nav.crops", "Crops", "/stardew-valley/#crops"],
+        ["nav.communityCenter", "Community Center", "/stardew-valley/#community-center"],
+        ["nav.money", "Money", "/stardew-valley/#money"],
+        ["nav.fishing", "Fishing", "/stardew-valley/#future-tools"],
+        ["nav.mining", "Mining", "/stardew-valley/#friendship"],
+        ["nav.friendship", "Friendship", "/stardew-valley/#friendship"]
       ]
     }
   };
@@ -115,10 +139,12 @@
     ].join("");
   }
 
-  function networkLinks() {
-    return `<div class="gch-network-links" aria-label="Game Coach Hub network">${config.links
-      .map(([label, href]) => `<a href="${href}">${label}</a>`)
-      .join("")}</div>`;
+  function linkMarkup([key, label, href]) {
+    return `<a href="${href}" data-network-i18n="${key}">${label}</a>`;
+  }
+
+  function sectionLinks() {
+    return config.links.map(linkMarkup).join("");
   }
 
   function ensureHeader() {
@@ -135,7 +161,7 @@
         "</a>",
         '<button class="gch-nav-toggle" type="button" aria-expanded="false">Menu</button>',
         '<nav class="gch-links" aria-label="Main navigation">',
-        config.links.map(([label, href]) => `<a href="${href}">${label}</a>`).join(""),
+        sectionLinks(),
         languageSwitch(),
         "</nav>",
         "</div>"
@@ -155,8 +181,10 @@
     const links =
       existing.querySelector(".nav-links,.gch-links,.site-nav") || existing.querySelector("nav");
 
-    if (links && !links.querySelector(".gch-network-links")) {
-      links.insertAdjacentHTML("beforeend", networkLinks());
+    existing.querySelectorAll(".gch-network-links").forEach((element) => element.remove());
+
+    if (links && siteKey !== "hub") {
+      links.innerHTML = sectionLinks() + languageSwitch();
     }
 
     if (links && !links.querySelector(".gch-language-switch,.language-switch")) {

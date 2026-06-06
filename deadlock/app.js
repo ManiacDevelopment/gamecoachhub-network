@@ -75,7 +75,7 @@ function affiliateBlock() {
 function renderSelector(title, searchValue, target, selectedId, exclude) {
   const list = filteredHeroes(searchValue, exclude).map((hero) => heroButton(hero, hero.id === selectedId, target)).join("");
   return `
-    <section class="deadlock-panel">
+    <section class="deadlock-panel" id="${target === "hero" ? "heroes" : "enemy-heroes"}">
       <p class="eyebrow">${title}</p>
       <div class="deadlock-search">
         <input data-search-${target} value="${escapeHtml(searchValue)}" placeholder="${target === "hero" ? "Search your hero..." : "Search enemy hero..."}">
@@ -98,7 +98,7 @@ function renderOverview(hero, enemy, duel) {
 function renderAbilities(abilities) {
   if (!abilities?.length) return "";
   return `
-    <section>
+    <section id="abilities">
       <h3>Abilities</h3>
       <div class="ability-grid">
         ${abilities.map((ability) => `
@@ -122,7 +122,7 @@ function renderBuild(build) {
     </article>
   `;
   return `
-    <section>
+    <section id="builds">
       <h3>${escapeHtml(build.name)}</h3>
       <p>${escapeHtml(build.description)}</p>
       <div class="build-grid">
@@ -138,7 +138,7 @@ function renderDuel(duel) {
   if (!duel) return `<section class="deadlock-phase"><h3>No detailed duel guide yet</h3><p>This hero combination still needs more matchup data.</p></section>`;
   const phase = (title, items) => `<article class="deadlock-phase"><h4>${title}</h4><ul>${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}</ul></article>`;
   return `
-    <section>
+    <section id="strategy">
       <h3>${escapeHtml(duel.headline)}</h3>
       <p>${escapeHtml(duel.gameplan)}</p>
       <div class="phase-grid">
@@ -153,7 +153,7 @@ function renderDuel(duel) {
 function renderCounters(counters) {
   if (!counters?.length) return "";
   return `
-    <section>
+    <section id="items">
       <h3>Counter Items</h3>
       <div class="counter-grid">
         ${counters.map((counter) => `
@@ -276,22 +276,24 @@ function render() {
         <button class="deadlock-action" type="button" data-music>${state.musicEnabled ? "Music On" : "Music Off"}</button>
       </div>
     </header>
-    <section class="deadlock-network">
+    <section class="deadlock-network" id="overview">
       <div>
-        <p class="eyebrow">Game Coach Hub network</p>
+        <p class="eyebrow">Deadlock local menu</p>
         <h2>Deadlock Coach uses the shared premium magazine strategy system.</h2>
         <p>Prepared for relevant sponsor cards, affiliate recommendations and a future premium/ad-free upgrade without disrupting the coach workflow.</p>
       </div>
       <div class="deadlock-network-actions">
-        <a href="/">Game Coach Hub</a>
-        <a href="/red-dead-online/">RDO Guide</a>
-        <a href="/dayz/">DayZ Guide</a>
-        <a href="/grounded/">Grounded Guide</a>
-        <a href="/stardew-valley/">Stardew Guide</a>
+        <a href="/">Back to Game Coach Hub</a>
+        <a href="/deadlock/">Overview</a>
+        <a href="#heroes">Heroes</a>
+        <a href="#builds">Builds</a>
+        <a href="#abilities">Abilities</a>
+        <a href="#items">Items</a>
+        <a href="#strategy">Strategy</a>
       </div>
     </section>
     ${monetizationZone("top", "Advertisement", "No advertisement is active in this placement.")}
-    <div class="deadlock-tabs">
+    <div class="deadlock-tabs" id="coach-tools">
       <button type="button" class="${state.view === "coach" ? "active" : ""}" data-view="coach">Matchup Coach</button>
       <button type="button" class="${state.view === "hero" ? "active" : ""}" data-view="hero">Hero Page</button>
     </div>

@@ -984,6 +984,19 @@ body::after {
   margin: 0 !important;
 }
 
+[data-ad-slot]:not([data-state]),
+[data-ad-slot][data-state="inactive"] {
+  display: none !important;
+}
+
+.gch-monetization-zone[data-state="ready"] {
+  display: block !important;
+}
+
+.gch-top-slot[data-state="ready"] {
+  display: flex !important;
+}
+
 .guide-actions .btn {
   min-width: min(100%, 170px);
   text-align: center;
