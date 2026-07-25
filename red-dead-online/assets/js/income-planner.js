@@ -1,8 +1,8 @@
 (function () {
   const STORAGE_KEY = "rdoIncomePlanner:v2";
   const LANGUAGE_KEY = "gch_language";
-  const ACTIVITIES_URL = "data/rdo-income-activities.json";
-  const BONUSES_URL = "data/rdo-monthly-bonuses.json";
+  const ACTIVITIES_URL = "/red-dead-online/data/rdo-income-activities.json";
+  const BONUSES_URL = "/red-dead-online/data/rdo-monthly-bonuses.json";
 
   const roles = [
     {
