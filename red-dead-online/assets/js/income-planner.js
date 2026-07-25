@@ -7,7 +7,7 @@
   const roles = [
     {
       id: "bountyHunter",
-      maxRank: 20,
+      maxRank: 30,
       labelEn: "Bounty Hunter",
       labelDa: "Bounty Hunter",
       noteEn: "Regular, legendary and role XP bounty routes.",
@@ -54,6 +54,9 @@
       noteDa: "Samples og legendary animal support."
     }
   ];
+
+  const customBonusTargets = new Set(["all", "bountyHunter", "trader", "collector", "moonshiner", "naturalist"]);
+  const customBonusMultiplierValues = new Set(["1", "1.5", "2", "3"]);
 
   const timerDefinitions = [
     {
@@ -138,6 +141,13 @@
       noActiveBonus: "No active monthly bonus is stored in the data file.",
       bonusOutdated: "Bonus data should be updated manually for the current month.",
       manualBonusOnly: "Custom bonus multipliers are available below.",
+      fixedBonusEmpty: "No fixed bonus data has been added. Use the manual bonus setup above.",
+      manualBonusActive: "Manual bonus active",
+      manualBonusInactive: "Manual bonus inactive",
+      manualBonusHint: "Enable it to include your own verified monthly multipliers in scoring.",
+      manualBonusTarget: "Applies to",
+      manualBonusMultipliers: "Multipliers",
+      manualBonusName: "Manual monthly bonus",
       estimate: "estimate",
       score: "score",
       locked: "Locked",
@@ -188,6 +198,8 @@
       roleXpFit: "Supports your selected role XP focus.",
       cashFit: "Strong estimated cash rate for your settings.",
       xpFit: "Strong estimated XP rate for your settings.",
+      businessNotReady: "Requires business production to be ready.",
+      productionStep: "Start or continue passive production before the next delivery.",
       moonshineWaiting: "Moonshine is producing: use the waiting window for Collector items, regular bounties or Trader support.",
       traderWaiting: "Trader production is running: avoid idle time with Collector, Bounty or resupply work.",
       legendaryCooldown: "Legendary Bounty is on cooldown: use regular or infamous bounty work instead.",
@@ -202,6 +214,13 @@
       noActiveBonus: "Ingen aktiv månedlig bonus ligger i datafilen.",
       bonusOutdated: "Bonusdata bør opdateres manuelt for den aktuelle måned.",
       manualBonusOnly: "Custom bonus multipliers kan bruges nedenfor.",
+      fixedBonusEmpty: "Ingen faste bonusdata er lagt ind. Brug manuel bonus ovenfor.",
+      manualBonusActive: "Manuel bonus aktiv",
+      manualBonusInactive: "Manuel bonus inaktiv",
+      manualBonusHint: "Aktivér den for at medregne dine egne verificerede månedlige multipliers i scoring.",
+      manualBonusTarget: "Gælder for",
+      manualBonusMultipliers: "Multipliers",
+      manualBonusName: "Manuel månedlig bonus",
       estimate: "estimat",
       score: "score",
       locked: "Locked",
@@ -252,6 +271,8 @@
       roleXpFit: "Støtter dit valgte role XP focus.",
       cashFit: "Stærk estimeret cash rate for dine settings.",
       xpFit: "Stærk estimeret XP rate for dine settings.",
+      businessNotReady: "Kræver at business production er klar.",
+      productionStep: "Start eller fortsæt passiv production før næste delivery.",
       moonshineWaiting: "Moonshine producerer: brug ventetiden til Collector items, regular bounties eller Trader support.",
       traderWaiting: "Trader production kører: undgå idle time med Collector, Bounty eller resupply.",
       legendaryCooldown: "Legendary Bounty er på cooldown: brug regular eller infamous bounty work i stedet.",
@@ -270,14 +291,20 @@
     useFastTravel: true,
     saveCashTravel: false,
     naturalistLegendaryAccess: false,
+    moonshineBatchReady: true,
+    traderGoodsReady: true,
+    legendaryBountyOnCooldown: false,
     priority: "balanced",
     roleFocus: "bountyHunter",
     useMonthlyBonuses: true,
     useCustomBonus: false,
+    customBonusTarget: "all",
     customCashMultiplier: 1,
     customXpMultiplier: 1,
     customRoleXpMultiplier: 1,
     customGoldMultiplier: 1,
+    customBonusNoteDa: "",
+    customBonusNoteEn: "",
     roles: {
       bountyHunter: { owned: true, rank: 5 },
       prestigiousBountyHunter: { owned: false, rank: 0 },
@@ -295,6 +322,8 @@
     ["trader_local_delivery", "trader_delivery", "Trader Local Delivery", "Trader Local Delivery", "trader", "trader", 1, 12, 0, 12, 0, 125, 650, 650, 0, "low", true, true, true, "Safer Trader delivery option.", "Sikrere Trader delivery option.", ["cash", "role-xp", "low-risk", "trader", "delivery"]],
     ["trader_distant_delivery", "trader_delivery", "Trader Distant Delivery", "Trader Distant Delivery", "trader", "trader", 1, 18, 0, 18, 0, 156, 800, 800, 0, "high", false, true, false, "Higher cash route with PvP exposure.", "Højere cash route med PvP exposure.", ["cash", "role-xp", "pvp-risk", "trader", "delivery"]],
     ["trader_resupply", "trader_resupply", "Trader Resupply", "Trader Resupply", "trader", "trader", 1, 8, 60, 8, 0, 0, 250, 500, 0, "low", true, true, true, "Keeps Cripps production moving.", "Holder Cripps production i gang.", ["role-xp", "support", "trader", "timer"]],
+    ["trader_production_wait", "passive", "Trader Production Waiting", "Trader Production Waiting", "trader", "trader", 1, 50, 0, 0, 50, 0, 0, 0, 0, "low", true, true, true, "Passive goods production. Planner recommends active filler instead of standing still.", "Passiv goods production. Planneren anbefaler aktiv filler i stedet for at stÃ¥ stille.", ["passive", "trader", "waiting"]],
+    ["moonshine_production", "passive", "Moonshine Production", "Moonshine Production", "moonshiner", "moonshiner", 1, 48, 0, 0, 48, 0, 0, 0, 0, "low", true, true, false, "Passive moonshine batch timer. Use the waiting window for Collector, Bounty or resupply work.", "Passiv moonshine batch timer. Brug ventetiden til Collector, Bounty eller resupply.", ["passive", "moonshiner", "waiting"]],
     ["moonshine_delivery", "moonshine_delivery", "Moonshine Delivery", "Moonshine Delivery", "moonshiner", "moonshiner", 1, 10, 0, 10, 0, 170, 450, 500, 0, "medium", true, true, false, "Fast cash when a batch is ready.", "Hurtig cash når batch er klar.", ["cash", "role-xp", "moonshiner", "delivery"]],
     ["moonshiner_bootlegger", "moonshiner_mission", "Bootlegger or Moonshiner Mission", "Bootlegger eller Moonshiner Mission", "moonshiner", "moonshiner", 1, 12, 0, 12, 0, 20, 350, 450, 0, "low", true, true, false, "Moonshiner role XP filler.", "Moonshiner role XP filler.", ["role-xp", "support", "moonshiner", "filler"]],
     ["collector_items", "collector", "Collector Individual Items", "Collector Individual Items", "collector", "collector", 1, 20, 0, 20, 0, 45, 850, 550, 0, "low", true, true, true, "Low-risk active route.", "Low-risk aktiv route.", ["cash", "xp", "low-risk", "collector", "filler"]],
@@ -349,6 +378,11 @@
     const number = Number(value);
     if (!Number.isFinite(number)) return fallback;
     return Math.max(min, Math.min(max, number));
+  }
+
+  function readMultiplierValue(value) {
+    const normalized = String(Number(value));
+    return customBonusMultiplierValues.has(normalized) ? Number(normalized) : 1;
   }
 
   function money(value) {
@@ -539,12 +573,20 @@
     dom.form.useFastTravel.checked = Boolean(setup.useFastTravel);
     dom.form.saveCashTravel.checked = Boolean(setup.saveCashTravel);
     dom.form.naturalistLegendaryAccess.checked = Boolean(setup.naturalistLegendaryAccess);
+    if (dom.form.moonshineBatchReady) dom.form.moonshineBatchReady.checked = Boolean(setup.moonshineBatchReady);
+    if (dom.form.traderGoodsReady) dom.form.traderGoodsReady.checked = Boolean(setup.traderGoodsReady);
+    if (dom.form.legendaryBountyOnCooldown) dom.form.legendaryBountyOnCooldown.checked = Boolean(setup.legendaryBountyOnCooldown);
     dom.form.useMonthlyBonuses.checked = Boolean(setup.useMonthlyBonuses);
     dom.form.useCustomBonus.checked = Boolean(setup.useCustomBonus);
-    dom.form.customCashMultiplier.value = setup.customCashMultiplier;
-    dom.form.customXpMultiplier.value = setup.customXpMultiplier;
-    dom.form.customRoleXpMultiplier.value = setup.customRoleXpMultiplier;
-    dom.form.customGoldMultiplier.value = setup.customGoldMultiplier;
+    if (dom.form.customBonusTarget) {
+      dom.form.customBonusTarget.value = customBonusTargets.has(setup.customBonusTarget) ? setup.customBonusTarget : "all";
+    }
+    dom.form.customCashMultiplier.value = String(readMultiplierValue(setup.customCashMultiplier));
+    dom.form.customXpMultiplier.value = String(readMultiplierValue(setup.customXpMultiplier));
+    dom.form.customRoleXpMultiplier.value = String(readMultiplierValue(setup.customRoleXpMultiplier));
+    dom.form.customGoldMultiplier.value = String(readMultiplierValue(setup.customGoldMultiplier));
+    if (dom.form.customBonusNoteDa) dom.form.customBonusNoteDa.value = setup.customBonusNoteDa || "";
+    if (dom.form.customBonusNoteEn) dom.form.customBonusNoteEn.value = setup.customBonusNoteEn || "";
     dom.roleFocus.value = setup.roleFocus;
     document.querySelectorAll("[data-priority]").forEach((button) => {
       button.classList.toggle("is-active", button.dataset.priority === setup.priority);
@@ -561,13 +603,19 @@
     setup.useFastTravel = dom.form.useFastTravel.checked;
     setup.saveCashTravel = dom.form.saveCashTravel.checked;
     setup.naturalistLegendaryAccess = dom.form.naturalistLegendaryAccess.checked;
+    setup.moonshineBatchReady = dom.form.moonshineBatchReady ? dom.form.moonshineBatchReady.checked : true;
+    setup.traderGoodsReady = dom.form.traderGoodsReady ? dom.form.traderGoodsReady.checked : true;
+    setup.legendaryBountyOnCooldown = dom.form.legendaryBountyOnCooldown ? dom.form.legendaryBountyOnCooldown.checked : false;
     setup.roleFocus = dom.roleFocus.value || "bountyHunter";
     setup.useMonthlyBonuses = dom.form.useMonthlyBonuses.checked;
     setup.useCustomBonus = dom.form.useCustomBonus.checked;
-    setup.customCashMultiplier = clampNumber(dom.form.customCashMultiplier.value, 0, 10, 1);
-    setup.customXpMultiplier = clampNumber(dom.form.customXpMultiplier.value, 0, 10, 1);
-    setup.customRoleXpMultiplier = clampNumber(dom.form.customRoleXpMultiplier.value, 0, 10, 1);
-    setup.customGoldMultiplier = clampNumber(dom.form.customGoldMultiplier.value, 0, 10, 1);
+    setup.customBonusTarget = customBonusTargets.has(dom.form.customBonusTarget?.value) ? dom.form.customBonusTarget.value : "all";
+    setup.customCashMultiplier = readMultiplierValue(dom.form.customCashMultiplier.value);
+    setup.customXpMultiplier = readMultiplierValue(dom.form.customXpMultiplier.value);
+    setup.customRoleXpMultiplier = readMultiplierValue(dom.form.customRoleXpMultiplier.value);
+    setup.customGoldMultiplier = readMultiplierValue(dom.form.customGoldMultiplier.value);
+    setup.customBonusNoteDa = String(dom.form.customBonusNoteDa?.value || "").slice(0, 180);
+    setup.customBonusNoteEn = String(dom.form.customBonusNoteEn?.value || "").slice(0, 180);
 
     document.querySelectorAll("[data-role-owned]").forEach((input) => {
       const roleId = input.dataset.roleOwned;
@@ -629,6 +677,34 @@
     return typeMatch && roleMatch;
   }
 
+  function customBonusTargetLabel(target) {
+    if (target === "all") return lang() === "da" ? "Alle aktiviteter" : "All activities";
+    return roleLabel(target);
+  }
+
+  function customBonusApplies(activity, setup) {
+    if (!setup.useCustomBonus) return false;
+    const target = customBonusTargets.has(setup.customBonusTarget) ? setup.customBonusTarget : "all";
+    if (target === "all") return true;
+    if (target === "bountyHunter" && activity.tags?.includes("bounty")) return true;
+    return activity.role === target || activity.requiredRole === target;
+  }
+
+  function multiplierLabel(value) {
+    const number = readMultiplierValue(value);
+    return `${Number.isInteger(number) ? number : number.toFixed(1)}x`;
+  }
+
+  function selectedCustomBonusNote(setup = state.setup) {
+    return lang() === "da" ? setup.customBonusNoteDa || setup.customBonusNoteEn : setup.customBonusNoteEn || setup.customBonusNoteDa;
+  }
+
+  function customBonusHasMultiplierEffect(setup) {
+    return [setup.customCashMultiplier, setup.customXpMultiplier, setup.customRoleXpMultiplier, setup.customGoldMultiplier].some((value) => {
+      return readMultiplierValue(value) !== 1;
+    });
+  }
+
   function multipliersFor(activity, setup) {
     const multipliers = {
       cash: 1,
@@ -651,13 +727,15 @@
       });
     }
 
-    if (setup.useCustomBonus) {
+    if (customBonusApplies(activity, setup)) {
       multipliers.cash *= setup.customCashMultiplier || 1;
       multipliers.xp *= setup.customXpMultiplier || 1;
       multipliers.roleXp *= setup.customRoleXpMultiplier || 1;
       multipliers.gold *= setup.customGoldMultiplier || 1;
-      multipliers.hasBonus = true;
-      multipliers.names.push("Custom bonus");
+      if (customBonusHasMultiplierEffect(setup)) {
+        multipliers.hasBonus = true;
+        multipliers.names.push(t("manualBonusName"));
+      }
     }
 
     return multipliers;
@@ -666,6 +744,39 @@
   function isTimerRunning(id) {
     const timer = state.timers[id];
     return Boolean(timer?.running && timer.endAt && timer.endAt > Date.now());
+  }
+
+  function timerWorkflowStatus(id) {
+    return timerState(state.timers[id]).status;
+  }
+
+  function timerBlocksReady(id) {
+    const status = timerWorkflowStatus(id);
+    return status === "running" || status === "paused";
+  }
+
+  function moonshineBatchReady(setup = state.setup) {
+    const status = timerWorkflowStatus("moonshineProduction");
+    if (status === "ready") return true;
+    if (timerBlocksReady("moonshineProduction")) return false;
+    return Boolean(setup.moonshineBatchReady);
+  }
+
+  function traderGoodsReady(setup = state.setup) {
+    const status = timerWorkflowStatus("traderGoods");
+    if (status === "ready") return true;
+    if (timerBlocksReady("traderGoods")) return false;
+    return Boolean(setup.traderGoodsReady);
+  }
+
+  function legendaryBountyOnCooldown(setup = state.setup) {
+    const status = timerWorkflowStatus("legendaryBountyCooldown");
+    return Boolean(setup.legendaryBountyOnCooldown) || status === "running" || status === "paused";
+  }
+
+  function roleRequirementRank(roleId, setup) {
+    const rankRoleId = roleId === "prestigiousBountyHunter" ? "bountyHunter" : roleId;
+    return Number(setup.roles[rankRoleId]?.rank ?? 0);
   }
 
   function passiveWaitMinutes() {
@@ -685,8 +796,16 @@
     if (activity.requiredRole) {
       const owned = Boolean(setup.roles[activity.requiredRole]?.owned);
       if (!owned) reasons.push(t("roleLocked"));
-      const roleRank = Number(setup.roles[activity.requiredRole]?.rank ?? 0);
+      const roleRank = roleRequirementRank(activity.requiredRole, setup);
       if (roleRank < Number(activity.requiredRank || 1)) reasons.push(t("rankLocked"));
+    }
+
+    if (activity.id === "moonshine_delivery" && !moonshineBatchReady(setup)) {
+      reasons.push(t("businessNotReady"));
+    }
+
+    if (activity.activityType === "trader_delivery" && !traderGoodsReady(setup)) {
+      reasons.push(t("businessNotReady"));
     }
 
     if (activity.id === "legendary_animal_materials" && !setup.naturalistLegendaryAccess) {
@@ -705,7 +824,7 @@
       reasons.push(t("rankLocked"));
     }
 
-    if (activity.id === "legendary_bounty" && isTimerRunning("legendaryBountyCooldown")) {
+    if (activity.id === "legendary_bounty" && legendaryBountyOnCooldown(setup)) {
       reasons.push(t("legendaryCooldown"));
     }
 
@@ -820,25 +939,148 @@
 
   function activeWaitAdvice() {
     const lines = [];
-    if (isTimerRunning("moonshineProduction")) lines.push(t("moonshineWaiting"));
-    if (isTimerRunning("traderGoods") || isTimerRunning("traderResupply")) lines.push(t("traderWaiting"));
-    if (isTimerRunning("legendaryBountyCooldown")) lines.push(t("legendaryCooldown"));
+    if (state.setup.roles.moonshiner?.owned && !moonshineBatchReady()) lines.push(t("moonshineWaiting"));
+    if (state.setup.roles.trader?.owned && (!traderGoodsReady() || isTimerRunning("traderResupply"))) lines.push(t("traderWaiting"));
+    if (legendaryBountyOnCooldown()) lines.push(t("legendaryCooldown"));
     if (!lines.length) lines.push(t("noWaitWindow"));
     return lines;
   }
 
+  function timelineRule(activity) {
+    if (activity.id === "moonshine_delivery") {
+      return { group: "moonshine_delivery", maxUses: 1, cooldownMin: 48, followupId: "moonshine_production" };
+    }
+    if (activity.activityType === "trader_delivery") {
+      return { group: "trader_delivery", maxUses: 1, cooldownMin: 50, followupId: "trader_production_wait" };
+    }
+    if (activity.id === "legendary_bounty") {
+      return { group: "legendary_bounty", maxUses: 1, cooldownMin: Number(activity.cooldownMin || 48) };
+    }
+    if (activity.id === "trader_resupply") {
+      return { group: "trader_resupply", maxUses: 1, cooldownMin: Number(activity.cooldownMin || 60) };
+    }
+    if (activity.id === "collector_set_sales") {
+      return { group: "collector_set_sales", maxUses: 1, cooldownMin: 60 };
+    }
+    if (activity.tags?.includes("passive")) {
+      return { group: activity.id, maxUses: 1, cooldownMin: Number(activity.passiveTimeMin || activity.durationMin || 30) };
+    }
+    return {
+      group: activity.id,
+      maxUses: activity.tags?.includes("route") ? 1 : Infinity,
+      cooldownMin: Number(activity.cooldownMin || 0)
+    };
+  }
+
+  function timelineDuration(item) {
+    const activity = item.activity;
+    if (activity.tags?.includes("passive") || Number(activity.activeTimeMin || 0) === 0) return 1;
+    return Math.max(5, Number(activity.activeTimeMin || activity.durationMin || 10));
+  }
+
+  function timelineItemById(scored, id) {
+    return scored.find((item) => item.activity.id === id);
+  }
+
+  function timelineUseCount(context, group) {
+    return context.used.get(group) || 0;
+  }
+
+  function canUseTimelineItem(item, context) {
+    const duration = timelineDuration(item);
+    if (duration > context.remaining) return false;
+    const rule = timelineRule(item.activity);
+    if (timelineUseCount(context, rule.group) >= rule.maxUses) return false;
+    if ((context.blockedUntil.get(rule.group) || 0) > context.elapsed) return false;
+    return true;
+  }
+
+  function addTimelineItem(item, context) {
+    const duration = timelineDuration(item);
+    const rule = timelineRule(item.activity);
+    context.steps.push(item);
+    context.remaining -= duration;
+    context.elapsed += duration;
+    context.used.set(rule.group, timelineUseCount(context, rule.group) + 1);
+    if (rule.cooldownMin > 0) {
+      context.blockedUntil.set(rule.group, context.elapsed + rule.cooldownMin);
+    }
+    return rule;
+  }
+
+  function addPassiveTimelineStep(scored, id, context) {
+    const item = timelineItemById(scored, id);
+    if (!item || !canUseTimelineItem(item, context)) return false;
+    addTimelineItem(item, context);
+    return true;
+  }
+
+  function timelineCandidateScore(item, context) {
+    let score = item.score;
+    const activity = item.activity;
+    const last = context.steps[context.steps.length - 1]?.activity;
+    const waitWindowActive = !moonshineBatchReady() || !traderGoodsReady() || passiveWaitMinutes().length > 0;
+
+    if (last?.id === activity.id) score -= activity.id === "regular_bounty" ? 35 : 140;
+    if (last?.activityType === activity.activityType && activity.id !== "regular_bounty") score -= 24;
+    score -= timelineUseCount(context, timelineRule(activity).group) * 55;
+    if (waitWindowActive && activity.tags?.includes("filler")) score += 60;
+    if (waitWindowActive && activity.id === "trader_resupply") score += 34;
+    if (activity.id === "moonshine_delivery" || activity.activityType === "trader_delivery") {
+      score -= timelineUseCount(context, "business_delivery") * 70;
+    }
+    return score;
+  }
+
+  function pickTimelineItem(scored, context) {
+    const active = scored
+      .filter((item) => Number(item.activity.activeTimeMin || item.activity.durationMin) > 0)
+      .filter((item) => !item.activity.tags?.includes("passive"))
+      .filter((item) => canUseTimelineItem(item, context))
+      .map((item) => ({ item, score: timelineCandidateScore(item, context) }))
+      .sort((a, b) => b.score - a.score);
+
+    const top = active[0];
+    const last = context.steps[context.steps.length - 1]?.activity;
+    if (top && last?.id === top.item.activity.id && top.item.activity.id !== "regular_bounty") {
+      const alternative = active.find((entry) => entry.item.activity.id !== last.id);
+      if (alternative && top.score - alternative.score <= 180) return alternative.item;
+    }
+
+    return top?.item || null;
+  }
+
   function makeTimeline(minutes, scored) {
-    const active = scored.filter((item) => Number(item.activity.activeTimeMin || item.activity.durationMin) > 0);
-    const steps = [];
-    let remaining = minutes;
+    const context = {
+      steps: [],
+      remaining: minutes,
+      elapsed: 0,
+      used: new Map(),
+      blockedUntil: new Map()
+    };
+
+    if (state.setup.roles.moonshiner?.owned && !moonshineBatchReady()) {
+      addPassiveTimelineStep(scored, "moonshine_production", context);
+    }
+    if (state.setup.roles.trader?.owned && !traderGoodsReady()) {
+      addPassiveTimelineStep(scored, "trader_production_wait", context);
+    }
+
     let guard = 0;
-    while (remaining > 4 && active.length && guard < 8) {
-      const candidate = active.find((item) => item.activity.durationMin <= remaining) || active[0];
-      steps.push(candidate);
-      remaining -= Math.max(5, Number(candidate.activity.durationMin || 10));
+    while (context.remaining > 4 && guard < 10) {
+      const candidate = pickTimelineItem(scored, context);
+      if (!candidate) break;
+      const rule = addTimelineItem(candidate, context);
+      if (candidate.activity.id === "moonshine_delivery" || candidate.activity.activityType === "trader_delivery") {
+        context.used.set("business_delivery", timelineUseCount(context, "business_delivery") + 1);
+      }
+      if (rule.followupId && context.remaining > 1) {
+        addPassiveTimelineStep(scored, rule.followupId, context);
+      }
       guard += 1;
     }
-    return steps;
+
+    return context.steps;
   }
 
   function renderPlanCard(title, items) {
@@ -948,7 +1190,38 @@
         .join("") || `<article class="activity-card"><p>${escapeHtml(t("noActivity"))}</p></article>`;
   }
 
+  function renderCustomBonusSummary() {
+    if (!dom.customBonusSummary) return;
+    const setup = state.setup;
+    if (!setup.useCustomBonus) {
+      dom.customBonusSummary.classList.remove("is-active");
+      dom.customBonusSummary.innerHTML = `
+        <strong>${escapeHtml(t("manualBonusInactive"))}</strong>
+        <p>${escapeHtml(t("manualBonusHint"))}</p>
+      `;
+      return;
+    }
+
+    const target = customBonusTargetLabel(setup.customBonusTarget || "all");
+    const multipliers = [
+      `RDO$: ${multiplierLabel(setup.customCashMultiplier)}`,
+      `XP: ${multiplierLabel(setup.customXpMultiplier)}`,
+      `Role XP: ${multiplierLabel(setup.customRoleXpMultiplier)}`,
+      `Gold: ${multiplierLabel(setup.customGoldMultiplier)}`
+    ].join(" | ");
+    const note = selectedCustomBonusNote(setup);
+
+    dom.customBonusSummary.classList.add("is-active");
+    dom.customBonusSummary.innerHTML = `
+      <strong>${escapeHtml(t("manualBonusActive"))}</strong>
+      <p>${escapeHtml(t("manualBonusTarget"))}: ${escapeHtml(target)}</p>
+      <p>${escapeHtml(t("manualBonusMultipliers"))}: ${escapeHtml(multipliers)}</p>
+      ${note ? `<p>${escapeHtml(note)}</p>` : ""}
+    `;
+  }
+
   function renderBonusStatus() {
+    renderCustomBonusSummary();
     const active = activeBonuses();
     const status = dom.bonusStatus;
     if (active.length) {
@@ -964,6 +1237,14 @@
 
     status.classList.remove("is-active");
     const sourceNote = lang() === "da" ? state.bonusMeta.sourceNoteDa : state.bonusMeta.sourceNoteEn;
+    if (!state.bonuses.length) {
+      status.innerHTML = `
+        <strong>${escapeHtml(t("fixedBonusEmpty"))}</strong>
+        <p>${escapeHtml(sourceNote || t("sourceManual"))}</p>
+      `;
+      return;
+    }
+
     status.innerHTML = `
       <strong>${escapeHtml(t("noActiveBonus"))}</strong>
       <p>${escapeHtml(t("bonusOutdated"))}</p>
@@ -1068,6 +1349,21 @@
     generatePlan();
   }
 
+  function resetCustomBonusSetup() {
+    state.setup.customBonusTarget = "all";
+    state.setup.customCashMultiplier = 1;
+    state.setup.customXpMultiplier = 1;
+    state.setup.customRoleXpMultiplier = 1;
+    state.setup.customGoldMultiplier = 1;
+    state.setup.customBonusNoteDa = "";
+    state.setup.customBonusNoteEn = "";
+    restoreForm();
+    readForm();
+    renderBonusStatus();
+    generatePlan();
+    saveState();
+  }
+
   function bindEvents() {
     dom.form.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -1077,6 +1373,7 @@
     dom.form.addEventListener("input", () => {
       readForm();
       renderComparison(scoredActivities());
+      renderBonusStatus();
     });
 
     dom.roleGrid.addEventListener("input", handleRoleControlChange);
@@ -1087,13 +1384,14 @@
         syncRoleRankControls();
       }
       readForm();
-      renderComparison(scoredActivities());
+      generatePlan();
       renderBonusStatus();
     });
 
     document.addEventListener("click", (event) => {
       const priority = event.target.closest("[data-priority]");
       const resetSetup = event.target.closest("[data-reset-setup]");
+      const resetCustomBonus = event.target.closest("[data-reset-custom-bonus]");
       const timerStart = event.target.closest("[data-timer-start]");
       const timerPause = event.target.closest("[data-timer-pause]");
       const timerReset = event.target.closest("[data-timer-reset]");
@@ -1114,10 +1412,12 @@
         renderRoleFocus();
         restoreForm();
         renderTimers();
+        renderBonusStatus();
         generatePlan();
         saveState();
       }
 
+      if (resetCustomBonus) resetCustomBonusSetup();
       if (timerStart) startTimer(timerStart.dataset.timerStart);
       if (timerPause) pauseTimer(timerPause.dataset.timerPause);
       if (timerReset) resetTimer(timerReset.dataset.timerReset);
@@ -1146,6 +1446,7 @@
     dom.roleGrid = document.querySelector("#role-grid");
     dom.roleFocus = document.querySelector("#roleFocus");
     dom.bonusStatus = document.querySelector("#bonus-status");
+    dom.customBonusSummary = document.querySelector("#custom-bonus-summary");
     dom.output = document.querySelector("#planner-output");
     dom.timers = document.querySelector("#timer-dashboard");
     dom.comparison = document.querySelector("#activity-comparison");
