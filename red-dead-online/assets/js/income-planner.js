@@ -55,6 +55,9 @@
     }
   ];
 
+  const customBonusTargets = new Set(["all", "bountyHunter", "trader", "collector", "moonshiner", "naturalist"]);
+  const customBonusMultiplierValues = new Set(["1", "1.5", "2", "3"]);
+
   const timerDefinitions = [
     {
       id: "legendaryBountyCooldown",
@@ -138,6 +141,13 @@
       noActiveBonus: "No active monthly bonus is stored in the data file.",
       bonusOutdated: "Bonus data should be updated manually for the current month.",
       manualBonusOnly: "Custom bonus multipliers are available below.",
+      fixedBonusEmpty: "No fixed bonus data has been added. Use the manual bonus setup above.",
+      manualBonusActive: "Manual bonus active",
+      manualBonusInactive: "Manual bonus inactive",
+      manualBonusHint: "Enable it to include your own verified monthly multipliers in scoring.",
+      manualBonusTarget: "Applies to",
+      manualBonusMultipliers: "Multipliers",
+      manualBonusName: "Manual monthly bonus",
       estimate: "estimate",
       score: "score",
       locked: "Locked",
@@ -204,6 +214,13 @@
       noActiveBonus: "Ingen aktiv månedlig bonus ligger i datafilen.",
       bonusOutdated: "Bonusdata bør opdateres manuelt for den aktuelle måned.",
       manualBonusOnly: "Custom bonus multipliers kan bruges nedenfor.",
+      fixedBonusEmpty: "Ingen faste bonusdata er lagt ind. Brug manuel bonus ovenfor.",
+      manualBonusActive: "Manuel bonus aktiv",
+      manualBonusInactive: "Manuel bonus inaktiv",
+      manualBonusHint: "Aktivér den for at medregne dine egne verificerede månedlige multipliers i scoring.",
+      manualBonusTarget: "Gælder for",
+      manualBonusMultipliers: "Multipliers",
+      manualBonusName: "Manuel månedlig bonus",
       estimate: "estimat",
       score: "score",
       locked: "Locked",
@@ -281,10 +298,13 @@
     roleFocus: "bountyHunter",
     useMonthlyBonuses: true,
     useCustomBonus: false,
+    customBonusTarget: "all",
     customCashMultiplier: 1,
     customXpMultiplier: 1,
     customRoleXpMultiplier: 1,
     customGoldMultiplier: 1,
+    customBonusNoteDa: "",
+    customBonusNoteEn: "",
     roles: {
       bountyHunter: { owned: true, rank: 5 },
       prestigiousBountyHunter: { owned: false, rank: 0 },
@@ -358,6 +378,11 @@
     const number = Number(value);
     if (!Number.isFinite(number)) return fallback;
     return Math.max(min, Math.min(max, number));
+  }
+
+  function readMultiplierValue(value) {
+    const normalized = String(Number(value));
+    return customBonusMultiplierValues.has(normalized) ? Number(normalized) : 1;
   }
 
   function money(value) {
@@ -553,10 +578,15 @@
     if (dom.form.legendaryBountyOnCooldown) dom.form.legendaryBountyOnCooldown.checked = Boolean(setup.legendaryBountyOnCooldown);
     dom.form.useMonthlyBonuses.checked = Boolean(setup.useMonthlyBonuses);
     dom.form.useCustomBonus.checked = Boolean(setup.useCustomBonus);
-    dom.form.customCashMultiplier.value = setup.customCashMultiplier;
-    dom.form.customXpMultiplier.value = setup.customXpMultiplier;
-    dom.form.customRoleXpMultiplier.value = setup.customRoleXpMultiplier;
-    dom.form.customGoldMultiplier.value = setup.customGoldMultiplier;
+    if (dom.form.customBonusTarget) {
+      dom.form.customBonusTarget.value = customBonusTargets.has(setup.customBonusTarget) ? setup.customBonusTarget : "all";
+    }
+    dom.form.customCashMultiplier.value = String(readMultiplierValue(setup.customCashMultiplier));
+    dom.form.customXpMultiplier.value = String(readMultiplierValue(setup.customXpMultiplier));
+    dom.form.customRoleXpMultiplier.value = String(readMultiplierValue(setup.customRoleXpMultiplier));
+    dom.form.customGoldMultiplier.value = String(readMultiplierValue(setup.customGoldMultiplier));
+    if (dom.form.customBonusNoteDa) dom.form.customBonusNoteDa.value = setup.customBonusNoteDa || "";
+    if (dom.form.customBonusNoteEn) dom.form.customBonusNoteEn.value = setup.customBonusNoteEn || "";
     dom.roleFocus.value = setup.roleFocus;
     document.querySelectorAll("[data-priority]").forEach((button) => {
       button.classList.toggle("is-active", button.dataset.priority === setup.priority);
@@ -579,10 +609,13 @@
     setup.roleFocus = dom.roleFocus.value || "bountyHunter";
     setup.useMonthlyBonuses = dom.form.useMonthlyBonuses.checked;
     setup.useCustomBonus = dom.form.useCustomBonus.checked;
-    setup.customCashMultiplier = clampNumber(dom.form.customCashMultiplier.value, 0, 10, 1);
-    setup.customXpMultiplier = clampNumber(dom.form.customXpMultiplier.value, 0, 10, 1);
-    setup.customRoleXpMultiplier = clampNumber(dom.form.customRoleXpMultiplier.value, 0, 10, 1);
-    setup.customGoldMultiplier = clampNumber(dom.form.customGoldMultiplier.value, 0, 10, 1);
+    setup.customBonusTarget = customBonusTargets.has(dom.form.customBonusTarget?.value) ? dom.form.customBonusTarget.value : "all";
+    setup.customCashMultiplier = readMultiplierValue(dom.form.customCashMultiplier.value);
+    setup.customXpMultiplier = readMultiplierValue(dom.form.customXpMultiplier.value);
+    setup.customRoleXpMultiplier = readMultiplierValue(dom.form.customRoleXpMultiplier.value);
+    setup.customGoldMultiplier = readMultiplierValue(dom.form.customGoldMultiplier.value);
+    setup.customBonusNoteDa = String(dom.form.customBonusNoteDa?.value || "").slice(0, 180);
+    setup.customBonusNoteEn = String(dom.form.customBonusNoteEn?.value || "").slice(0, 180);
 
     document.querySelectorAll("[data-role-owned]").forEach((input) => {
       const roleId = input.dataset.roleOwned;
@@ -644,6 +677,34 @@
     return typeMatch && roleMatch;
   }
 
+  function customBonusTargetLabel(target) {
+    if (target === "all") return lang() === "da" ? "Alle aktiviteter" : "All activities";
+    return roleLabel(target);
+  }
+
+  function customBonusApplies(activity, setup) {
+    if (!setup.useCustomBonus) return false;
+    const target = customBonusTargets.has(setup.customBonusTarget) ? setup.customBonusTarget : "all";
+    if (target === "all") return true;
+    if (target === "bountyHunter" && activity.tags?.includes("bounty")) return true;
+    return activity.role === target || activity.requiredRole === target;
+  }
+
+  function multiplierLabel(value) {
+    const number = readMultiplierValue(value);
+    return `${Number.isInteger(number) ? number : number.toFixed(1)}x`;
+  }
+
+  function selectedCustomBonusNote(setup = state.setup) {
+    return lang() === "da" ? setup.customBonusNoteDa || setup.customBonusNoteEn : setup.customBonusNoteEn || setup.customBonusNoteDa;
+  }
+
+  function customBonusHasMultiplierEffect(setup) {
+    return [setup.customCashMultiplier, setup.customXpMultiplier, setup.customRoleXpMultiplier, setup.customGoldMultiplier].some((value) => {
+      return readMultiplierValue(value) !== 1;
+    });
+  }
+
   function multipliersFor(activity, setup) {
     const multipliers = {
       cash: 1,
@@ -666,13 +727,15 @@
       });
     }
 
-    if (setup.useCustomBonus) {
+    if (customBonusApplies(activity, setup)) {
       multipliers.cash *= setup.customCashMultiplier || 1;
       multipliers.xp *= setup.customXpMultiplier || 1;
       multipliers.roleXp *= setup.customRoleXpMultiplier || 1;
       multipliers.gold *= setup.customGoldMultiplier || 1;
-      multipliers.hasBonus = true;
-      multipliers.names.push("Custom bonus");
+      if (customBonusHasMultiplierEffect(setup)) {
+        multipliers.hasBonus = true;
+        multipliers.names.push(t("manualBonusName"));
+      }
     }
 
     return multipliers;
@@ -1127,7 +1190,38 @@
         .join("") || `<article class="activity-card"><p>${escapeHtml(t("noActivity"))}</p></article>`;
   }
 
+  function renderCustomBonusSummary() {
+    if (!dom.customBonusSummary) return;
+    const setup = state.setup;
+    if (!setup.useCustomBonus) {
+      dom.customBonusSummary.classList.remove("is-active");
+      dom.customBonusSummary.innerHTML = `
+        <strong>${escapeHtml(t("manualBonusInactive"))}</strong>
+        <p>${escapeHtml(t("manualBonusHint"))}</p>
+      `;
+      return;
+    }
+
+    const target = customBonusTargetLabel(setup.customBonusTarget || "all");
+    const multipliers = [
+      `RDO$: ${multiplierLabel(setup.customCashMultiplier)}`,
+      `XP: ${multiplierLabel(setup.customXpMultiplier)}`,
+      `Role XP: ${multiplierLabel(setup.customRoleXpMultiplier)}`,
+      `Gold: ${multiplierLabel(setup.customGoldMultiplier)}`
+    ].join(" | ");
+    const note = selectedCustomBonusNote(setup);
+
+    dom.customBonusSummary.classList.add("is-active");
+    dom.customBonusSummary.innerHTML = `
+      <strong>${escapeHtml(t("manualBonusActive"))}</strong>
+      <p>${escapeHtml(t("manualBonusTarget"))}: ${escapeHtml(target)}</p>
+      <p>${escapeHtml(t("manualBonusMultipliers"))}: ${escapeHtml(multipliers)}</p>
+      ${note ? `<p>${escapeHtml(note)}</p>` : ""}
+    `;
+  }
+
   function renderBonusStatus() {
+    renderCustomBonusSummary();
     const active = activeBonuses();
     const status = dom.bonusStatus;
     if (active.length) {
@@ -1143,6 +1237,14 @@
 
     status.classList.remove("is-active");
     const sourceNote = lang() === "da" ? state.bonusMeta.sourceNoteDa : state.bonusMeta.sourceNoteEn;
+    if (!state.bonuses.length) {
+      status.innerHTML = `
+        <strong>${escapeHtml(t("fixedBonusEmpty"))}</strong>
+        <p>${escapeHtml(sourceNote || t("sourceManual"))}</p>
+      `;
+      return;
+    }
+
     status.innerHTML = `
       <strong>${escapeHtml(t("noActiveBonus"))}</strong>
       <p>${escapeHtml(t("bonusOutdated"))}</p>
@@ -1247,6 +1349,21 @@
     generatePlan();
   }
 
+  function resetCustomBonusSetup() {
+    state.setup.customBonusTarget = "all";
+    state.setup.customCashMultiplier = 1;
+    state.setup.customXpMultiplier = 1;
+    state.setup.customRoleXpMultiplier = 1;
+    state.setup.customGoldMultiplier = 1;
+    state.setup.customBonusNoteDa = "";
+    state.setup.customBonusNoteEn = "";
+    restoreForm();
+    readForm();
+    renderBonusStatus();
+    generatePlan();
+    saveState();
+  }
+
   function bindEvents() {
     dom.form.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -1256,6 +1373,7 @@
     dom.form.addEventListener("input", () => {
       readForm();
       renderComparison(scoredActivities());
+      renderBonusStatus();
     });
 
     dom.roleGrid.addEventListener("input", handleRoleControlChange);
@@ -1273,6 +1391,7 @@
     document.addEventListener("click", (event) => {
       const priority = event.target.closest("[data-priority]");
       const resetSetup = event.target.closest("[data-reset-setup]");
+      const resetCustomBonus = event.target.closest("[data-reset-custom-bonus]");
       const timerStart = event.target.closest("[data-timer-start]");
       const timerPause = event.target.closest("[data-timer-pause]");
       const timerReset = event.target.closest("[data-timer-reset]");
@@ -1293,10 +1412,12 @@
         renderRoleFocus();
         restoreForm();
         renderTimers();
+        renderBonusStatus();
         generatePlan();
         saveState();
       }
 
+      if (resetCustomBonus) resetCustomBonusSetup();
       if (timerStart) startTimer(timerStart.dataset.timerStart);
       if (timerPause) pauseTimer(timerPause.dataset.timerPause);
       if (timerReset) resetTimer(timerReset.dataset.timerReset);
@@ -1325,6 +1446,7 @@
     dom.roleGrid = document.querySelector("#role-grid");
     dom.roleFocus = document.querySelector("#roleFocus");
     dom.bonusStatus = document.querySelector("#bonus-status");
+    dom.customBonusSummary = document.querySelector("#custom-bonus-summary");
     dom.output = document.querySelector("#planner-output");
     dom.timers = document.querySelector("#timer-dashboard");
     dom.comparison = document.querySelector("#activity-comparison");

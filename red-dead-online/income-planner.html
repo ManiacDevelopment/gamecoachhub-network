@@ -84,14 +84,24 @@
         "priority.lowRisk": "Low-risk",
         "priority.roleFocus": "Role XP focus",
         "bonus.kicker": "Monthly bonuses",
-        "bonus.title": "Bonus engine",
-        "bonus.copy": "Bonus data is loaded from a manual JSON file. No live bonus source is claimed.",
-        "bonus.use": "Apply active monthly bonuses",
-        "bonus.custom": "Use custom bonus multipliers",
+        "bonus.title": "Monthly bonuses",
+        "bonus.copy": "Rockstar changes bonuses regularly. Enter this month’s bonuses manually here if you want them included in the calculation.",
+        "bonus.use": "Apply fixed monthly bonus data",
+        "bonus.custom": "Enable custom monthly bonus",
+        "bonus.target": "Bonus target",
+        "bonus.targetAll": "All activities",
+        "bonus.targetBounty": "Bounty Hunter",
+        "bonus.targetTrader": "Trader",
+        "bonus.targetCollector": "Collector",
+        "bonus.targetMoonshiner": "Moonshiner",
+        "bonus.targetNaturalist": "Naturalist",
         "bonus.cash": "RDO$ multiplier",
         "bonus.xp": "XP multiplier",
         "bonus.roleXp": "Role XP multiplier",
         "bonus.gold": "Gold multiplier",
+        "bonus.noteDa": "DA note",
+        "bonus.noteEn": "EN note",
+        "bonus.resetCustom": "Reset bonus to 1x",
         "actions.generate": "Generate plan",
         "actions.reset": "Reset setup",
         "output.kicker": "Recommended rotation",
@@ -171,14 +181,24 @@
         "priority.lowRisk": "Low-risk",
         "priority.roleFocus": "Role XP focus",
         "bonus.kicker": "Månedlige bonusser",
-        "bonus.title": "Bonusmotor",
-        "bonus.copy": "Bonusdata indlæses fra en manuel JSON-fil. Der påstås ingen live bonuskilde.",
-        "bonus.use": "Brug aktive månedlige bonusser",
-        "bonus.custom": "Brug custom bonus multipliers",
+        "bonus.title": "Månedlige bonusser",
+        "bonus.copy": "Rockstar ændrer bonusser løbende. Indtast månedens bonusser manuelt her, hvis du vil have dem med i beregningen.",
+        "bonus.use": "Brug faste månedlige bonusdata",
+        "bonus.custom": "Aktivér manuel månedlig bonus",
+        "bonus.target": "Bonus-type",
+        "bonus.targetAll": "Alle aktiviteter",
+        "bonus.targetBounty": "Bounty Hunter",
+        "bonus.targetTrader": "Trader",
+        "bonus.targetCollector": "Collector",
+        "bonus.targetMoonshiner": "Moonshiner",
+        "bonus.targetNaturalist": "Naturalist",
         "bonus.cash": "RDO$ multiplier",
         "bonus.xp": "XP multiplier",
         "bonus.roleXp": "Role XP multiplier",
         "bonus.gold": "Gold multiplier",
+        "bonus.noteDa": "DA note",
+        "bonus.noteEn": "EN note",
+        "bonus.resetCustom": "Nulstil bonus til 1x",
         "actions.generate": "Generer plan",
         "actions.reset": "Nulstil setup",
         "output.kicker": "Anbefalet rotation",
@@ -339,37 +359,82 @@
 
           <section class="income-panel">
             <p class="eyebrow" data-page-i18n="bonus.kicker">Monthly bonuses</p>
-            <h3 data-page-i18n="bonus.title">Bonus engine</h3>
-            <p data-page-i18n="bonus.copy">Bonus data is loaded from a manual JSON file. No live bonus source is claimed.</p>
-            <div id="bonus-status" class="bonus-line" data-no-i18n="true"></div>
+            <h3 data-page-i18n="bonus.title">Monthly bonuses</h3>
+            <p data-page-i18n="bonus.copy">Rockstar changes bonuses regularly. Enter this month’s bonuses manually here if you want them included in the calculation.</p>
             <div class="toggle-stack">
               <label class="toggle-row">
                 <input id="useMonthlyBonuses" name="useMonthlyBonuses" type="checkbox" checked data-planner-input>
-                <span data-page-i18n="bonus.use">Apply active monthly bonuses</span>
+                <span data-page-i18n="bonus.use">Apply fixed monthly bonus data</span>
               </label>
               <label class="toggle-row">
                 <input id="useCustomBonus" name="useCustomBonus" type="checkbox" data-planner-input>
-                <span data-page-i18n="bonus.custom">Use custom bonus multipliers</span>
+                <span data-page-i18n="bonus.custom">Enable custom monthly bonus</span>
               </label>
             </div>
             <div class="custom-bonus-grid" id="custom-bonus-grid">
               <div class="field-group">
+                <label for="customBonusTarget" data-page-i18n="bonus.target">Bonus target</label>
+                <select id="customBonusTarget" name="customBonusTarget" data-planner-input>
+                  <option value="all" data-page-i18n="bonus.targetAll">All activities</option>
+                  <option value="bountyHunter" data-page-i18n="bonus.targetBounty">Bounty Hunter</option>
+                  <option value="trader" data-page-i18n="bonus.targetTrader">Trader</option>
+                  <option value="collector" data-page-i18n="bonus.targetCollector">Collector</option>
+                  <option value="moonshiner" data-page-i18n="bonus.targetMoonshiner">Moonshiner</option>
+                  <option value="naturalist" data-page-i18n="bonus.targetNaturalist">Naturalist</option>
+                </select>
+              </div>
+              <div class="field-group">
                 <label for="customCashMultiplier" data-page-i18n="bonus.cash">RDO$ multiplier</label>
-                <input id="customCashMultiplier" name="customCashMultiplier" type="number" min="0" step="0.1" value="1" data-planner-input>
+                <select id="customCashMultiplier" name="customCashMultiplier" data-planner-input>
+                  <option value="1">1x</option>
+                  <option value="1.5">1.5x</option>
+                  <option value="2">2x</option>
+                  <option value="3">3x</option>
+                </select>
               </div>
               <div class="field-group">
                 <label for="customXpMultiplier" data-page-i18n="bonus.xp">XP multiplier</label>
-                <input id="customXpMultiplier" name="customXpMultiplier" type="number" min="0" step="0.1" value="1" data-planner-input>
+                <select id="customXpMultiplier" name="customXpMultiplier" data-planner-input>
+                  <option value="1">1x</option>
+                  <option value="1.5">1.5x</option>
+                  <option value="2">2x</option>
+                  <option value="3">3x</option>
+                </select>
               </div>
               <div class="field-group">
                 <label for="customRoleXpMultiplier" data-page-i18n="bonus.roleXp">Role XP multiplier</label>
-                <input id="customRoleXpMultiplier" name="customRoleXpMultiplier" type="number" min="0" step="0.1" value="1" data-planner-input>
+                <select id="customRoleXpMultiplier" name="customRoleXpMultiplier" data-planner-input>
+                  <option value="1">1x</option>
+                  <option value="1.5">1.5x</option>
+                  <option value="2">2x</option>
+                  <option value="3">3x</option>
+                </select>
               </div>
               <div class="field-group">
                 <label for="customGoldMultiplier" data-page-i18n="bonus.gold">Gold multiplier</label>
-                <input id="customGoldMultiplier" name="customGoldMultiplier" type="number" min="0" step="0.1" value="1" data-planner-input>
+                <select id="customGoldMultiplier" name="customGoldMultiplier" data-planner-input>
+                  <option value="1">1x</option>
+                  <option value="1.5">1.5x</option>
+                  <option value="2">2x</option>
+                  <option value="3">3x</option>
+                </select>
               </div>
             </div>
+            <div class="input-grid field-spaced">
+              <div class="field-group">
+                <label for="customBonusNoteDa" data-page-i18n="bonus.noteDa">DA note</label>
+                <input id="customBonusNoteDa" name="customBonusNoteDa" type="text" maxlength="180" data-planner-input>
+              </div>
+              <div class="field-group">
+                <label for="customBonusNoteEn" data-page-i18n="bonus.noteEn">EN note</label>
+                <input id="customBonusNoteEn" name="customBonusNoteEn" type="text" maxlength="180" data-planner-input>
+              </div>
+            </div>
+            <div class="planner-actions bonus-actions">
+              <button class="btn" type="button" data-reset-custom-bonus data-page-i18n="bonus.resetCustom">Reset bonus to 1x</button>
+            </div>
+            <div id="custom-bonus-summary" class="bonus-line" data-no-i18n="true"></div>
+            <div id="bonus-status" class="bonus-line" data-no-i18n="true"></div>
           </section>
 
           <div class="planner-actions">

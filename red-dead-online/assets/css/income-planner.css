@@ -302,6 +302,10 @@ body[data-site="rdo"] {
   margin-top: 12px;
 }
 
+.bonus-actions {
+  margin-top: 12px;
+}
+
 .bonus-line {
   padding: 14px;
   display: grid;
