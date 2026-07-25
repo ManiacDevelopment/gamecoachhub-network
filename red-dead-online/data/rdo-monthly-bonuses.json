@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "lastManualReview": "2026-07-25",
+  "liveSource": false,
+  "sourceNoteEn": "This file is manual and intentionally contains no unverified current-month bonus. Add verified monthly RDO event data here when reviewed.",
+  "sourceNoteDa": "Denne fil er manuel og indeholder bevidst ingen uverificeret aktuel månedsbonus. Tilføj verificeret månedlig RDO event-data her efter gennemgang.",
+  "supportedBonusShape": {
+    "eventName": "string",
+    "startDate": "YYYY-MM-DD",
+    "endDate": "YYYY-MM-DD",
+    "activityType": "string or array",
+    "role": "role key or null",
+    "payoutMultiplier": "number",
+    "xpMultiplier": "number",
+    "roleXpMultiplier": "number",
+    "goldMultiplier": "number",
+    "discountInfo": "string",
+    "noteDa": "string",
+    "noteEn": "string"
+  },
+  "bonuses": []
+}
