@@ -7,6 +7,7 @@
   const roles = [
     {
       id: "bountyHunter",
+      maxRank: 20,
       labelEn: "Bounty Hunter",
       labelDa: "Bounty Hunter",
       noteEn: "Regular, legendary and role XP bounty routes.",
@@ -14,6 +15,7 @@
     },
     {
       id: "prestigiousBountyHunter",
+      maxRank: 30,
       labelEn: "Prestigious Bounty Hunter",
       labelDa: "Prestigious Bounty Hunter",
       noteEn: "Infamous bounties and extended Bounty Hunter progression.",
@@ -21,6 +23,7 @@
     },
     {
       id: "trader",
+      maxRank: 20,
       labelEn: "Trader",
       labelDa: "Trader",
       noteEn: "Cripps production, resupply and wagon deliveries.",
@@ -28,6 +31,7 @@
     },
     {
       id: "collector",
+      maxRank: 20,
       labelEn: "Collector",
       labelDa: "Collector",
       noteEn: "Low-risk cash and XP routes.",
@@ -35,6 +39,7 @@
     },
     {
       id: "moonshiner",
+      maxRank: 20,
       labelEn: "Moonshiner",
       labelDa: "Moonshiner",
       noteEn: "Passive batch production and deliveries.",
@@ -42,6 +47,7 @@
     },
     {
       id: "naturalist",
+      maxRank: 20,
       labelEn: "Naturalist",
       labelDa: "Naturalist",
       noteEn: "Samples and legendary animal support.",
@@ -274,11 +280,11 @@
     customGoldMultiplier: 1,
     roles: {
       bountyHunter: { owned: true, rank: 5 },
-      prestigiousBountyHunter: { owned: false, rank: 1 },
+      prestigiousBountyHunter: { owned: false, rank: 0 },
       trader: { owned: true, rank: 5 },
       collector: { owned: true, rank: 5 },
-      moonshiner: { owned: false, rank: 1 },
-      naturalist: { owned: false, rank: 1 }
+      moonshiner: { owned: false, rank: 0 },
+      naturalist: { owned: false, rank: 0 }
     }
   };
 
@@ -311,6 +317,7 @@
   };
 
   const dom = {};
+  let renderedLanguage = null;
 
   function lang() {
     return (localStorage.getItem(LANGUAGE_KEY) || document.documentElement.lang || "en").startsWith("da") ? "da" : "en";
@@ -465,6 +472,17 @@
     return lang() === "da" ? role.labelDa : role.labelEn;
   }
 
+  function roleMaxRank(roleId) {
+    return roles.find((role) => role.id === roleId)?.maxRank || 20;
+  }
+
+  function renderRankOptions(selectedRank, maxRank) {
+    const rank = clampNumber(selectedRank, 0, maxRank, 0);
+    return Array.from({ length: maxRank + 1 }, (_, value) => {
+      return `<option value="${value}" ${value === rank ? "selected" : ""}>${value}</option>`;
+    }).join("");
+  }
+
   function activityName(activity) {
     return lang() === "da" ? activity.nameDa || activity.nameEn : activity.nameEn || activity.nameDa;
   }
@@ -476,20 +494,29 @@
   function renderRoles() {
     dom.roleGrid.innerHTML = roles
       .map((role) => {
-        const current = state.setup.roles[role.id] || { owned: false, rank: 1 };
+        const current = state.setup.roles[role.id] || { owned: false, rank: 0 };
+        const owned = Boolean(current.owned);
+        const maxRank = roleMaxRank(role.id);
+        const rank = owned ? clampNumber(current.rank, 0, maxRank, 0) : 0;
         const label = lang() === "da" ? role.labelDa : role.labelEn;
         const note = lang() === "da" ? role.noteDa : role.noteEn;
+        const rankId = `role-rank-${role.id}`;
         return `
-          <label class="role-row">
-            <span>
-              <span class="checkbox-label">
-                <input type="checkbox" data-role-owned="${escapeHtml(role.id)}" ${current.owned ? "checked" : ""}>
+          <div class="role-row">
+            <div>
+              <label class="checkbox-label">
+                <input type="checkbox" data-role-owned="${escapeHtml(role.id)}" ${owned ? "checked" : ""} aria-controls="${escapeHtml(rankId)}">
                 <span>${escapeHtml(label)}</span>
-              </span>
+              </label>
               <small>${escapeHtml(note)}</small>
-            </span>
-            <input type="number" min="1" max="30" value="${escapeHtml(current.rank)}" aria-label="${escapeHtml(label)} ${escapeHtml(t("roleRank"))}" data-role-rank="${escapeHtml(role.id)}">
-          </label>
+            </div>
+            <label class="role-rank-field" for="${escapeHtml(rankId)}">
+              <span>${escapeHtml(t("roleRank"))}</span>
+              <select id="${escapeHtml(rankId)}" data-role-rank="${escapeHtml(role.id)}" ${owned ? "" : "disabled"} aria-label="${escapeHtml(label)} ${escapeHtml(t("roleRank"))}">
+                ${renderRankOptions(rank, maxRank)}
+              </select>
+            </label>
+          </div>
         `;
       })
       .join("");
@@ -544,17 +571,41 @@
 
     document.querySelectorAll("[data-role-owned]").forEach((input) => {
       const roleId = input.dataset.roleOwned;
-      setup.roles[roleId] ||= { owned: false, rank: 1 };
+      setup.roles[roleId] ||= { owned: false, rank: 0 };
       setup.roles[roleId].owned = input.checked;
     });
     document.querySelectorAll("[data-role-rank]").forEach((input) => {
       const roleId = input.dataset.roleRank;
-      setup.roles[roleId] ||= { owned: false, rank: 1 };
-      setup.roles[roleId].rank = clampNumber(input.value, 1, 30, 1);
+      setup.roles[roleId] ||= { owned: false, rank: 0 };
+      setup.roles[roleId].rank = setup.roles[roleId].owned ? clampNumber(input.value, 0, roleMaxRank(roleId), 0) : 0;
     });
 
     saveState();
     return setup;
+  }
+
+  function syncRoleRankControls() {
+    document.querySelectorAll("[data-role-owned]").forEach((checkbox) => {
+      const roleId = checkbox.dataset.roleOwned;
+      const rankInput = document.querySelector(`[data-role-rank="${escapeAttrValue(roleId)}"]`);
+      if (!rankInput) return;
+      rankInput.disabled = !checkbox.checked;
+      if (!checkbox.checked) {
+        rankInput.value = "0";
+      }
+    });
+  }
+
+  function handleRoleControlChange(event) {
+    if (!event.target.matches("[data-role-owned], [data-role-rank]")) return;
+    event.stopPropagation();
+    if (event.target.matches("[data-role-owned]")) {
+      syncRoleRankControls();
+    }
+    readForm();
+    generatePlan();
+    renderComparison(scoredActivities());
+    renderBonusStatus();
   }
 
   function sessionMinutes(setup = state.setup) {
@@ -634,7 +685,7 @@
     if (activity.requiredRole) {
       const owned = Boolean(setup.roles[activity.requiredRole]?.owned);
       if (!owned) reasons.push(t("roleLocked"));
-      const roleRank = Number(setup.roles[activity.requiredRole]?.rank || 1);
+      const roleRank = Number(setup.roles[activity.requiredRole]?.rank ?? 0);
       if (roleRank < Number(activity.requiredRank || 1)) reasons.push(t("rankLocked"));
     }
 
@@ -693,7 +744,7 @@
   function roleNeedBonus(activity, setup) {
     if (setup.priority !== "roleXp") return 0;
     if (activity.role !== setup.roleFocus && activity.requiredRole !== setup.roleFocus) return 0;
-    const roleRank = Number(setup.roles[setup.roleFocus]?.rank || 1);
+    const roleRank = Number(setup.roles[setup.roleFocus]?.rank ?? 0);
     return Math.max(0, 30 - roleRank) * 1.4;
   }
 
@@ -1028,7 +1079,13 @@
       renderComparison(scoredActivities());
     });
 
-    dom.form.addEventListener("change", () => {
+    dom.roleGrid.addEventListener("input", handleRoleControlChange);
+    dom.roleGrid.addEventListener("change", handleRoleControlChange);
+
+    dom.form.addEventListener("change", (event) => {
+      if (event.target.matches("[data-role-owned]")) {
+        syncRoleRankControls();
+      }
       readForm();
       renderComparison(scoredActivities());
       renderBonusStatus();
@@ -1067,9 +1124,13 @@
     });
 
     window.addEventListener("gch:languagechange", () => {
+      const nextLanguage = lang();
+      if (nextLanguage === renderedLanguage) return;
+      readForm();
       renderRoles();
       renderRoleFocus();
       restoreForm();
+      renderedLanguage = nextLanguage;
       renderBonusStatus();
       renderTimers();
       generatePlan();
@@ -1097,6 +1158,7 @@
     renderRoles();
     renderRoleFocus();
     restoreForm();
+    renderedLanguage = lang();
     dom.output.innerHTML = `<div class="recommendation-card"><p>${escapeHtml(t("loading"))}</p></div>`;
     await loadData();
     renderBonusStatus();

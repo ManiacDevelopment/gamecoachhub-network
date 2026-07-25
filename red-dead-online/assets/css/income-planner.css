@@ -175,7 +175,7 @@ body[data-site="rdo"] {
 
 .role-row {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 96px;
+  grid-template-columns: minmax(0, 1fr) 118px;
   gap: 10px;
   align-items: center;
   padding: 10px;
@@ -193,6 +193,16 @@ body[data-site="rdo"] {
   display: block;
   color: var(--gch-muted);
   line-height: 1.35;
+}
+
+.role-rank-field {
+  display: grid;
+  gap: 6px;
+  color: var(--gch-muted);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
 }
 
 .field-group {
@@ -214,7 +224,7 @@ body[data-site="rdo"] {
 
 .field-group input,
 .field-group select,
-.role-row input[type="number"],
+.role-rank-field select,
 .custom-bonus-grid input {
   min-height: 42px;
   width: 100%;
@@ -229,10 +239,15 @@ body[data-site="rdo"] {
 
 .field-group input:focus,
 .field-group select:focus,
-.role-row input[type="number"]:focus,
+.role-rank-field select:focus,
 .custom-bonus-grid input:focus {
   outline: 2px solid rgba(230, 183, 95, 0.35);
   outline-offset: 2px;
+}
+
+.role-rank-field select:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
 }
 
 .toggle-row,
