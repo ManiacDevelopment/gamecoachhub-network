@@ -67,6 +67,11 @@
         "setup.legendary": "Naturalist legendary animal access for Trader materials",
         "roles.title": "Owned roles and role ranks",
         "roles.copy": "Leave a role unchecked if you do not own it yet.",
+        "status.title": "Business status",
+        "status.copy": "Use these quick status toggles when your current in-game production state is known. Timers still override status while they are running.",
+        "status.moonshineReady": "Moonshine batch is ready for delivery",
+        "status.traderReady": "Trader goods are ready for delivery",
+        "status.legendaryCooldown": "Legendary Bounty is on cooldown",
         "priority.kicker": "Priority",
         "priority.title": "Choose what the rotation should optimize.",
         "priority.cash": "Max RDO$",
@@ -149,6 +154,11 @@
         "setup.legendary": "Naturalist legendary animal adgang til Trader materials",
         "roles.title": "Owned roles og role ranks",
         "roles.copy": "Lad en role være unchecked hvis du ikke ejer den endnu.",
+        "status.title": "Business status",
+        "status.copy": "Brug disse hurtige statusfelter når din aktuelle in-game production state er kendt. Timere overstyrer stadig status mens de kører.",
+        "status.moonshineReady": "Moonshine batch er klar til delivery",
+        "status.traderReady": "Trader goods er klar til delivery",
+        "status.legendaryCooldown": "Legendary Bounty er på cooldown",
         "priority.kicker": "Prioritet",
         "priority.title": "Vælg hvad rotationen skal optimere.",
         "priority.cash": "Maks RDO$",
@@ -287,6 +297,25 @@
             <h3 data-page-i18n="roles.title">Owned roles and role ranks</h3>
             <p data-page-i18n="roles.copy">Leave a role unchecked if you do not own it yet.</p>
             <div class="role-grid" id="role-grid" data-no-i18n="true"></div>
+          </section>
+
+          <section class="income-panel">
+            <h3 data-page-i18n="status.title">Business status</h3>
+            <p data-page-i18n="status.copy">Use these quick status toggles when your current in-game production state is known. Timers still override status while they are running.</p>
+            <div class="toggle-stack">
+              <label class="toggle-row">
+                <input id="moonshineBatchReady" name="moonshineBatchReady" type="checkbox" checked data-planner-input>
+                <span data-page-i18n="status.moonshineReady">Moonshine batch is ready for delivery</span>
+              </label>
+              <label class="toggle-row">
+                <input id="traderGoodsReady" name="traderGoodsReady" type="checkbox" checked data-planner-input>
+                <span data-page-i18n="status.traderReady">Trader goods are ready for delivery</span>
+              </label>
+              <label class="toggle-row">
+                <input id="legendaryBountyOnCooldown" name="legendaryBountyOnCooldown" type="checkbox" data-planner-input>
+                <span data-page-i18n="status.legendaryCooldown">Legendary Bounty is on cooldown</span>
+              </label>
+            </div>
           </section>
 
           <section class="income-panel">
