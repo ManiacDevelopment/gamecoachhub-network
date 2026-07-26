@@ -328,6 +328,32 @@
       traderWaiting: "Trader production is running: avoid idle time with Collector, Bounty or resupply work.",
       legendaryCooldown: "Legendary Bounty is on cooldown: use regular or infamous bounty work instead.",
       noWaitWindow: "No passive wait window detected. Start a production timer or run the highest-scored active activity.",
+      recommendedTodoList: "Recommended to-do list",
+      todoListCopy: "Follow the next practical steps with mission controls and timers in one place.",
+      todoStep: "Step",
+      todoDuration: "Duration",
+      todoReminder: "Reminder",
+      todoStatus: "Status",
+      todoReason: "Why",
+      todoEstimate: "Estimate",
+      todoReady: "Ready",
+      todoNotReady: "Not ready",
+      todoRunning: "Running",
+      todoPaused: "Paused",
+      todoOnCooldown: "On cooldown",
+      todoWaitingProduction: "Waiting for production",
+      todoCompleted: "Completed",
+      todoStartAfterDelivery: "Start after delivery is finished",
+      todoRecommendedWaiting: "Recommended while passive production runs",
+      todoActiveWaiting: "Active waiting time",
+      todoProductionFollowup: "Production follow-up after delivery.",
+      todoResupplyFollowup: "Resupply check after Trader delivery.",
+      todoMissionInProgress: "Mission in progress",
+      todoNoTasks: "Generate a plan to see your to-do list.",
+      activeTimersTitle: "Active timers",
+      activeTimersCopy: "Compact timer status for mission, cooldown and passive production.",
+      noActiveTimers: "No active timer is running.",
+      markDone: "Mark done",
       timerSettingsTitle: "Timer settings",
       timerSettingsCopy: "Adjust mission, cooldown and production defaults. Settings are saved locally and used by mission buttons, timers and rotation estimates.",
       resetDefaultTimes: "Reset default times",
@@ -420,6 +446,32 @@
       traderWaiting: "Trader production kører: undgå idle time med Collector, Bounty eller resupply.",
       legendaryCooldown: "Legendary Bounty er på cooldown: brug regular eller infamous bounty work i stedet.",
       noWaitWindow: "Ingen passiv wait window registreret. Start en production timer eller kør den højst-scorede aktive aktivitet.",
+      recommendedTodoList: "Anbefalet to-do liste",
+      todoListCopy: "Følg de næste praktiske trin med mission controls og timere samlet ét sted.",
+      todoStep: "Trin",
+      todoDuration: "Varighed",
+      todoReminder: "Reminder",
+      todoStatus: "Status",
+      todoReason: "Hvorfor",
+      todoEstimate: "Estimat",
+      todoReady: "Klar",
+      todoNotReady: "Ikke klar",
+      todoRunning: "Kører",
+      todoPaused: "Pauset",
+      todoOnCooldown: "På cooldown",
+      todoWaitingProduction: "Venter på produktion",
+      todoCompleted: "Afsluttet",
+      todoStartAfterDelivery: "Start når levering er afsluttet",
+      todoRecommendedWaiting: "Anbefalet mens passiv produktion kører",
+      todoActiveWaiting: "Aktiv ventetid",
+      todoProductionFollowup: "Production follow-up efter delivery.",
+      todoResupplyFollowup: "Resupply check efter Trader delivery.",
+      todoMissionInProgress: "Mission i gang",
+      todoNoTasks: "Generer en plan for at se din to-do liste.",
+      activeTimersTitle: "Aktive timere",
+      activeTimersCopy: "Kompakt timerstatus for mission, cooldown og passiv production.",
+      noActiveTimers: "Ingen aktiv timer kører.",
+      markDone: "Marker som færdig",
       timerSettingsTitle: "Timerindstillinger",
       timerSettingsCopy: "Tilpas mission-, cooldown- og production-defaults. Indstillinger gemmes lokalt og bruges af mission-knapper, timere og rotation-estimater.",
       resetDefaultTimes: "Gendan standardtider",
@@ -1306,115 +1358,285 @@
     return context.steps;
   }
 
-  function renderPlanCard(title, items) {
+  function missionIdForActivity(activity) {
+    if (activity.id === "regular_bounty") return "regularBounty";
+    if (activity.id === "legendary_bounty") return "legendaryBounty";
+    if (activity.id === "moonshine_delivery") return "moonshineDelivery";
+    if (activity.activityType === "trader_delivery") return "traderDelivery";
+    return "";
+  }
+
+  function timerIdForActivity(activity) {
+    if (activity.id === "moonshine_production") return "moonshineProduction";
+    if (activity.id === "trader_production_wait") return "traderGoods";
+    if (activity.id === "trader_resupply") return "traderResupply";
+    return "";
+  }
+
+  function activityTodoMinutes(activity) {
+    if (activity.id === "regular_bounty") return settingValue("regularBountyMinutes");
+    if (activity.id === "legendary_bounty") return settingValue("legendaryBountyMinutes");
+    if (activity.id === "moonshine_delivery") return settingValue("moonshineDeliveryMinutes");
+    if (activity.activityType === "trader_delivery") return settingValue("traderDeliveryMinutes");
+    if (activity.id === "moonshine_production") return settingValue("moonshineStrongProductionMinutes");
+    if (activity.id === "trader_production_wait") return settingValue("traderFullMinutes");
+    if (activity.id === "trader_resupply") return settingValue("traderResupplyMinutes");
+    return Math.max(1, activityActiveMinutes(activity));
+  }
+
+  function timerLabel(id) {
+    const definition = timerDefinitions.find((item) => item.id === id);
+    if (!definition) return id;
+    return lang() === "da" ? definition.labelDa : definition.labelEn;
+  }
+
+  function todoStatus(key, detail = "") {
+    const labels = {
+      ready: t("todoReady"),
+      notReady: t("todoNotReady"),
+      running: t("todoRunning"),
+      paused: t("todoPaused"),
+      cooldown: t("todoOnCooldown"),
+      waiting: t("todoWaitingProduction"),
+      completed: t("todoCompleted")
+    };
+    return { key, label: labels[key] || labels.notReady, detail };
+  }
+
+  function missionTodoStatus(missionId) {
+    const definition = missionDefinition(missionId);
+    const current = state.activeMission?.id === missionId;
+    if (current) return todoStatus("running", activeMissionRemaining() > 0 ? formatDuration(activeMissionRemaining()) : t("readyNow"));
+    const blocked = definition ? missionStartBlocked(definition) : t("todoNotReady");
+    if (!blocked) return todoStatus("ready");
+    if (missionId === "legendaryBounty" && legendaryBountyOnCooldown()) return todoStatus("cooldown", blocked);
+    if ((missionId === "moonshineDelivery" && !moonshineBatchReady()) || (missionId === "traderDelivery" && !traderGoodsReady())) {
+      return todoStatus("waiting", blocked);
+    }
+    return todoStatus("notReady", blocked);
+  }
+
+  function timerTodoStatus(timerId, deferred = false) {
+    const definition = timerDefinitions.find((item) => item.id === timerId);
+    const view = timerState(state.timers[timerId]);
+    if (view.status === "running" && definition?.kind === "cooldown") return todoStatus("cooldown", formatDuration(view.remaining));
+    if (view.status === "running") return todoStatus("running", formatDuration(view.remaining));
+    if (view.status === "paused") return todoStatus("paused", formatDuration(view.remaining));
+    if (view.status === "ready") return todoStatus("ready", t("readyNow"));
+    if (deferred) return todoStatus("waiting", t("todoStartAfterDelivery"));
+    return todoStatus("ready");
+  }
+
+  function activityEstimateLine(item) {
+    const parts = [];
+    if (item.adjusted.cash > 0) parts.push(money(item.adjusted.cash));
+    if (item.adjusted.xp > 0) parts.push(`${xp(item.adjusted.xp)} XP`);
+    if (item.adjusted.gold > 0) parts.push(`${gold(item.adjusted.gold)} gold`);
+    return parts.join(" | ");
+  }
+
+  function buildActivityTask(item, index, options = {}) {
+    const activity = item.activity;
+    const missionId = missionIdForActivity(activity);
+    const timerId = timerIdForActivity(activity);
+    const reasons = reasonsFor(item);
+    return {
+      id: options.id || `activity-${activity.id}-${index}`,
+      type: "activity",
+      activity,
+      item,
+      missionId,
+      timerId,
+      deferredTimer: Boolean(options.deferredTimer),
+      title: options.title || activityName(activity),
+      typeLabel: roleLabel(activity.role),
+      duration: `${activityTodoMinutes(activity)} min`,
+      durationLabel: activity.id === "regular_bounty" ? t("todoReminder") : t("todoDuration"),
+      estimate: activityEstimateLine(item),
+      reason: options.reason || reasons[0] || activityNote(activity),
+      status: missionId ? missionTodoStatus(missionId) : timerId ? timerTodoStatus(timerId, Boolean(options.deferredTimer)) : todoStatus("ready")
+    };
+  }
+
+  function buildTimerTask(timerId, index, options = {}) {
+    return {
+      id: options.id || `timer-${timerId}-${index}`,
+      type: "timer",
+      timerId,
+      deferredTimer: Boolean(options.deferredTimer),
+      title: options.title || timerLabel(timerId),
+      typeLabel: options.typeLabel || t("activeTimersTitle"),
+      duration: `${timerDefaultMinutes(timerId)} min`,
+      durationLabel: t("todoDuration"),
+      estimate: "",
+      reason: options.reason || t("todoProductionFollowup"),
+      status: timerTodoStatus(timerId, Boolean(options.deferredTimer))
+    };
+  }
+
+  function addUniqueTask(tasks, task, counts) {
+    if (!task) return;
+    const key = task.missionId || task.timerId || task.activity?.id || task.id;
+    const current = counts.get(key) || 0;
+    if (task.activity?.id !== "regular_bounty" && current > 0) return;
+    if (task.activity?.id === "regular_bounty" && current >= 2) return;
+    counts.set(key, current + 1);
+    tasks.push(task);
+  }
+
+  function followupTasksFor(item, index) {
+    const activity = item.activity;
+    if (activity.id === "moonshine_delivery") {
+      return [buildTimerTask("moonshineProduction", index, { deferredTimer: true, reason: t("todoProductionFollowup") })];
+    }
+    if (activity.activityType === "trader_delivery") {
+      return [
+        buildTimerTask("traderGoods", index, { deferredTimer: true, reason: t("todoProductionFollowup") }),
+        buildTimerTask("traderResupply", index, { deferredTimer: true, reason: t("todoResupplyFollowup") })
+      ];
+    }
+    if (activity.id === "legendary_bounty") {
+      return [buildTimerTask("legendaryBountyCooldown", index, { deferredTimer: true, reason: t("legendaryBountyNote") })];
+    }
+    return [];
+  }
+
+  function activeTimerTasks(startIndex = 0) {
+    return ["legendaryBountyCooldown", "moonshineProduction", "traderGoods", "traderResupply", "customTimer"]
+      .map((id, index) => ({ id, view: timerState(state.timers[id]), index: startIndex + index }))
+      .filter((entry) => entry.view.status !== "idle")
+      .map((entry) => buildTimerTask(entry.id, entry.index, { reason: timerLabel(entry.id) }));
+  }
+
+  function buildTodoTasks(scored) {
+    const tasks = [];
+    const counts = new Map();
+    if (isMissionActive()) {
+      const definition = missionDefinition();
+      const activity = state.activities.find((item) => item.id === definition?.activityId);
+      const item = activity ? scored.find((entry) => entry.activity.id === activity.id) || scoreActivity(activity, state.setup) : null;
+      if (item) {
+        addUniqueTask(tasks, buildActivityTask(item, 0, { reason: t("missionContinue") }), counts);
+      }
+    }
+
+    activeTimerTasks(tasks.length).forEach((task) => addUniqueTask(tasks, task, counts));
+
+    const timeline = makeTimeline(120, scored);
+    const source = timeline.length ? timeline : scored.slice(0, 6).map((item) => item);
+    source.forEach((item, index) => {
+      if (tasks.length >= 8) return;
+      const reason = item.activity.tags?.includes("filler") ? t("todoRecommendedWaiting") : undefined;
+      addUniqueTask(tasks, buildActivityTask(item, index + 1, { reason }), counts);
+      followupTasksFor(item, index + 1).forEach((task) => addUniqueTask(tasks, task, counts));
+    });
+
+    return tasks.slice(0, 8);
+  }
+
+  function renderTodoActions(task) {
+    if (task.missionId) {
+      const definition = missionDefinition(task.missionId);
+      const current = state.activeMission?.id === task.missionId;
+      const blocked = definition ? missionStartBlocked(definition) : t("todoNotReady");
+      if (current) {
+        return `<button class="btn primary" type="button" data-mission-finish="${escapeHtml(task.missionId)}">${escapeHtml(t("finishMission"))}</button>`;
+      }
+      if (isMissionActive()) {
+        return `<button class="btn" type="button" disabled>${escapeHtml(t("todoMissionInProgress"))}</button>`;
+      }
+      return `<button class="btn primary" type="button" data-mission-start="${escapeHtml(task.missionId)}" ${blocked ? "disabled" : ""}>${escapeHtml(missionStartLabel(definition))}</button>`;
+    }
+
+    if (!task.timerId) return "";
+    const timer = state.timers[task.timerId] || {};
+    const view = timerState(timer);
+    const disabled = task.deferredTimer && view.status === "idle";
+    const minutes = timer.durationMin || timerDefaultMinutes(task.timerId);
+    const primaryText = view.status === "paused" ? t("resume") : t("start");
+    if (view.status === "ready") {
+      return `<button class="btn primary" type="button" data-timer-reset="${escapeHtml(task.timerId)}">${escapeHtml(t("markDone"))}</button>`;
+    }
     return `
-      <article class="plan-card">
-        <h3>${escapeHtml(title)}</h3>
-        <ol>
-          ${items.map((item) => `<li>${escapeHtml(activityName(item.activity))}</li>`).join("") || `<li>${escapeHtml(t("noActivity"))}</li>`}
-        </ol>
-      </article>
+      <div class="todo-timer-input">
+        <input type="number" min="1" max="300" value="${escapeHtml(minutes)}" data-timer-minutes="${escapeHtml(task.timerId)}" aria-label="${escapeHtml(task.title)} ${escapeHtml(t("minutes"))}">
+        <span>${escapeHtml(t("minutes"))}</span>
+      </div>
+      <button class="btn primary" type="button" data-timer-start="${escapeHtml(task.timerId)}" ${disabled ? "disabled" : ""}>${escapeHtml(disabled ? t("todoStartAfterDelivery") : primaryText)}</button>
+      <button class="btn" type="button" data-timer-pause="${escapeHtml(task.timerId)}" ${view.status === "running" ? "" : "disabled"}>${escapeHtml(t("pause"))}</button>
+      <button class="btn" type="button" data-timer-reset="${escapeHtml(task.timerId)}">${escapeHtml(t("reset"))}</button>
     `;
   }
 
-  function renderActiveMissionPlan() {
-    const definition = missionDefinition();
-    if (!definition) return false;
-    const remaining = activeMissionRemaining();
-    const pausedLabels = passiveTimerIds
-      .filter((id) => state.timers[id]?.pausedByMission === state.activeMission.id)
-      .map((id) => {
-        const timerDefinition = timerDefinitions.find((item) => item.id === id);
-        return timerDefinition ? (lang() === "da" ? timerDefinition.labelDa : timerDefinition.labelEn) : id;
-      });
-
+  function renderTodoList(best, tasks) {
+    const waitAdvice = activeWaitAdvice();
     dom.output.innerHTML = `
-      <article class="recommendation-card">
-        <span class="score-pill">${escapeHtml(t("activeMission"))}</span>
-        <h2>${escapeHtml(missionLabel(definition))}</h2>
-        <p>${escapeHtml(t("missionContinue"))}</p>
-        <p><strong>${escapeHtml(t("remainingMissionTime"))}:</strong> ${escapeHtml(remaining > 0 ? formatDuration(remaining) : t("readyNow"))}</p>
-        <div class="timer-controls">
-          <button class="btn primary" type="button" data-mission-finish="${escapeHtml(definition.id)}">${escapeHtml(missionFinishLabel(definition))}</button>
-        </div>
+      <article class="recommendation-card todo-intro">
+        <span class="score-pill">${escapeHtml(t("score"))}: ${escapeHtml(best.score)}</span>
+        <h2>${escapeHtml(t("recommendedTodoList"))}</h2>
+        <p>${escapeHtml(t("todoListCopy"))}</p>
       </article>
-      <article class="income-card">
-        <h3>${escapeHtml(t("passivePauseStatus"))}</h3>
-        <p>${escapeHtml(t("passiveTimersPaused"))}</p>
-        ${pausedLabels.length ? `<ul class="tips-list">${pausedLabels.map((label) => `<li>${escapeHtml(label)}</li>`).join("")}</ul>` : ""}
+
+      <div class="todo-list" data-todo-list="recommended">
+        ${tasks.length ? tasks.map((task, index) => `
+          <article class="todo-card is-${escapeHtml(task.status.key)}" data-todo-task="${escapeHtml(task.id)}">
+            <div class="todo-number">${escapeHtml(index + 1)}</div>
+            <div class="todo-main">
+              <div class="todo-title-row">
+                <div>
+                  <span class="todo-type">${escapeHtml(task.typeLabel)}</span>
+                  <h3>${escapeHtml(task.title)}</h3>
+                </div>
+                <span class="todo-status">${escapeHtml(task.status.label)}</span>
+              </div>
+              <div class="todo-meta">
+                <span><strong>${escapeHtml(task.durationLabel)}:</strong> ${escapeHtml(task.duration)}</span>
+                ${task.status.detail ? `<span><strong>${escapeHtml(t("todoStatus"))}:</strong> ${escapeHtml(task.status.detail)}</span>` : ""}
+                ${task.estimate ? `<span><strong>${escapeHtml(t("todoEstimate"))}:</strong> ${escapeHtml(task.estimate)}</span>` : ""}
+              </div>
+              <p class="todo-reason"><strong>${escapeHtml(t("todoReason"))}:</strong> ${escapeHtml(task.reason)}</p>
+              <div class="timer-controls todo-actions">${renderTodoActions(task)}</div>
+            </div>
+          </article>
+        `).join("") : `<article class="todo-card"><p>${escapeHtml(t("todoNoTasks"))}</p></article>`}
+      </div>
+
+      <article class="income-card todo-wait-card">
+        <h3>${escapeHtml(t("whileWaiting"))}</h3>
+        <ul class="tips-list">${waitAdvice.map((line) => `<li>${escapeHtml(line)}</li>`).join("")}</ul>
       </article>
     `;
-
-    state.lastPlan = {
-      generatedAt: new Date().toISOString(),
-      bestActivityId: definition.activityId || definition.id,
-      bestActivityName: missionLabel(definition),
-      priority: state.setup.priority,
-      activeMission: state.activeMission,
-      setup: state.setup
-    };
-    saveState();
-    return true;
   }
 
   function generatePlan() {
     const scored = scoredActivities();
     renderComparison(scored);
 
-    if (isMissionActive() && renderActiveMissionPlan()) {
-      return;
-    }
-
     if (!scored.length) {
       dom.output.innerHTML = `<div class="recommendation-card"><p>${escapeHtml(t("noActivity"))}</p></div>`;
-      state.lastPlan = { generatedAt: new Date().toISOString(), bestActivityId: null };
+      state.lastPlan = { generatedAt: new Date().toISOString(), bestActivityId: null, todoTasks: [] };
       saveState();
       return;
     }
 
     const best = scored[0];
-    const reasons = reasonsFor(best);
-    const waitAdvice = activeWaitAdvice();
-    const plan30 = makeTimeline(30, scored);
-    const plan60 = makeTimeline(60, scored);
-    const plan120 = makeTimeline(120, scored);
-
-    dom.output.innerHTML = `
-      <article class="recommendation-card">
-        <span class="score-pill">${escapeHtml(t("score"))}: ${best.score}</span>
-        <h2>${escapeHtml(activityName(best.activity))}</h2>
-        <p>${escapeHtml(activityNote(best.activity))}</p>
-        ${best.activity.estimate ? `<span class="estimate-pill">${escapeHtml(t("estimate"))}</span>` : ""}
-      </article>
-
-      <div class="metric-grid">
-        <div class="metric-card"><span>${escapeHtml(t("cashHour"))}</span><strong>${money(best.perHour.cash)}</strong></div>
-        <div class="metric-card"><span>${escapeHtml(t("xpHour"))}</span><strong>${xp(best.perHour.xp)}</strong></div>
-        <div class="metric-card"><span>${escapeHtml(t("goldHour"))}</span><strong>${gold(best.perHour.gold)}</strong></div>
-      </div>
-
-      <article class="income-card">
-        <h3>${escapeHtml(t("why"))}</h3>
-        <ul class="tips-list">${reasons.map((reason) => `<li>${escapeHtml(reason)}</li>`).join("")}</ul>
-      </article>
-
-      <article class="income-card">
-        <h3>${escapeHtml(t("whileWaiting"))}</h3>
-        <ul class="tips-list">${waitAdvice.map((line) => `<li>${escapeHtml(line)}</li>`).join("")}</ul>
-      </article>
-
-      <div class="plan-grid">
-        ${renderPlanCard(t("next30"), plan30)}
-        ${renderPlanCard(t("next60"), plan60)}
-        ${renderPlanCard(t("next120"), plan120)}
-      </div>
-    `;
+    const tasks = buildTodoTasks(scored);
+    renderTodoList(best, tasks);
 
     state.lastPlan = {
       generatedAt: new Date().toISOString(),
       bestActivityId: best.activity.id,
       bestActivityName: activityName(best.activity),
       priority: state.setup.priority,
+      todoTasks: tasks.map((task, index) => ({
+        index: index + 1,
+        id: task.id,
+        title: task.title,
+        type: task.type,
+        missionId: task.missionId || null,
+        timerId: task.timerId || null,
+        status: task.status.key
+      })),
       setup: state.setup
     };
     saveState();
@@ -1678,49 +1900,39 @@
       });
 
     dom.missionDashboard.innerHTML = `
-      <section class="income-panel mission-dashboard-panel">
-        <div class="mission-dashboard-head">
-          <div>
-            <h3>${escapeHtml(t("missionDashboardTitle"))}</h3>
-            <p>${escapeHtml(t("missionDashboardCopy"))}</p>
-          </div>
-          <div class="mission-status ${active ? "is-active" : ""}">
-            <strong>${escapeHtml(active ? `${t("activeMission")}: ${missionLabel(activeDefinition)}` : t("noMissionRunning"))}</strong>
-            <span>${escapeHtml(active ? `${t("remainingMissionTime")}: ${remaining > 0 ? formatDuration(remaining) : t("readyNow")}` : t("passiveTimersActive"))}</span>
-          </div>
-        </div>
-        <div class="bonus-line ${active ? "is-active" : ""}">
-          <strong>${escapeHtml(t("passivePauseStatus"))}</strong>
-          <p>${escapeHtml(active ? t("passiveTimersPaused") : t("passiveTimersActive"))}</p>
-          ${pausedLabels.length ? `<p>${escapeHtml(pausedLabels.join(", "))}</p>` : ""}
-        </div>
-        <div class="mission-grid">
-          ${missionDefinitions
-            .map((definition) => {
-              const isCurrent = activeDefinition?.id === definition.id;
-              const blocked = missionStartBlocked(definition);
-              const note = definition.noteKey ? t(definition.noteKey) : "";
-              return `
-                <article class="mission-card ${isCurrent ? "is-active" : ""}" data-mission-card="${escapeHtml(definition.id)}">
-                  <span class="timer-state">${escapeHtml(isCurrent ? t("running") : blocked ? t("locked") : t("idle"))}</span>
-                  <h3>${escapeHtml(missionLabel(definition))}</h3>
-                  ${blocked && !isCurrent ? `<p class="timer-note">${escapeHtml(blocked)}</p>` : ""}
-                  ${note ? `<p class="timer-note">${escapeHtml(note)}</p>` : ""}
-                  <div class="timer-controls">
-                    <button class="btn primary" type="button" data-mission-start="${escapeHtml(definition.id)}" ${active || blocked ? "disabled" : ""}>${escapeHtml(missionStartLabel(definition))}</button>
-                    <button class="btn" type="button" data-mission-finish="${escapeHtml(definition.id)}" ${isCurrent ? "" : "disabled"}>${escapeHtml(missionFinishLabel(definition))}</button>
-                  </div>
-                </article>
-              `;
-            })
-            .join("")}
+      <section class="income-panel mission-dashboard-panel compact-mission-status ${active ? "is-active" : ""}">
+        <div>
+          <h3>${escapeHtml(active ? `${t("activeMission")}: ${missionLabel(activeDefinition)}` : t("noMissionRunning"))}</h3>
+          <p>${escapeHtml(active ? `${t("remainingMissionTime")}: ${remaining > 0 ? formatDuration(remaining) : t("readyNow")}` : t("passiveTimersActive"))}</p>
+          ${active && pausedLabels.length ? `<p><strong>${escapeHtml(t("passiveTimersPaused"))}:</strong> ${escapeHtml(pausedLabels.join(", "))}</p>` : ""}
         </div>
       </section>
     `;
   }
 
   function renderTimers() {
-    dom.timers.innerHTML = timerDefinitions
+    const overviewIds = ["legendaryBountyCooldown", "moonshineProduction", "traderGoods", "traderResupply", "customTimer"];
+    const activeDefinition = missionDefinition();
+    const active = isMissionActive();
+    const activeMissionRow = active
+      ? `
+        <article class="active-timer-row is-running">
+          <div>
+            <span class="timer-state">${escapeHtml(t("activeMission"))}</span>
+            <h3>${escapeHtml(missionLabel(activeDefinition))}</h3>
+            <p class="timer-note">${escapeHtml(t("passiveTimersPaused"))}</p>
+          </div>
+          <strong class="timer-display">${escapeHtml(activeMissionRemaining() > 0 ? formatDuration(activeMissionRemaining()) : t("readyNow"))}</strong>
+          <div class="timer-controls">
+            <button class="btn primary" type="button" data-mission-finish="${escapeHtml(activeDefinition.id)}">${escapeHtml(t("finishMission"))}</button>
+          </div>
+        </article>
+      `
+      : "";
+
+    const rows = overviewIds
+      .map((id) => timerDefinitions.find((item) => item.id === id))
+      .filter(Boolean)
       .map((definition) => {
         const timer = state.timers[definition.id] || {};
         const view = timerState(timer);
@@ -1729,24 +1941,41 @@
         const buttonText = view.status === "paused" ? t("resume") : t("start");
         const defaultMinutes = timerDefaultMinutes(definition.id);
         return `
-          <article class="timer-card" data-timer-card="${escapeHtml(definition.id)}">
-            <span class="timer-state">${escapeHtml(statusLabel(definition, view.status))}</span>
-            <h3>${escapeHtml(label)}</h3>
-            <p class="timer-note">${escapeHtml(note)}</p>
-            <div class="timer-display">${escapeHtml(view.status === "idle" ? "--" : formatDuration(view.remaining))}</div>
-            <div class="field-group">
-              <label for="timer-${escapeHtml(definition.id)}">${escapeHtml(t("minutes"))}</label>
-              <input id="timer-${escapeHtml(definition.id)}" type="number" min="1" max="300" value="${escapeHtml(timer.durationMin || defaultMinutes)}" data-timer-minutes="${escapeHtml(definition.id)}">
+          <article class="active-timer-row is-${escapeHtml(view.status)}" data-timer-card="${escapeHtml(definition.id)}">
+            <div>
+              <span class="timer-state">${escapeHtml(statusLabel(definition, view.status))}</span>
+              <h3>${escapeHtml(label)}</h3>
+              <p class="timer-note">${escapeHtml(note)}</p>
             </div>
+            <strong class="timer-display">${escapeHtml(view.status === "idle" ? "--" : formatDuration(view.remaining))}</strong>
             <div class="timer-controls">
+              <div class="todo-timer-input">
+                <input type="number" min="1" max="300" value="${escapeHtml(timer.durationMin || defaultMinutes)}" data-timer-minutes="${escapeHtml(definition.id)}" aria-label="${escapeHtml(label)} ${escapeHtml(t("minutes"))}">
+                <span>${escapeHtml(t("minutes"))}</span>
+              </div>
               <button class="btn primary" type="button" data-timer-start="${escapeHtml(definition.id)}">${escapeHtml(buttonText)}</button>
-              <button class="btn" type="button" data-timer-pause="${escapeHtml(definition.id)}">${escapeHtml(t("pause"))}</button>
+              <button class="btn" type="button" data-timer-pause="${escapeHtml(definition.id)}" ${view.status === "running" ? "" : "disabled"}>${escapeHtml(t("pause"))}</button>
               <button class="btn" type="button" data-timer-reset="${escapeHtml(definition.id)}">${escapeHtml(t("reset"))}</button>
             </div>
           </article>
         `;
       })
       .join("");
+
+    dom.timers.innerHTML = `
+      <section class="income-panel active-timers-panel">
+        <div class="active-timers-head">
+          <div>
+            <h3>${escapeHtml(t("activeTimersTitle"))}</h3>
+            <p>${escapeHtml(t("activeTimersCopy"))}</p>
+          </div>
+        </div>
+        <div class="active-timer-list">
+          ${activeMissionRow}
+          ${rows}
+        </div>
+      </section>
+    `;
   }
 
   function startTimer(id) {
@@ -1989,6 +2218,9 @@
     window.setInterval(() => {
       renderMissionDashboard();
       renderTimers();
+      if (isMissionActive() || Object.values(state.timers).some((timer) => timerState(timer).status !== "idle")) {
+        generatePlan();
+      }
     }, 1000);
   }
 
