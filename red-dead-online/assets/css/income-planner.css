@@ -408,6 +408,72 @@ body[data-site="rdo"] {
   gap: 12px;
 }
 
+.timer-settings-panel,
+.mission-dashboard-panel {
+  display: grid;
+  gap: 14px;
+}
+
+.timer-settings-head,
+.mission-dashboard-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.timer-settings-grid,
+.mission-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.timer-setting-input {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.timer-setting-input span {
+  color: var(--gch-muted);
+  font-size: 0.76rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.mission-status,
+.mission-card {
+  padding: 14px;
+  border: 1px solid var(--gch-line);
+  border-radius: var(--gch-radius);
+  background: rgba(255, 255, 255, 0.044);
+}
+
+.mission-status {
+  min-width: min(100%, 260px);
+  display: grid;
+  gap: 6px;
+}
+
+.mission-status.is-active,
+.mission-card.is-active {
+  border-color: rgba(230, 183, 95, 0.4);
+  background: linear-gradient(135deg, rgba(230, 183, 95, 0.16), rgba(201, 84, 57, 0.09));
+}
+
+.mission-card {
+  display: grid;
+  gap: 10px;
+}
+
+.btn:disabled,
+.priority-option:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
 .timer-card {
   padding: 14px;
   display: grid;
@@ -520,6 +586,8 @@ body[data-site="rdo"] {
   }
 
   .timer-grid,
+  .timer-settings-grid,
+  .mission-grid,
   .comparison-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -557,9 +625,16 @@ body[data-site="rdo"] {
   .custom-bonus-grid,
   .metric-grid,
   .timer-grid,
+  .timer-settings-grid,
+  .mission-grid,
   .comparison-grid,
   .activity-stats {
     grid-template-columns: 1fr;
+  }
+
+  .timer-settings-head,
+  .mission-dashboard-head {
+    display: grid;
   }
 
   .role-row {
