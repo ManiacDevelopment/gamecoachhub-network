@@ -57,6 +57,103 @@
 
   const customBonusTargets = new Set(["all", "bountyHunter", "trader", "collector", "moonshiner", "naturalist"]);
   const customBonusMultiplierValues = new Set(["1", "1.5", "2", "3"]);
+  const passiveTimerIds = ["moonshineProduction", "traderGoods", "traderResupply"];
+
+  const defaultTimerSettings = {
+    regularBountyMinutes: 12,
+    legendaryBountyMinutes: 16,
+    legendaryCooldownMinutes: 48,
+    traderDeliveryMinutes: 12,
+    moonshineDeliveryMinutes: 10,
+    moonshineWeakProductionMinutes: 30,
+    moonshineAverageProductionMinutes: 45,
+    moonshineStrongProductionMinutes: 60,
+    traderGoodMinutes: 2,
+    traderResupplyGoods: 25,
+    traderResupplyMinutes: 50,
+    traderFullGoods: 100,
+    traderFullMinutes: 200
+  };
+
+  const timerSettingDefinitions = [
+    { id: "regularBountyMinutes", labelEn: "Regular bounty optimal turn-in reminder", labelDa: "Almindelig dusørjagt optimal turn-in reminder", min: 1, max: 30, suffix: "min" },
+    { id: "legendaryBountyMinutes", labelEn: "Legendary bounty mission timer", labelDa: "Legendary Bounty missionstimer", min: 1, max: 60, suffix: "min" },
+    { id: "legendaryCooldownMinutes", labelEn: "Legendary bounty cooldown", labelDa: "Legendary Bounty cooldown", min: 1, max: 120, suffix: "min" },
+    { id: "traderDeliveryMinutes", labelEn: "Trader delivery timer", labelDa: "Trader delivery timer", min: 1, max: 60, suffix: "min" },
+    { id: "moonshineDeliveryMinutes", labelEn: "Moonshine delivery timer", labelDa: "Moonshine delivery timer", min: 1, max: 60, suffix: "min" },
+    { id: "moonshineWeakProductionMinutes", labelEn: "Moonshine weak production", labelDa: "Moonshine weak production", min: 1, max: 120, suffix: "min" },
+    { id: "moonshineAverageProductionMinutes", labelEn: "Moonshine average production", labelDa: "Moonshine average production", min: 1, max: 120, suffix: "min" },
+    { id: "moonshineStrongProductionMinutes", labelEn: "Moonshine strong production", labelDa: "Moonshine strong production", min: 1, max: 120, suffix: "min" },
+    { id: "traderGoodMinutes", labelEn: "Trader goods production per good", labelDa: "Trader goods production pr. good", min: 1, max: 10, suffix: "min" },
+    { id: "traderResupplyGoods", labelEn: "Trader resupply interval goods", labelDa: "Trader resupply interval goods", min: 1, max: 100, suffix: "goods" },
+    { id: "traderResupplyMinutes", labelEn: "Trader resupply interval time", labelDa: "Trader resupply interval tid", min: 1, max: 180, suffix: "min" },
+    { id: "traderFullGoods", labelEn: "Trader full wagon goods", labelDa: "Trader full wagon goods", min: 1, max: 100, suffix: "goods" },
+    { id: "traderFullMinutes", labelEn: "Trader full wagon production", labelDa: "Trader full wagon production", min: 1, max: 300, suffix: "min" }
+  ];
+
+  const timerSettingByTimerId = {
+    bountyTurnIn: "regularBountyMinutes",
+    legendaryBountyMission: "legendaryBountyMinutes",
+    legendaryBountyCooldown: "legendaryCooldownMinutes",
+    traderDeliveryMission: "traderDeliveryMinutes",
+    moonshineDeliveryMission: "moonshineDeliveryMinutes",
+    traderGoods: "traderFullMinutes",
+    traderResupply: "traderResupplyMinutes",
+    moonshineProduction: "moonshineStrongProductionMinutes"
+  };
+
+  const missionDefinitions = [
+    {
+      id: "regularBounty",
+      activityId: "regular_bounty",
+      timerId: "bountyTurnIn",
+      settingId: "regularBountyMinutes",
+      labelEn: "Regular Bounty",
+      labelDa: "Almindelig dusørjagt",
+      startEn: "Start Regular Bounty",
+      startDa: "Start almindelig dusørjagt",
+      finishEn: "Finish Regular Bounty",
+      finishDa: "Afslut almindelig dusørjagt",
+      noteKey: "regularBountyNote"
+    },
+    {
+      id: "legendaryBounty",
+      activityId: "legendary_bounty",
+      timerId: "legendaryBountyMission",
+      settingId: "legendaryBountyMinutes",
+      cooldownTimerId: "legendaryBountyCooldown",
+      labelEn: "Legendary Bounty",
+      labelDa: "Legendarisk dusørjagt",
+      startEn: "Start Legendary Bounty",
+      startDa: "Start legendarisk dusørjagt",
+      finishEn: "Finish Legendary Bounty",
+      finishDa: "Afslut legendarisk dusørjagt",
+      noteKey: "legendaryBountyNote"
+    },
+    {
+      id: "traderDelivery",
+      timerId: "traderDeliveryMission",
+      settingId: "traderDeliveryMinutes",
+      labelEn: "Trader Delivery",
+      labelDa: "Trader-levering",
+      startEn: "Start Trader Delivery",
+      startDa: "Start Trader-levering",
+      finishEn: "Finish Trader Delivery",
+      finishDa: "Afslut Trader-levering"
+    },
+    {
+      id: "moonshineDelivery",
+      activityId: "moonshine_delivery",
+      timerId: "moonshineDeliveryMission",
+      settingId: "moonshineDeliveryMinutes",
+      labelEn: "Moonshine Delivery",
+      labelDa: "Moonshine-levering",
+      startEn: "Start Moonshine Delivery",
+      startDa: "Start Moonshine-levering",
+      finishEn: "Finish Moonshine Delivery",
+      finishDa: "Afslut Moonshine-levering"
+    }
+  ];
 
   const timerDefinitions = [
     {
@@ -78,6 +175,33 @@
       noteDa: "Reminder til effektiv normal bounty timing."
     },
     {
+      id: "legendaryBountyMission",
+      labelEn: "Legendary bounty mission",
+      labelDa: "Legendary Bounty mission",
+      defaultMinutes: 16,
+      kind: "mission",
+      noteEn: "Mission timer before the Legendary Bounty cooldown starts.",
+      noteDa: "Missionstimer før Legendary Bounty cooldown starter."
+    },
+    {
+      id: "traderDeliveryMission",
+      labelEn: "Trader delivery mission",
+      labelDa: "Trader delivery mission",
+      defaultMinutes: 12,
+      kind: "mission",
+      noteEn: "Delivery timer for active Trader wagon runs.",
+      noteDa: "Delivery timer til aktive Trader wagon runs."
+    },
+    {
+      id: "moonshineDeliveryMission",
+      labelEn: "Moonshine delivery mission",
+      labelDa: "Moonshine delivery mission",
+      defaultMinutes: 10,
+      kind: "mission",
+      noteEn: "Delivery timer for active Moonshine runs.",
+      noteDa: "Delivery timer til aktive Moonshine runs."
+    },
+    {
       id: "traderGoods",
       labelEn: "Trader goods production",
       labelDa: "Trader goods production",
@@ -90,7 +214,7 @@
       id: "traderResupply",
       labelEn: "Trader resupply reminder",
       labelDa: "Trader resupply reminder",
-      defaultMinutes: 60,
+      defaultMinutes: 50,
       kind: "reminder",
       noteEn: "Check Cripps materials and production.",
       noteDa: "Tjek Cripps materials og production."
@@ -99,7 +223,7 @@
       id: "moonshineProduction",
       labelEn: "Moonshine production",
       labelDa: "Moonshine production",
-      defaultMinutes: 48,
+      defaultMinutes: 60,
       kind: "production",
       noteEn: "Strong moonshine batch planning timer.",
       noteDa: "Strong moonshine batch planning timer."
@@ -204,6 +328,25 @@
       traderWaiting: "Trader production is running: avoid idle time with Collector, Bounty or resupply work.",
       legendaryCooldown: "Legendary Bounty is on cooldown: use regular or infamous bounty work instead.",
       noWaitWindow: "No passive wait window detected. Start a production timer or run the highest-scored active activity.",
+      timerSettingsTitle: "Timer settings",
+      timerSettingsCopy: "Adjust mission, cooldown and production defaults. Settings are saved locally and used by mission buttons, timers and rotation estimates.",
+      resetDefaultTimes: "Reset default times",
+      missionDashboardTitle: "Mission dashboard",
+      missionDashboardCopy: "Start the mission you are actively playing so passive production timers pause while the mission is in progress.",
+      noMissionRunning: "No mission in progress",
+      activeMission: "Active mission",
+      remainingMissionTime: "Remaining mission time",
+      passivePauseStatus: "Passive timer pause status",
+      passiveTimersPaused: "Mission in progress: passive production timers are paused.",
+      passiveTimersActive: "No mission pause is active.",
+      missionAlreadyRunning: "A mission is already running. Finish it before starting another mission.",
+      missionContinue: "Continue or finish the active mission before starting a new rotation.",
+      finishMission: "Finish mission",
+      regularBountyNote: "12 minutes is used as the default for regular bounties because it is generally the best balance for payout per time. Waiting longer can increase payout per mission, but often lowers efficiency per hour.",
+      legendaryBountyNote: "Legendary Bounty uses a separate mission timer and then starts a cooldown. The default mission timer is set to 16 minutes, and the cooldown is set to 48 minutes.",
+      timerSettingsSaved: "Timer settings saved locally.",
+      missionStarted: "Mission started.",
+      missionFinished: "Mission finished.",
       assumptions: "Estimate model; update data files when verified payout or bonus data changes.",
       sourceManual: "Manual bonus data only; no live source."
     },
@@ -277,6 +420,25 @@
       traderWaiting: "Trader production kører: undgå idle time med Collector, Bounty eller resupply.",
       legendaryCooldown: "Legendary Bounty er på cooldown: brug regular eller infamous bounty work i stedet.",
       noWaitWindow: "Ingen passiv wait window registreret. Start en production timer eller kør den højst-scorede aktive aktivitet.",
+      timerSettingsTitle: "Timerindstillinger",
+      timerSettingsCopy: "Tilpas mission-, cooldown- og production-defaults. Indstillinger gemmes lokalt og bruges af mission-knapper, timere og rotation-estimater.",
+      resetDefaultTimes: "Gendan standardtider",
+      missionDashboardTitle: "Mission dashboard",
+      missionDashboardCopy: "Start den mission du aktivt spiller, så passive produktionstimere pauses mens missionen er i gang.",
+      noMissionRunning: "Ingen mission i gang",
+      activeMission: "Aktiv missionstype",
+      remainingMissionTime: "Resterende missionstid",
+      passivePauseStatus: "Pause-status for passive timere",
+      passiveTimersPaused: "Mission i gang: passive produktionstimere er sat på pause.",
+      passiveTimersActive: "Ingen mission-pause er aktiv.",
+      missionAlreadyRunning: "En mission kører allerede. Afslut den før du starter en ny mission.",
+      missionContinue: "Fortsæt eller afslut den aktive mission før du starter en ny rotation.",
+      finishMission: "Afslut mission",
+      regularBountyNote: "12 minutter er valgt som standard for almindelige bounties, fordi det normalt er den bedste balance for payout pr. tid. Længere ventetid kan give højere payout pr. mission, men ofte lavere effektivitet pr. time.",
+      legendaryBountyNote: "Legendary Bounty bruger en separat missionstimer og starter derefter en cooldown. Standard missionstimeren er sat til 16 minutter, og cooldown er sat til 48 minutter.",
+      timerSettingsSaved: "Timerindstillinger gemt lokalt.",
+      missionStarted: "Mission startet.",
+      missionFinished: "Mission afsluttet.",
       assumptions: "Estimate model; opdater datafiler når verificeret payout eller bonusdata ændrer sig.",
       sourceManual: "Kun manuel bonusdata; ingen live source."
     }
@@ -336,6 +498,8 @@
 
   const state = {
     setup: structuredClone(defaultSetup),
+    timerSettings: structuredClone(defaultTimerSettings),
+    activeMission: null,
     timers: {},
     activities: [],
     bonuses: [],
@@ -385,6 +549,18 @@
     return customBonusMultiplierValues.has(normalized) ? Number(normalized) : 1;
   }
 
+  function settingValue(id) {
+    const definition = timerSettingDefinitions.find((item) => item.id === id);
+    const fallback = defaultTimerSettings[id] ?? 1;
+    return clampNumber(state.timerSettings[id], definition?.min ?? 1, definition?.max ?? 300, fallback);
+  }
+
+  function timerDefaultMinutes(timerId) {
+    const settingId = timerSettingByTimerId[timerId];
+    const definition = timerDefinitions.find((item) => item.id === timerId);
+    return settingId ? settingValue(settingId) : Number(definition?.defaultMinutes || 30);
+  }
+
   function money(value) {
     return `$${Math.round(value)}`;
   }
@@ -413,14 +589,43 @@
     return output;
   }
 
+  function mergeTimerSettings(saved) {
+    const output = structuredClone(defaultTimerSettings);
+    if (!saved || typeof saved !== "object") return output;
+    timerSettingDefinitions.forEach((definition) => {
+      output[definition.id] = clampNumber(saved[definition.id], definition.min, definition.max, defaultTimerSettings[definition.id]);
+    });
+    return output;
+  }
+
+  function sanitizeActiveMission(saved) {
+    if (!saved || typeof saved !== "object") return null;
+    const definition = missionDefinitions.find((item) => item.id === saved.id);
+    const endAt = Number(saved.endAt);
+    const startedAt = Number(saved.startedAt);
+    if (!definition || !Number.isFinite(endAt) || !Number.isFinite(startedAt)) return null;
+    return {
+      id: definition.id,
+      timerId: definition.timerId,
+      startedAt,
+      endAt,
+      durationMin: clampNumber(saved.durationMin, 1, 240, settingValue(definition.settingId)),
+      pausedPassiveTimers: Array.isArray(saved.pausedPassiveTimers) ? saved.pausedPassiveTimers.filter((id) => passiveTimerIds.includes(id)) : []
+    };
+  }
+
   function readStoredState() {
     try {
       const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
       state.setup = deepMerge(defaultSetup, saved.setup);
+      state.timerSettings = mergeTimerSettings(saved.timerSettings);
+      state.activeMission = sanitizeActiveMission(saved.activeMission);
       state.timers = saved.timers && typeof saved.timers === "object" ? saved.timers : {};
       state.lastPlan = saved.lastPlan || null;
     } catch {
       state.setup = structuredClone(defaultSetup);
+      state.timerSettings = structuredClone(defaultTimerSettings);
+      state.activeMission = null;
       state.timers = {};
       state.lastPlan = null;
     }
@@ -431,6 +636,8 @@
       STORAGE_KEY,
       JSON.stringify({
         setup: state.setup,
+        timerSettings: state.timerSettings,
+        activeMission: state.activeMission,
         timers: state.timers,
         lastPlan: state.lastPlan
       })
@@ -774,6 +981,22 @@
     return Boolean(setup.legendaryBountyOnCooldown) || status === "running" || status === "paused";
   }
 
+  function activityDurationMinutes(activity) {
+    if (activity.id === "regular_bounty") return settingValue("regularBountyMinutes");
+    if (activity.id === "legendary_bounty") return settingValue("legendaryBountyMinutes");
+    if (activity.id === "moonshine_delivery") return settingValue("moonshineDeliveryMinutes");
+    if (activity.activityType === "trader_delivery") return settingValue("traderDeliveryMinutes");
+    return Number(activity.durationMin || activity.activeTimeMin || 1);
+  }
+
+  function activityActiveMinutes(activity) {
+    if (activity.id === "regular_bounty") return settingValue("regularBountyMinutes");
+    if (activity.id === "legendary_bounty") return settingValue("legendaryBountyMinutes");
+    if (activity.id === "moonshine_delivery") return settingValue("moonshineDeliveryMinutes");
+    if (activity.activityType === "trader_delivery") return settingValue("traderDeliveryMinutes");
+    return Number(activity.activeTimeMin || activity.durationMin || 1);
+  }
+
   function roleRequirementRank(roleId, setup) {
     const rankRoleId = roleId === "prestigiousBountyHunter" ? "bountyHunter" : roleId;
     return Number(setup.roles[rankRoleId]?.rank ?? 0);
@@ -820,7 +1043,7 @@
       reasons.push(t("pvpFiltered"));
     }
 
-    if (activity.durationMin > sessionMinutes(setup)) {
+    if (activityDurationMinutes(activity) > sessionMinutes(setup)) {
       reasons.push(t("rankLocked"));
     }
 
@@ -870,7 +1093,7 @@
   function scoreActivity(activity, setup) {
     const eligibilityResult = eligibility(activity, setup);
     const multipliers = multipliersFor(activity, setup);
-    const duration = Math.max(1, Number(activity.durationMin || 1));
+    const duration = Math.max(1, activityDurationMinutes(activity));
     const cash = Number(activity.baseCash || 0) * multipliers.cash;
     const xpValue = Number(activity.baseXp || 0) * multipliers.xp;
     const roleXpValue = Number(activity.baseRoleXp || 0) * multipliers.roleXp;
@@ -948,16 +1171,16 @@
 
   function timelineRule(activity) {
     if (activity.id === "moonshine_delivery") {
-      return { group: "moonshine_delivery", maxUses: 1, cooldownMin: 48, followupId: "moonshine_production" };
+      return { group: "moonshine_delivery", maxUses: 1, cooldownMin: settingValue("moonshineStrongProductionMinutes"), followupId: "moonshine_production" };
     }
     if (activity.activityType === "trader_delivery") {
-      return { group: "trader_delivery", maxUses: 1, cooldownMin: 50, followupId: "trader_production_wait" };
+      return { group: "trader_delivery", maxUses: 1, cooldownMin: settingValue("traderFullMinutes"), followupId: "trader_production_wait" };
     }
     if (activity.id === "legendary_bounty") {
-      return { group: "legendary_bounty", maxUses: 1, cooldownMin: Number(activity.cooldownMin || 48) };
+      return { group: "legendary_bounty", maxUses: 1, cooldownMin: settingValue("legendaryCooldownMinutes") };
     }
     if (activity.id === "trader_resupply") {
-      return { group: "trader_resupply", maxUses: 1, cooldownMin: Number(activity.cooldownMin || 60) };
+      return { group: "trader_resupply", maxUses: 1, cooldownMin: settingValue("traderResupplyMinutes") };
     }
     if (activity.id === "collector_set_sales") {
       return { group: "collector_set_sales", maxUses: 1, cooldownMin: 60 };
@@ -975,7 +1198,7 @@
   function timelineDuration(item) {
     const activity = item.activity;
     if (activity.tags?.includes("passive") || Number(activity.activeTimeMin || 0) === 0) return 1;
-    return Math.max(5, Number(activity.activeTimeMin || activity.durationMin || 10));
+    return Math.max(5, activityActiveMinutes(activity));
   }
 
   function timelineItemById(scored, id) {
@@ -1094,9 +1317,53 @@
     `;
   }
 
+  function renderActiveMissionPlan() {
+    const definition = missionDefinition();
+    if (!definition) return false;
+    const remaining = activeMissionRemaining();
+    const pausedLabels = passiveTimerIds
+      .filter((id) => state.timers[id]?.pausedByMission === state.activeMission.id)
+      .map((id) => {
+        const timerDefinition = timerDefinitions.find((item) => item.id === id);
+        return timerDefinition ? (lang() === "da" ? timerDefinition.labelDa : timerDefinition.labelEn) : id;
+      });
+
+    dom.output.innerHTML = `
+      <article class="recommendation-card">
+        <span class="score-pill">${escapeHtml(t("activeMission"))}</span>
+        <h2>${escapeHtml(missionLabel(definition))}</h2>
+        <p>${escapeHtml(t("missionContinue"))}</p>
+        <p><strong>${escapeHtml(t("remainingMissionTime"))}:</strong> ${escapeHtml(remaining > 0 ? formatDuration(remaining) : t("readyNow"))}</p>
+        <div class="timer-controls">
+          <button class="btn primary" type="button" data-mission-finish="${escapeHtml(definition.id)}">${escapeHtml(missionFinishLabel(definition))}</button>
+        </div>
+      </article>
+      <article class="income-card">
+        <h3>${escapeHtml(t("passivePauseStatus"))}</h3>
+        <p>${escapeHtml(t("passiveTimersPaused"))}</p>
+        ${pausedLabels.length ? `<ul class="tips-list">${pausedLabels.map((label) => `<li>${escapeHtml(label)}</li>`).join("")}</ul>` : ""}
+      </article>
+    `;
+
+    state.lastPlan = {
+      generatedAt: new Date().toISOString(),
+      bestActivityId: definition.activityId || definition.id,
+      bestActivityName: missionLabel(definition),
+      priority: state.setup.priority,
+      activeMission: state.activeMission,
+      setup: state.setup
+    };
+    saveState();
+    return true;
+  }
+
   function generatePlan() {
     const scored = scoredActivities();
     renderComparison(scored);
+
+    if (isMissionActive() && renderActiveMissionPlan()) {
+      return;
+    }
 
     if (!scored.length) {
       dom.output.innerHTML = `<div class="recommendation-card"><p>${escapeHtml(t("noActivity"))}</p></div>`;
@@ -1281,6 +1548,177 @@
     return t("idle");
   }
 
+  function timerSettingLabel(definition) {
+    return lang() === "da" ? definition.labelDa : definition.labelEn;
+  }
+
+  function missionLabel(definition) {
+    if (!definition) return "";
+    return lang() === "da" ? definition.labelDa : definition.labelEn;
+  }
+
+  function missionStartLabel(definition) {
+    return lang() === "da" ? definition.startDa : definition.startEn;
+  }
+
+  function missionFinishLabel(definition) {
+    return lang() === "da" ? definition.finishDa : definition.finishEn;
+  }
+
+  function missionDefinition(id = state.activeMission?.id) {
+    return missionDefinitions.find((definition) => definition.id === id) || null;
+  }
+
+  function activeMissionRemaining() {
+    if (!state.activeMission) return 0;
+    return Math.max(0, Number(state.activeMission.endAt || 0) - Date.now());
+  }
+
+  function isMissionActive() {
+    return Boolean(state.activeMission && missionDefinition(state.activeMission.id));
+  }
+
+  function startTimerWithMinutes(id, minutes, extra = {}) {
+    const safeMinutes = clampNumber(minutes, 1, 300, timerDefaultMinutes(id));
+    state.timers[id] = Object.assign(
+      {
+        durationMin: safeMinutes,
+        durationMs: safeMinutes * 60000,
+        remainingMs: 0,
+        running: true,
+        endAt: Date.now() + safeMinutes * 60000
+      },
+      extra
+    );
+  }
+
+  function pausePassiveTimersForMission(missionId) {
+    const paused = [];
+    passiveTimerIds.forEach((id) => {
+      const timer = state.timers[id];
+      if (!timer?.running || !timer.endAt || timer.endAt <= Date.now()) return;
+      state.timers[id] = Object.assign({}, timer, {
+        running: false,
+        remainingMs: Math.max(0, timer.endAt - Date.now()),
+        endAt: null,
+        pausedByMission: missionId
+      });
+      paused.push(id);
+    });
+    return paused;
+  }
+
+  function resumePassiveTimersAfterMission(missionId) {
+    passiveTimerIds.forEach((id) => {
+      const timer = state.timers[id];
+      if (!timer || timer.pausedByMission !== missionId || timer.remainingMs <= 0) return;
+      const resumed = Object.assign({}, timer, {
+        running: true,
+        endAt: Date.now() + timer.remainingMs,
+        remainingMs: 0
+      });
+      delete resumed.pausedByMission;
+      state.timers[id] = resumed;
+    });
+  }
+
+  function missionStartBlocked(definition) {
+    if (isMissionActive()) return t("missionAlreadyRunning");
+    if ((definition.id === "regularBounty" || definition.id === "legendaryBounty") && !state.setup.roles.bountyHunter?.owned) return t("roleLocked");
+    if (definition.id === "legendaryBounty" && roleRequirementRank("bountyHunter", state.setup) < 5) return t("rankLocked");
+    if (definition.id === "traderDelivery" && !state.setup.roles.trader?.owned) return t("roleLocked");
+    if (definition.id === "moonshineDelivery" && !state.setup.roles.moonshiner?.owned) return t("roleLocked");
+    if (definition.id === "legendaryBounty" && legendaryBountyOnCooldown()) return t("legendaryCooldown");
+    if (definition.id === "moonshineDelivery" && !moonshineBatchReady()) return t("businessNotReady");
+    if (definition.id === "traderDelivery" && !traderGoodsReady()) return t("businessNotReady");
+    return "";
+  }
+
+  function renderTimerSettings() {
+    if (!dom.timerSettings) return;
+    dom.timerSettings.innerHTML = `
+      <section class="income-panel timer-settings-panel">
+        <div class="timer-settings-head">
+          <div>
+            <h3>${escapeHtml(t("timerSettingsTitle"))}</h3>
+            <p>${escapeHtml(t("timerSettingsCopy"))}</p>
+          </div>
+          <button class="btn" type="button" data-reset-timer-settings>${escapeHtml(t("resetDefaultTimes"))}</button>
+        </div>
+        <div class="timer-settings-grid">
+          ${timerSettingDefinitions
+            .map((definition) => {
+              const value = settingValue(definition.id);
+              return `
+                <div class="field-group">
+                  <label for="timer-setting-${escapeHtml(definition.id)}">${escapeHtml(timerSettingLabel(definition))}</label>
+                  <div class="timer-setting-input">
+                    <input id="timer-setting-${escapeHtml(definition.id)}" type="number" min="${escapeHtml(definition.min)}" max="${escapeHtml(definition.max)}" value="${escapeHtml(value)}" data-timer-setting="${escapeHtml(definition.id)}">
+                    <span>${escapeHtml(definition.suffix)}</span>
+                  </div>
+                </div>
+              `;
+            })
+            .join("")}
+        </div>
+      </section>
+    `;
+  }
+
+  function renderMissionDashboard() {
+    if (!dom.missionDashboard) return;
+    const activeDefinition = missionDefinition();
+    const active = isMissionActive();
+    const remaining = active ? activeMissionRemaining() : 0;
+    const pausedLabels = passiveTimerIds
+      .filter((id) => state.timers[id]?.pausedByMission === state.activeMission?.id)
+      .map((id) => {
+        const definition = timerDefinitions.find((item) => item.id === id);
+        return definition ? (lang() === "da" ? definition.labelDa : definition.labelEn) : id;
+      });
+
+    dom.missionDashboard.innerHTML = `
+      <section class="income-panel mission-dashboard-panel">
+        <div class="mission-dashboard-head">
+          <div>
+            <h3>${escapeHtml(t("missionDashboardTitle"))}</h3>
+            <p>${escapeHtml(t("missionDashboardCopy"))}</p>
+          </div>
+          <div class="mission-status ${active ? "is-active" : ""}">
+            <strong>${escapeHtml(active ? `${t("activeMission")}: ${missionLabel(activeDefinition)}` : t("noMissionRunning"))}</strong>
+            <span>${escapeHtml(active ? `${t("remainingMissionTime")}: ${remaining > 0 ? formatDuration(remaining) : t("readyNow")}` : t("passiveTimersActive"))}</span>
+          </div>
+        </div>
+        <div class="bonus-line ${active ? "is-active" : ""}">
+          <strong>${escapeHtml(t("passivePauseStatus"))}</strong>
+          <p>${escapeHtml(active ? t("passiveTimersPaused") : t("passiveTimersActive"))}</p>
+          ${pausedLabels.length ? `<p>${escapeHtml(pausedLabels.join(", "))}</p>` : ""}
+        </div>
+        <div class="mission-grid">
+          ${missionDefinitions
+            .map((definition) => {
+              const isCurrent = activeDefinition?.id === definition.id;
+              const blocked = missionStartBlocked(definition);
+              const note = definition.noteKey ? t(definition.noteKey) : "";
+              return `
+                <article class="mission-card ${isCurrent ? "is-active" : ""}" data-mission-card="${escapeHtml(definition.id)}">
+                  <span class="timer-state">${escapeHtml(isCurrent ? t("running") : blocked ? t("locked") : t("idle"))}</span>
+                  <h3>${escapeHtml(missionLabel(definition))}</h3>
+                  ${blocked && !isCurrent ? `<p class="timer-note">${escapeHtml(blocked)}</p>` : ""}
+                  ${note ? `<p class="timer-note">${escapeHtml(note)}</p>` : ""}
+                  <div class="timer-controls">
+                    <button class="btn primary" type="button" data-mission-start="${escapeHtml(definition.id)}" ${active || blocked ? "disabled" : ""}>${escapeHtml(missionStartLabel(definition))}</button>
+                    <button class="btn" type="button" data-mission-finish="${escapeHtml(definition.id)}" ${isCurrent ? "" : "disabled"}>${escapeHtml(missionFinishLabel(definition))}</button>
+                  </div>
+                </article>
+              `;
+            })
+            .join("")}
+        </div>
+      </section>
+    `;
+  }
+
   function renderTimers() {
     dom.timers.innerHTML = timerDefinitions
       .map((definition) => {
@@ -1289,6 +1727,7 @@
         const label = lang() === "da" ? definition.labelDa : definition.labelEn;
         const note = lang() === "da" ? definition.noteDa : definition.noteEn;
         const buttonText = view.status === "paused" ? t("resume") : t("start");
+        const defaultMinutes = timerDefaultMinutes(definition.id);
         return `
           <article class="timer-card" data-timer-card="${escapeHtml(definition.id)}">
             <span class="timer-state">${escapeHtml(statusLabel(definition, view.status))}</span>
@@ -1297,7 +1736,7 @@
             <div class="timer-display">${escapeHtml(view.status === "idle" ? "--" : formatDuration(view.remaining))}</div>
             <div class="field-group">
               <label for="timer-${escapeHtml(definition.id)}">${escapeHtml(t("minutes"))}</label>
-              <input id="timer-${escapeHtml(definition.id)}" type="number" min="1" max="240" value="${escapeHtml(timer.durationMin || definition.defaultMinutes)}" data-timer-minutes="${escapeHtml(definition.id)}">
+              <input id="timer-${escapeHtml(definition.id)}" type="number" min="1" max="300" value="${escapeHtml(timer.durationMin || defaultMinutes)}" data-timer-minutes="${escapeHtml(definition.id)}">
             </div>
             <div class="timer-controls">
               <button class="btn primary" type="button" data-timer-start="${escapeHtml(definition.id)}">${escapeHtml(buttonText)}</button>
@@ -1315,8 +1754,24 @@
     if (!definition) return;
     const input = document.querySelector(`[data-timer-minutes="${escapeAttrValue(id)}"]`);
     const saved = state.timers[id] || {};
-    const minutes = clampNumber(input?.value, 1, 240, definition.defaultMinutes);
+    const minutes = clampNumber(input?.value, 1, 300, timerDefaultMinutes(id));
     const remaining = saved.remainingMs > 0 ? saved.remainingMs : minutes * 60000;
+    if (isMissionActive() && passiveTimerIds.includes(id)) {
+      state.timers[id] = {
+        durationMin: minutes,
+        durationMs: minutes * 60000,
+        remainingMs: remaining,
+        running: false,
+        endAt: null,
+        pausedByMission: state.activeMission.id
+      };
+      if (!state.activeMission.pausedPassiveTimers.includes(id)) state.activeMission.pausedPassiveTimers.push(id);
+      saveState();
+      renderTimers();
+      renderMissionDashboard();
+      generatePlan();
+      return;
+    }
     state.timers[id] = {
       durationMin: minutes,
       durationMs: minutes * 60000,
@@ -1326,6 +1781,7 @@
     };
     saveState();
     renderTimers();
+    renderMissionDashboard();
     generatePlan();
   }
 
@@ -1339,12 +1795,88 @@
     });
     saveState();
     renderTimers();
+    renderMissionDashboard();
     generatePlan();
   }
 
   function resetTimer(id) {
     delete state.timers[id];
     saveState();
+    renderTimers();
+    renderMissionDashboard();
+    generatePlan();
+  }
+
+  function updateTimerSetting(id, value) {
+    const definition = timerSettingDefinitions.find((item) => item.id === id);
+    if (!definition) return;
+    state.timerSettings[id] = clampNumber(value, definition.min, definition.max, defaultTimerSettings[id]);
+    saveState();
+    renderTimers();
+    renderMissionDashboard();
+    generatePlan();
+  }
+
+  function resetTimerSettings() {
+    state.timerSettings = structuredClone(defaultTimerSettings);
+    renderTimerSettings();
+    renderTimers();
+    renderMissionDashboard();
+    generatePlan();
+    saveState();
+  }
+
+  function startMission(id) {
+    const definition = missionDefinition(id);
+    if (!definition) return;
+    readForm();
+    if (missionStartBlocked(definition)) return;
+    const durationMin = settingValue(definition.settingId);
+    const now = Date.now();
+    state.activeMission = {
+      id: definition.id,
+      timerId: definition.timerId,
+      startedAt: now,
+      endAt: now + durationMin * 60000,
+      durationMin,
+      pausedPassiveTimers: []
+    };
+    state.activeMission.pausedPassiveTimers = pausePassiveTimersForMission(definition.id);
+    startTimerWithMinutes(definition.timerId, durationMin, { missionId: definition.id });
+    saveState();
+    renderMissionDashboard();
+    renderTimers();
+    generatePlan();
+  }
+
+  function finishMission(id) {
+    if (!isMissionActive() || state.activeMission.id !== id) return;
+    const definition = missionDefinition(id);
+    const missionId = state.activeMission.id;
+    delete state.timers[definition.timerId];
+    resumePassiveTimersAfterMission(missionId);
+    state.activeMission = null;
+
+    if (definition.id === "legendaryBounty") {
+      state.setup.legendaryBountyOnCooldown = false;
+      startTimerWithMinutes("legendaryBountyCooldown", settingValue("legendaryCooldownMinutes"));
+    }
+
+    if (definition.id === "traderDelivery") {
+      state.setup.traderGoodsReady = false;
+      startTimerWithMinutes("traderGoods", settingValue("traderFullMinutes"));
+      startTimerWithMinutes("traderResupply", settingValue("traderResupplyMinutes"));
+    }
+
+    if (definition.id === "moonshineDelivery") {
+      state.setup.moonshineBatchReady = false;
+      startTimerWithMinutes("moonshineProduction", settingValue("moonshineStrongProductionMinutes"));
+      delete state.timers.moonshineDeliveryReady;
+    }
+
+    restoreForm();
+    saveState();
+    renderMissionDashboard();
     renderTimers();
     generatePlan();
   }
@@ -1386,12 +1918,23 @@
       readForm();
       generatePlan();
       renderBonusStatus();
+      renderMissionDashboard();
+    });
+
+    document.addEventListener("change", (event) => {
+      const settingInput = event.target.closest("[data-timer-setting]");
+      if (settingInput) {
+        updateTimerSetting(settingInput.dataset.timerSetting, settingInput.value);
+      }
     });
 
     document.addEventListener("click", (event) => {
       const priority = event.target.closest("[data-priority]");
       const resetSetup = event.target.closest("[data-reset-setup]");
       const resetCustomBonus = event.target.closest("[data-reset-custom-bonus]");
+      const resetDefaultTimes = event.target.closest("[data-reset-timer-settings]");
+      const missionStart = event.target.closest("[data-mission-start]");
+      const missionFinish = event.target.closest("[data-mission-finish]");
       const timerStart = event.target.closest("[data-timer-start]");
       const timerPause = event.target.closest("[data-timer-pause]");
       const timerReset = event.target.closest("[data-timer-reset]");
@@ -1408,9 +1951,11 @@
       if (resetSetup) {
         state.setup = structuredClone(defaultSetup);
         state.timers = {};
+        state.activeMission = null;
         renderRoles();
         renderRoleFocus();
         restoreForm();
+        renderMissionDashboard();
         renderTimers();
         renderBonusStatus();
         generatePlan();
@@ -1418,6 +1963,9 @@
       }
 
       if (resetCustomBonus) resetCustomBonusSetup();
+      if (resetDefaultTimes) resetTimerSettings();
+      if (missionStart) startMission(missionStart.dataset.missionStart);
+      if (missionFinish) finishMission(missionFinish.dataset.missionFinish);
       if (timerStart) startTimer(timerStart.dataset.timerStart);
       if (timerPause) pauseTimer(timerPause.dataset.timerPause);
       if (timerReset) resetTimer(timerReset.dataset.timerReset);
@@ -1431,12 +1979,15 @@
       renderRoleFocus();
       restoreForm();
       renderedLanguage = nextLanguage;
+      renderTimerSettings();
+      renderMissionDashboard();
       renderBonusStatus();
       renderTimers();
       generatePlan();
     });
 
     window.setInterval(() => {
+      renderMissionDashboard();
       renderTimers();
     }, 1000);
   }
@@ -1448,6 +1999,8 @@
     dom.bonusStatus = document.querySelector("#bonus-status");
     dom.customBonusSummary = document.querySelector("#custom-bonus-summary");
     dom.output = document.querySelector("#planner-output");
+    dom.timerSettings = document.querySelector("#timer-settings");
+    dom.missionDashboard = document.querySelector("#mission-dashboard");
     dom.timers = document.querySelector("#timer-dashboard");
     dom.comparison = document.querySelector("#activity-comparison");
   }
@@ -1459,6 +2012,8 @@
     renderRoles();
     renderRoleFocus();
     restoreForm();
+    renderTimerSettings();
+    renderMissionDashboard();
     renderedLanguage = lang();
     dom.output.innerHTML = `<div class="recommendation-card"><p>${escapeHtml(t("loading"))}</p></div>`;
     await loadData();
