@@ -58,10 +58,18 @@
   const customBonusTargets = new Set(["all", "bountyHunter", "trader", "collector", "moonshiner", "naturalist"]);
   const customBonusMultiplierValues = new Set(["1", "1.5", "2", "3"]);
   const passiveTimerIds = ["moonshineProduction", "traderGoods", "traderResupply"];
+  const legendaryBountyModeIds = new Set(["efficient", "balanced", "max", "custom"]);
+  const legendaryBountyTimerModes = [
+    { id: "efficient", minutes: 12, labelKey: "legendaryBountyModeEfficient" },
+    { id: "balanced", minutes: 16, labelKey: "legendaryBountyModeBalanced" },
+    { id: "max", minutes: 30, labelKey: "legendaryBountyModeMax" },
+    { id: "custom", minutes: 16, labelKey: "legendaryBountyModeCustom" }
+  ];
 
   const defaultTimerSettings = {
     regularBountyMinutes: 12,
-    legendaryBountyMinutes: 16,
+    legendaryBountyMode: "balanced",
+    legendaryBountyCustomMinutes: 16,
     legendaryCooldownMinutes: 48,
     traderDeliveryMinutes: 12,
     moonshineDeliveryMinutes: 10,
@@ -77,7 +85,7 @@
 
   const timerSettingDefinitions = [
     { id: "regularBountyMinutes", labelEn: "Regular bounty optimal turn-in reminder", labelDa: "Almindelig dusørjagt optimal turn-in reminder", min: 1, max: 30, suffix: "min" },
-    { id: "legendaryBountyMinutes", labelEn: "Legendary bounty mission timer", labelDa: "Legendary Bounty missionstimer", min: 1, max: 60, suffix: "min" },
+    { id: "legendaryBountyCustomMinutes", labelEn: "Legendary bounty custom mission timer", labelDa: "Legendary Bounty custom missionstimer", min: 1, max: 60, suffix: "min" },
     { id: "legendaryCooldownMinutes", labelEn: "Legendary bounty cooldown", labelDa: "Legendary Bounty cooldown", min: 1, max: 120, suffix: "min" },
     { id: "traderDeliveryMinutes", labelEn: "Trader delivery timer", labelDa: "Trader delivery timer", min: 1, max: 60, suffix: "min" },
     { id: "moonshineDeliveryMinutes", labelEn: "Moonshine delivery timer", labelDa: "Moonshine delivery timer", min: 1, max: 60, suffix: "min" },
@@ -93,7 +101,6 @@
 
   const timerSettingByTimerId = {
     bountyTurnIn: "regularBountyMinutes",
-    legendaryBountyMission: "legendaryBountyMinutes",
     legendaryBountyCooldown: "legendaryCooldownMinutes",
     traderDeliveryMission: "traderDeliveryMinutes",
     moonshineDeliveryMission: "moonshineDeliveryMinutes",
@@ -120,7 +127,7 @@
       id: "legendaryBounty",
       activityId: "legendary_bounty",
       timerId: "legendaryBountyMission",
-      settingId: "legendaryBountyMinutes",
+      settingId: "legendaryBountyCustomMinutes",
       cooldownTimerId: "legendaryBountyCooldown",
       labelEn: "Legendary Bounty",
       labelDa: "Legendarisk dusørjagt",
@@ -354,6 +361,21 @@
       activeTimersCopy: "Compact timer status for mission, cooldown and passive production.",
       noActiveTimers: "No active timer is running.",
       markDone: "Mark done",
+      legendaryBountyModeTitle: "Legendary Bounty payout timer",
+      legendaryBountyModeCopy: "Choose how long the hidden Legendary Bounty mission-time reminder should run.",
+      legendaryBountyModeEfficient: "Efficient farming: 12 min",
+      legendaryBountyModeBalanced: "Balanced: 16 min",
+      legendaryBountyModeMax: "Max reward / XP: 30 min",
+      legendaryBountyModeCustom: "Custom",
+      legendaryBountyCustomLabel: "Custom Legendary Bounty time",
+      legendaryBountyRecommendedMode: "Recommended for current priority",
+      legendaryBountyStartNote: "Start the timer when you regain control of your character after the intro/cutscene. The visible in-game timer does not control payout.",
+      legendaryBountyPayoutExplainer: "30 minutes gives max payout and max Bounty XP per Legendary Bounty. 12 minutes is usually better for efficient farming per hour. 16 minutes is used as the balanced default.",
+      legendaryBountyXpRecommendation: "Max XP: wait 30 minutes.",
+      legendaryBountyEfficientRecommendation: "Efficient farming: wait 12 minutes.",
+      legendaryBountyBalancedRecommendation: "Balanced: wait 16 minutes.",
+      legendaryBountyMaxRecommendation: "Max reward / XP: wait 30 minutes.",
+      legendaryBountyCustomRecommendation: "Custom: wait {minutes} minutes.",
       timerSettingsTitle: "Timer settings",
       timerSettingsCopy: "Adjust mission, cooldown and production defaults. Settings are saved locally and used by mission buttons, timers and rotation estimates.",
       resetDefaultTimes: "Reset default times",
@@ -369,7 +391,7 @@
       missionContinue: "Continue or finish the active mission before starting a new rotation.",
       finishMission: "Finish mission",
       regularBountyNote: "12 minutes is used as the default for regular bounties because it is generally the best balance for payout per time. Waiting longer can increase payout per mission, but often lowers efficiency per hour.",
-      legendaryBountyNote: "Legendary Bounty uses a separate mission timer and then starts a cooldown. The default mission timer is set to 16 minutes, and the cooldown is set to 48 minutes.",
+      legendaryBountyNote: "Legendary Bounty uses a hidden mission-time payout timer and then starts a 48 minute cooldown after completion.",
       timerSettingsSaved: "Timer settings saved locally.",
       missionStarted: "Mission started.",
       missionFinished: "Mission finished.",
@@ -472,6 +494,21 @@
       activeTimersCopy: "Kompakt timerstatus for mission, cooldown og passiv production.",
       noActiveTimers: "Ingen aktiv timer kører.",
       markDone: "Marker som færdig",
+      legendaryBountyModeTitle: "Legendary Bounty payout-timer",
+      legendaryBountyModeCopy: "Vælg hvor længe den skjulte Legendary Bounty missionstids-reminder skal køre.",
+      legendaryBountyModeEfficient: "Effektiv farming: 12 min",
+      legendaryBountyModeBalanced: "Balanceret: 16 min",
+      legendaryBountyModeMax: "Maks reward / XP: 30 min",
+      legendaryBountyModeCustom: "Brugerdefineret",
+      legendaryBountyCustomLabel: "Brugerdefineret Legendary Bounty tid",
+      legendaryBountyRecommendedMode: "Anbefalet for nuværende prioritet",
+      legendaryBountyStartNote: "Start timeren når du får kontrol over karakteren efter intro/cutscene. Den synlige in-game timer styrer ikke payout.",
+      legendaryBountyPayoutExplainer: "30 minutter giver max payout og max Bounty XP pr. Legendary Bounty. 12 minutter er typisk bedre for effektiv farming pr. time. 16 minutter bruges som balanceret standard.",
+      legendaryBountyXpRecommendation: "Maks XP: vent 30 minutter.",
+      legendaryBountyEfficientRecommendation: "Effektiv farming: vent 12 minutter.",
+      legendaryBountyBalancedRecommendation: "Balanceret: vent 16 minutter.",
+      legendaryBountyMaxRecommendation: "Maks reward / XP: vent 30 minutter.",
+      legendaryBountyCustomRecommendation: "Brugerdefineret: vent {minutes} minutter.",
       timerSettingsTitle: "Timerindstillinger",
       timerSettingsCopy: "Tilpas mission-, cooldown- og production-defaults. Indstillinger gemmes lokalt og bruges af mission-knapper, timere og rotation-estimater.",
       resetDefaultTimes: "Gendan standardtider",
@@ -487,7 +524,7 @@
       missionContinue: "Fortsæt eller afslut den aktive mission før du starter en ny rotation.",
       finishMission: "Afslut mission",
       regularBountyNote: "12 minutter er valgt som standard for almindelige bounties, fordi det normalt er den bedste balance for payout pr. tid. Længere ventetid kan give højere payout pr. mission, men ofte lavere effektivitet pr. time.",
-      legendaryBountyNote: "Legendary Bounty bruger en separat missionstimer og starter derefter en cooldown. Standard missionstimeren er sat til 16 minutter, og cooldown er sat til 48 minutter.",
+      legendaryBountyNote: "Legendary Bounty bruger en skjult missionstids-payout timer og starter derefter en 48 minutters cooldown efter afslutning.",
       timerSettingsSaved: "Timerindstillinger gemt lokalt.",
       missionStarted: "Mission startet.",
       missionFinished: "Mission afsluttet.",
@@ -607,7 +644,62 @@
     return clampNumber(state.timerSettings[id], definition?.min ?? 1, definition?.max ?? 300, fallback);
   }
 
+  function normalizeLegendaryBountyMode(value) {
+    return legendaryBountyModeIds.has(value) ? value : defaultTimerSettings.legendaryBountyMode;
+  }
+
+  function legendaryBountyModeFromMinutes(minutes) {
+    const value = Number(minutes);
+    if (value === 12) return "efficient";
+    if (value === 16) return "balanced";
+    if (value === 30) return "max";
+    return "custom";
+  }
+
+  function legendaryBountySelectedMode(settings = state.timerSettings) {
+    return normalizeLegendaryBountyMode(settings.legendaryBountyMode);
+  }
+
+  function legendaryBountyRecommendedMode(setup = state.setup, settings = state.timerSettings) {
+    const selected = legendaryBountySelectedMode(settings);
+    if (selected === "custom") return "custom";
+    if (setup.priority === "xp" || setup.priority === "roleXp") return "max";
+    if (setup.priority === "gold") return "efficient";
+    return selected;
+  }
+
+  function legendaryBountyModeMinutes(mode, settings = state.timerSettings) {
+    if (mode === "custom") return settingValue("legendaryBountyCustomMinutes");
+    return legendaryBountyTimerModes.find((item) => item.id === mode)?.minutes || 16;
+  }
+
+  function legendaryBountyTimerMinutes(setup = state.setup, settings = state.timerSettings) {
+    return legendaryBountyModeMinutes(legendaryBountyRecommendedMode(setup, settings), settings);
+  }
+
+  function legendaryBountyModeLabel(mode) {
+    const definition = legendaryBountyTimerModes.find((item) => item.id === mode);
+    return definition ? t(definition.labelKey) : t("legendaryBountyModeBalanced");
+  }
+
+  function legendaryBountyRecommendationText(setup = state.setup, settings = state.timerSettings) {
+    const mode = legendaryBountyRecommendedMode(setup, settings);
+    if (mode === "custom") {
+      return t("legendaryBountyCustomRecommendation").replace("{minutes}", legendaryBountyModeMinutes("custom", settings));
+    }
+    if (setup.priority === "xp" || setup.priority === "roleXp") return t("legendaryBountyXpRecommendation");
+    if (mode === "efficient") return t("legendaryBountyEfficientRecommendation");
+    if (mode === "max") return t("legendaryBountyMaxRecommendation");
+    return t("legendaryBountyBalancedRecommendation");
+  }
+
+  function missionDurationMinutes(definition) {
+    if (definition?.id === "legendaryBounty") return legendaryBountyTimerMinutes();
+    return settingValue(definition?.settingId);
+  }
+
   function timerDefaultMinutes(timerId) {
+    if (timerId === "legendaryBountyMission") return legendaryBountyTimerMinutes();
     const settingId = timerSettingByTimerId[timerId];
     const definition = timerDefinitions.find((item) => item.id === timerId);
     return settingId ? settingValue(settingId) : Number(definition?.defaultMinutes || 30);
@@ -647,6 +739,13 @@
     timerSettingDefinitions.forEach((definition) => {
       output[definition.id] = clampNumber(saved[definition.id], definition.min, definition.max, defaultTimerSettings[definition.id]);
     });
+    const legacyMinutes = Number(saved.legendaryBountyMinutes);
+    const hasLegacyMinutes = Number.isFinite(legacyMinutes);
+    const savedMode = legendaryBountyModeIds.has(saved.legendaryBountyMode) ? saved.legendaryBountyMode : "";
+    output.legendaryBountyMode = savedMode || (hasLegacyMinutes ? legendaryBountyModeFromMinutes(legacyMinutes) : defaultTimerSettings.legendaryBountyMode);
+    if (output.legendaryBountyMode === "custom" && hasLegacyMinutes && saved.legendaryBountyCustomMinutes === undefined) {
+      output.legendaryBountyCustomMinutes = clampNumber(legacyMinutes, 1, 60, defaultTimerSettings.legendaryBountyCustomMinutes);
+    }
     return output;
   }
 
@@ -661,7 +760,7 @@
       timerId: definition.timerId,
       startedAt,
       endAt,
-      durationMin: clampNumber(saved.durationMin, 1, 240, settingValue(definition.settingId)),
+      durationMin: clampNumber(saved.durationMin, 1, 240, missionDurationMinutes(definition)),
       pausedPassiveTimers: Array.isArray(saved.pausedPassiveTimers) ? saved.pausedPassiveTimers.filter((id) => passiveTimerIds.includes(id)) : []
     };
   }
@@ -1035,7 +1134,7 @@
 
   function activityDurationMinutes(activity) {
     if (activity.id === "regular_bounty") return settingValue("regularBountyMinutes");
-    if (activity.id === "legendary_bounty") return settingValue("legendaryBountyMinutes");
+    if (activity.id === "legendary_bounty") return legendaryBountyTimerMinutes();
     if (activity.id === "moonshine_delivery") return settingValue("moonshineDeliveryMinutes");
     if (activity.activityType === "trader_delivery") return settingValue("traderDeliveryMinutes");
     return Number(activity.durationMin || activity.activeTimeMin || 1);
@@ -1043,7 +1142,7 @@
 
   function activityActiveMinutes(activity) {
     if (activity.id === "regular_bounty") return settingValue("regularBountyMinutes");
-    if (activity.id === "legendary_bounty") return settingValue("legendaryBountyMinutes");
+    if (activity.id === "legendary_bounty") return legendaryBountyTimerMinutes();
     if (activity.id === "moonshine_delivery") return settingValue("moonshineDeliveryMinutes");
     if (activity.activityType === "trader_delivery") return settingValue("traderDeliveryMinutes");
     return Number(activity.activeTimeMin || activity.durationMin || 1);
@@ -1375,7 +1474,7 @@
 
   function activityTodoMinutes(activity) {
     if (activity.id === "regular_bounty") return settingValue("regularBountyMinutes");
-    if (activity.id === "legendary_bounty") return settingValue("legendaryBountyMinutes");
+    if (activity.id === "legendary_bounty") return legendaryBountyTimerMinutes();
     if (activity.id === "moonshine_delivery") return settingValue("moonshineDeliveryMinutes");
     if (activity.activityType === "trader_delivery") return settingValue("traderDeliveryMinutes");
     if (activity.id === "moonshine_production") return settingValue("moonshineStrongProductionMinutes");
@@ -1440,6 +1539,7 @@
     const missionId = missionIdForActivity(activity);
     const timerId = timerIdForActivity(activity);
     const reasons = reasonsFor(item);
+    const isLegendaryBounty = activity.id === "legendary_bounty";
     return {
       id: options.id || `activity-${activity.id}-${index}`,
       type: "activity",
@@ -1453,7 +1553,9 @@
       duration: `${activityTodoMinutes(activity)} min`,
       durationLabel: activity.id === "regular_bounty" ? t("todoReminder") : t("todoDuration"),
       estimate: activityEstimateLine(item),
-      reason: options.reason || reasons[0] || activityNote(activity),
+      reason: options.reason || (isLegendaryBounty ? legendaryBountyRecommendationText() : reasons[0]) || activityNote(activity),
+      note: isLegendaryBounty ? t("legendaryBountyStartNote") : "",
+      detail: isLegendaryBounty ? t("legendaryBountyPayoutExplainer") : "",
       status: missionId ? missionTodoStatus(missionId) : timerId ? timerTodoStatus(timerId, Boolean(options.deferredTimer)) : todoStatus("ready")
     };
   }
@@ -1472,6 +1574,11 @@
       reason: options.reason || t("todoProductionFollowup"),
       status: timerTodoStatus(timerId, Boolean(options.deferredTimer))
     };
+  }
+
+  function shouldPromoteLegendaryBounty() {
+    const selectedMode = legendaryBountySelectedMode();
+    return selectedMode !== "balanced" || ["xp", "roleXp", "gold"].includes(state.setup.priority);
   }
 
   function addUniqueTask(tasks, task, counts) {
@@ -1521,6 +1628,11 @@
     }
 
     activeTimerTasks(tasks.length).forEach((task) => addUniqueTask(tasks, task, counts));
+
+    if (!isMissionActive() && shouldPromoteLegendaryBounty()) {
+      const legendaryItem = scored.find((item) => item.activity.id === "legendary_bounty");
+      if (legendaryItem) addUniqueTask(tasks, buildActivityTask(legendaryItem, 1, { reason: legendaryBountyRecommendationText() }), counts);
+    }
 
     const timeline = makeTimeline(120, scored);
     const source = timeline.length ? timeline : scored.slice(0, 6).map((item) => item);
@@ -1595,6 +1707,8 @@
                 ${task.estimate ? `<span><strong>${escapeHtml(t("todoEstimate"))}:</strong> ${escapeHtml(task.estimate)}</span>` : ""}
               </div>
               <p class="todo-reason"><strong>${escapeHtml(t("todoReason"))}:</strong> ${escapeHtml(task.reason)}</p>
+              ${task.note ? `<p class="todo-note">${escapeHtml(task.note)}</p>` : ""}
+              ${task.detail ? `<p class="todo-note">${escapeHtml(task.detail)}</p>` : ""}
               <div class="timer-controls todo-actions">${renderTodoActions(task)}</div>
             </div>
           </article>
@@ -1858,6 +1972,9 @@
 
   function renderTimerSettings() {
     if (!dom.timerSettings) return;
+    const legendarySelectedMode = legendaryBountySelectedMode();
+    const legendaryRecommendedMode = legendaryBountyRecommendedMode();
+    const legendaryCustomMinutes = settingValue("legendaryBountyCustomMinutes");
     dom.timerSettings.innerHTML = `
       <section class="income-panel timer-settings-panel">
         <div class="timer-settings-head">
@@ -1867,8 +1984,29 @@
           </div>
           <button class="btn" type="button" data-reset-timer-settings>${escapeHtml(t("resetDefaultTimes"))}</button>
         </div>
+        <article class="legendary-bounty-setting">
+          <div>
+            <label for="legendary-bounty-mode">${escapeHtml(t("legendaryBountyModeTitle"))}</label>
+            <p>${escapeHtml(t("legendaryBountyModeCopy"))}</p>
+          </div>
+          <div class="legendary-mode-grid">
+            <select id="legendary-bounty-mode" data-legendary-bounty-mode>
+              ${legendaryBountyTimerModes.map((mode) => `
+                <option value="${escapeHtml(mode.id)}" ${legendarySelectedMode === mode.id ? "selected" : ""}>${escapeHtml(t(mode.labelKey))}</option>
+              `).join("")}
+            </select>
+            <div class="timer-setting-input">
+              <input id="timer-setting-legendaryBountyCustomMinutes" type="number" min="1" max="60" value="${escapeHtml(legendaryCustomMinutes)}" data-timer-setting="legendaryBountyCustomMinutes" ${legendarySelectedMode === "custom" ? "" : "disabled"} aria-label="${escapeHtml(t("legendaryBountyCustomLabel"))}">
+              <span>${escapeHtml(t("minutes"))}</span>
+            </div>
+          </div>
+          <p class="legendary-mode-note"><strong>${escapeHtml(t("legendaryBountyRecommendedMode"))}:</strong> ${escapeHtml(legendaryBountyModeLabel(legendaryRecommendedMode))} - ${escapeHtml(legendaryBountyRecommendationText())}</p>
+          <p class="legendary-mode-note">${escapeHtml(t("legendaryBountyStartNote"))}</p>
+          <p class="legendary-mode-note">${escapeHtml(t("legendaryBountyPayoutExplainer"))}</p>
+        </article>
         <div class="timer-settings-grid">
           ${timerSettingDefinitions
+            .filter((definition) => definition.id !== "legendaryBountyCustomMinutes")
             .map((definition) => {
               const value = settingValue(definition.id);
               return `
@@ -2046,6 +2184,15 @@
     generatePlan();
   }
 
+  function updateLegendaryBountyMode(value) {
+    state.timerSettings.legendaryBountyMode = normalizeLegendaryBountyMode(value);
+    saveState();
+    renderTimerSettings();
+    renderTimers();
+    renderMissionDashboard();
+    generatePlan();
+  }
+
   function resetTimerSettings() {
     state.timerSettings = structuredClone(defaultTimerSettings);
     renderTimerSettings();
@@ -2060,7 +2207,7 @@
     if (!definition) return;
     readForm();
     if (missionStartBlocked(definition)) return;
-    const durationMin = settingValue(definition.settingId);
+    const durationMin = missionDurationMinutes(definition);
     const now = Date.now();
     state.activeMission = {
       id: definition.id,
@@ -2151,6 +2298,10 @@
     });
 
     document.addEventListener("change", (event) => {
+      const legendaryModeInput = event.target.closest("[data-legendary-bounty-mode]");
+      if (legendaryModeInput) {
+        updateLegendaryBountyMode(legendaryModeInput.value);
+      }
       const settingInput = event.target.closest("[data-timer-setting]");
       if (settingInput) {
         updateTimerSetting(settingInput.dataset.timerSetting, settingInput.value);
