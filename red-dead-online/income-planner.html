@@ -67,11 +67,40 @@
         "setup.legendary": "Naturalist legendary animal access for Trader materials",
         "roles.title": "Owned roles and role ranks",
         "roles.copy": "Leave a role unchecked if you do not own it yet.",
-        "status.title": "Business status",
-        "status.copy": "Use these quick status toggles when your current in-game production state is known. Timers still override status while they are running.",
-        "status.moonshineReady": "Moonshine batch is ready for delivery",
-        "status.traderReady": "Trader goods are ready for delivery",
+        "status.kicker": "Current business status",
+        "status.title": "Current business status",
+        "status.copy": "Set Trader and Moonshine state before generating the plan. Timers still override manual status while they are running.",
+        "status.moonshine": "Moonshine",
+        "status.moonshineReady": "Moonshine batch ready",
+        "status.moonshineRunning": "Production running",
+        "status.moonshineStrength": "Strength",
+        "status.moonshineWeak": "Weak",
+        "status.moonshineAverage": "Average",
+        "status.moonshineStrong": "Strong",
+        "status.moonshineRemaining": "Remaining production time",
+        "status.moonshineRestarted": "Mash/production just restarted",
+        "status.trader": "Trader",
+        "status.traderMaterials": "Trader materials",
+        "status.materialsEmpty": "Empty",
+        "status.materialsLow": "Low",
+        "status.materialsOk": "OK",
+        "status.materialsFull": "Full",
+        "status.traderSupplies": "Trader supplies",
+        "status.suppliesNeeds": "Needs resupply",
+        "status.suppliesSupplied": "Supplied / production running",
+        "status.traderGoods": "Goods amount",
+        "status.traderReady": "Goods ready",
         "status.legendaryCooldown": "Legendary Bounty is on cooldown",
+        "status.markMaterialsFull": "Materials filled",
+        "status.resetMaterials": "Reset materials",
+        "status.markResupplyDone": "Resupply done",
+        "status.resetResupply": "Reset resupply",
+        "status.markGoodsReady": "Goods ready",
+        "status.resetGoods": "Reset goods",
+        "status.markBatchReady": "Mark batch ready",
+        "status.startProduction": "Start production",
+        "status.resetBatch": "Reset batch",
+        "status.markDelivered": "Mark delivered",
         "priority.kicker": "Priority",
         "priority.title": "Choose what the rotation should optimize.",
         "priority.cash": "Max RDO$",
@@ -85,6 +114,7 @@
         "priority.roleFocus": "Role XP focus",
         "bonus.kicker": "Monthly bonuses",
         "bonus.title": "Monthly bonuses",
+        "bonus.overviewTitle": "Monthly bonuses before planning",
         "bonus.copy": "Rockstar changes bonuses regularly. Enter this month’s bonuses manually here if you want them included in the calculation.",
         "bonus.use": "Apply fixed monthly bonus data",
         "bonus.custom": "Enable custom monthly bonus",
@@ -164,11 +194,40 @@
         "setup.legendary": "Naturalist legendary animal adgang til Trader materials",
         "roles.title": "Owned roles og role ranks",
         "roles.copy": "Lad en role være unchecked hvis du ikke ejer den endnu.",
-        "status.title": "Business status",
-        "status.copy": "Brug disse hurtige statusfelter når din aktuelle in-game production state er kendt. Timere overstyrer stadig status mens de kører.",
-        "status.moonshineReady": "Moonshine batch er klar til delivery",
-        "status.traderReady": "Trader goods er klar til delivery",
+        "status.kicker": "Aktuel business-status",
+        "status.title": "Aktuel business-status",
+        "status.copy": "Sæt Trader og Moonshine status før planen genereres. Timere overstyrer stadig manuel status mens de kører.",
+        "status.moonshine": "Moonshine",
+        "status.moonshineReady": "Moonshine batch klar",
+        "status.moonshineRunning": "Produktion kører",
+        "status.moonshineStrength": "Styrke",
+        "status.moonshineWeak": "Weak",
+        "status.moonshineAverage": "Average",
+        "status.moonshineStrong": "Strong",
+        "status.moonshineRemaining": "Resterende produktionstid",
+        "status.moonshineRestarted": "Mash/production er lige startet",
+        "status.trader": "Trader",
+        "status.traderMaterials": "Trader materialer",
+        "status.materialsEmpty": "Empty",
+        "status.materialsLow": "Low",
+        "status.materialsOk": "OK",
+        "status.materialsFull": "Full",
+        "status.traderSupplies": "Trader supplies",
+        "status.suppliesNeeds": "Needs resupply",
+        "status.suppliesSupplied": "Supplied / production running",
+        "status.traderGoods": "Goods amount",
+        "status.traderReady": "Goods klar",
         "status.legendaryCooldown": "Legendary Bounty er på cooldown",
+        "status.markMaterialsFull": "Skind/materialer fyldt op",
+        "status.resetMaterials": "Nulstil materialer",
+        "status.markResupplyDone": "Resupply udført",
+        "status.resetResupply": "Nulstil resupply",
+        "status.markGoodsReady": "Goods klar",
+        "status.resetGoods": "Nulstil goods",
+        "status.markBatchReady": "Marker batch klar",
+        "status.startProduction": "Start production",
+        "status.resetBatch": "Nulstil batch",
+        "status.markDelivered": "Marker leveret",
         "priority.kicker": "Prioritet",
         "priority.title": "Vælg hvad rotationen skal optimere.",
         "priority.cash": "Maks RDO$",
@@ -182,6 +241,7 @@
         "priority.roleFocus": "Role XP focus",
         "bonus.kicker": "Månedlige bonusser",
         "bonus.title": "Månedlige bonusser",
+        "bonus.overviewTitle": "Månedlige bonusser før planlægning",
         "bonus.copy": "Rockstar ændrer bonusser løbende. Indtast månedens bonusser manuelt her, hvis du vil have dem med i beregningen.",
         "bonus.use": "Brug faste månedlige bonusdata",
         "bonus.custom": "Aktivér manuel månedlig bonus",
@@ -271,6 +331,12 @@
 
       <div class="planner-shell">
         <form class="setup-stack" id="income-planner-form">
+          <section class="income-panel bonus-overview-panel">
+            <p class="eyebrow" data-page-i18n="bonus.kicker">Monthly bonuses</p>
+            <h3 data-page-i18n="bonus.overviewTitle">Monthly bonuses before planning</h3>
+            <div id="bonus-overview" class="bonus-line" data-no-i18n="true"></div>
+          </section>
+
           <section class="income-panel">
             <div class="input-grid">
               <div class="field-group">
@@ -319,23 +385,90 @@
             <div class="role-grid" id="role-grid" data-no-i18n="true"></div>
           </section>
 
-          <section class="income-panel">
-            <h3 data-page-i18n="status.title">Business status</h3>
-            <p data-page-i18n="status.copy">Use these quick status toggles when your current in-game production state is known. Timers still override status while they are running.</p>
-            <div class="toggle-stack">
-              <label class="toggle-row">
-                <input id="moonshineBatchReady" name="moonshineBatchReady" type="checkbox" checked data-planner-input>
-                <span data-page-i18n="status.moonshineReady">Moonshine batch is ready for delivery</span>
-              </label>
-              <label class="toggle-row">
-                <input id="traderGoodsReady" name="traderGoodsReady" type="checkbox" checked data-planner-input>
-                <span data-page-i18n="status.traderReady">Trader goods are ready for delivery</span>
-              </label>
-              <label class="toggle-row">
-                <input id="legendaryBountyOnCooldown" name="legendaryBountyOnCooldown" type="checkbox" data-planner-input>
-                <span data-page-i18n="status.legendaryCooldown">Legendary Bounty is on cooldown</span>
-              </label>
+          <section class="income-panel business-status-panel">
+            <p class="eyebrow" data-page-i18n="status.kicker">Current business status</p>
+            <h3 data-page-i18n="status.title">Current business status</h3>
+            <p data-page-i18n="status.copy">Set Trader and Moonshine state before generating the plan. Timers still override manual status while they are running.</p>
+            <div class="business-status-grid">
+              <div class="business-status-card">
+                <h4 data-page-i18n="status.moonshine">Moonshine</h4>
+                <div class="toggle-stack">
+                  <label class="toggle-row">
+                    <input id="moonshineBatchReady" name="moonshineBatchReady" type="checkbox" checked data-planner-input>
+                    <span data-page-i18n="status.moonshineReady">Moonshine batch ready</span>
+                  </label>
+                  <label class="toggle-row">
+                    <input id="moonshineProductionRunning" name="moonshineProductionRunning" type="checkbox" data-planner-input>
+                    <span data-page-i18n="status.moonshineRunning">Production running</span>
+                  </label>
+                </div>
+                <div class="input-grid compact-input-grid field-spaced">
+                  <div class="field-group">
+                    <label for="moonshineStrength" data-page-i18n="status.moonshineStrength">Strength</label>
+                    <select id="moonshineStrength" name="moonshineStrength" data-planner-input>
+                      <option value="weak" data-page-i18n="status.moonshineWeak">Weak</option>
+                      <option value="average" data-page-i18n="status.moonshineAverage">Average</option>
+                      <option value="strong" data-page-i18n="status.moonshineStrong">Strong</option>
+                    </select>
+                  </div>
+                  <div class="field-group">
+                    <label for="moonshineRemainingMinutes" data-page-i18n="status.moonshineRemaining">Remaining production time</label>
+                    <input id="moonshineRemainingMinutes" name="moonshineRemainingMinutes" type="number" min="0" max="180" value="60" data-planner-input>
+                  </div>
+                </div>
+                <label class="toggle-row field-spaced">
+                  <input id="moonshineJustRestarted" name="moonshineJustRestarted" type="checkbox" data-planner-input>
+                  <span data-page-i18n="status.moonshineRestarted">Mash/production just restarted</span>
+                </label>
+                <div class="planner-actions status-actions">
+                  <button class="btn" type="button" data-business-action="markBatchReady" data-page-i18n="status.markBatchReady">Mark batch ready</button>
+                  <button class="btn" type="button" data-business-action="startMoonshineProduction" data-page-i18n="status.startProduction">Start production</button>
+                  <button class="btn" type="button" data-business-action="resetBatch" data-page-i18n="status.resetBatch">Reset batch</button>
+                  <button class="btn" type="button" data-business-action="markMoonshineDelivered" data-page-i18n="status.markDelivered">Mark delivered</button>
+                </div>
+              </div>
+              <div class="business-status-card">
+                <h4 data-page-i18n="status.trader">Trader</h4>
+                <div class="input-grid compact-input-grid">
+                  <div class="field-group">
+                    <label for="traderMaterialsStatus" data-page-i18n="status.traderMaterials">Trader materials</label>
+                    <select id="traderMaterialsStatus" name="traderMaterialsStatus" data-planner-input>
+                      <option value="empty" data-page-i18n="status.materialsEmpty">Empty</option>
+                      <option value="low" data-page-i18n="status.materialsLow">Low</option>
+                      <option value="ok" data-page-i18n="status.materialsOk">OK</option>
+                      <option value="full" data-page-i18n="status.materialsFull">Full</option>
+                    </select>
+                  </div>
+                  <div class="field-group">
+                    <label for="traderSuppliesStatus" data-page-i18n="status.traderSupplies">Trader supplies</label>
+                    <select id="traderSuppliesStatus" name="traderSuppliesStatus" data-planner-input>
+                      <option value="needs" data-page-i18n="status.suppliesNeeds">Needs resupply</option>
+                      <option value="supplied" data-page-i18n="status.suppliesSupplied">Supplied / production running</option>
+                    </select>
+                  </div>
+                  <div class="field-group">
+                    <label for="traderGoodsAmount" data-page-i18n="status.traderGoods">Goods amount</label>
+                    <input id="traderGoodsAmount" name="traderGoodsAmount" type="number" min="0" max="100" value="100" data-planner-input>
+                  </div>
+                  <label class="toggle-row business-inline-toggle">
+                    <input id="traderGoodsReady" name="traderGoodsReady" type="checkbox" checked data-planner-input>
+                    <span data-page-i18n="status.traderReady">Goods ready</span>
+                  </label>
+                </div>
+                <div class="planner-actions status-actions">
+                  <button class="btn" type="button" data-business-action="markMaterialsFull" data-page-i18n="status.markMaterialsFull">Materials filled</button>
+                  <button class="btn" type="button" data-business-action="resetMaterials" data-page-i18n="status.resetMaterials">Reset materials</button>
+                  <button class="btn" type="button" data-business-action="markResupplyDone" data-page-i18n="status.markResupplyDone">Resupply done</button>
+                  <button class="btn" type="button" data-business-action="resetResupply" data-page-i18n="status.resetResupply">Reset resupply</button>
+                  <button class="btn" type="button" data-business-action="markGoodsReady" data-page-i18n="status.markGoodsReady">Goods ready</button>
+                  <button class="btn" type="button" data-business-action="resetGoods" data-page-i18n="status.resetGoods">Reset goods</button>
+                </div>
+              </div>
             </div>
+            <label class="toggle-row field-spaced">
+              <input id="legendaryBountyOnCooldown" name="legendaryBountyOnCooldown" type="checkbox" data-planner-input>
+              <span data-page-i18n="status.legendaryCooldown">Legendary Bounty is on cooldown</span>
+            </label>
           </section>
 
           <section class="income-panel">

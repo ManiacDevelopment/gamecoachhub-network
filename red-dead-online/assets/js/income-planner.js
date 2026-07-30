@@ -59,6 +59,9 @@
   const customBonusMultiplierValues = new Set(["1", "1.5", "2", "3"]);
   const passiveTimerIds = ["moonshineProduction", "traderGoods", "traderResupply"];
   const legendaryBountyModeIds = new Set(["efficient", "balanced", "max", "custom"]);
+  const moonshineStrengthIds = new Set(["weak", "average", "strong"]);
+  const traderMaterialStatusIds = new Set(["empty", "low", "ok", "full"]);
+  const traderSupplyStatusIds = new Set(["needs", "supplied"]);
   const legendaryBountyTimerModes = [
     { id: "efficient", minutes: 12, labelKey: "legendaryBountyModeEfficient" },
     { id: "balanced", minutes: 16, labelKey: "legendaryBountyModeBalanced" },
@@ -350,6 +353,11 @@
       todoOnCooldown: "On cooldown",
       todoWaitingProduction: "Waiting for production",
       todoCompleted: "Completed",
+      todoCategoryDoNow: "Do now",
+      todoCategoryStatus: "Status",
+      todoCategoryWhileWaiting: "While waiting",
+      todoCategoryMaintenance: "Maintenance",
+      todoCategoryPassive: "Passive production",
       todoStartAfterDelivery: "Start after delivery is finished",
       todoRecommendedWaiting: "Recommended while passive production runs",
       todoActiveWaiting: "Active waiting time",
@@ -357,6 +365,44 @@
       todoResupplyFollowup: "Resupply check after Trader delivery.",
       todoMissionInProgress: "Mission in progress",
       todoNoTasks: "Generate a plan to see your to-do list.",
+      monthlyBonusOverviewTitle: "Monthly bonuses",
+      fixedMonthlyBonusLabel: "Fixed monthly data",
+      currentBusinessStatusTitle: "Current business status",
+      moonshineBatchReadyLabel: "Moonshine batch ready",
+      moonshineProductionRunningLabel: "Production running",
+      moonshineStrengthLabel: "Moonshine strength",
+      moonshineRemainingLabel: "Remaining production time",
+      moonshineRestartedLabel: "Mash/production just restarted",
+      moonshineWeak: "Weak",
+      moonshineAverage: "Average",
+      moonshineStrong: "Strong",
+      traderMaterialsLabel: "Trader materials",
+      traderSuppliesLabel: "Trader supplies",
+      traderGoodsAmountLabel: "Trader goods amount",
+      traderGoodsReadyLabel: "Goods ready",
+      materialsEmpty: "Empty",
+      materialsLow: "Low",
+      materialsOk: "OK",
+      materialsFull: "Full",
+      suppliesNeeds: "Needs resupply",
+      suppliesSupplied: "Supplied / production running",
+      markMaterialsFull: "Materials filled",
+      resetMaterials: "Reset materials",
+      markResupplyDone: "Resupply done",
+      resetResupply: "Reset resupply",
+      markGoodsReady: "Goods ready",
+      resetGoods: "Reset goods",
+      markBatchReady: "Mark batch ready",
+      startMoonshineProduction: "Start production",
+      resetBatch: "Reset batch",
+      markMoonshineDelivered: "Mark delivered",
+      moonshineReadyReason: "Moonshine batch is ready. Deliver it before passive waiting.",
+      traderReadyReason: "Trader goods are ready. Deliver the wagon before passive production waiting.",
+      traderResupplyNeededTitle: "Trader Resupply",
+      traderResupplyNeededReason: "Supplies need resupply before Cripps production can keep moving.",
+      traderMaterialsNeededTitle: "Collect Trader materials",
+      traderMaterialsNeededReason: "Materials are low or empty. Refill skins/materials before waiting on Trader production.",
+      traderProductionBlocked: "Trader production needs materials or resupply before passive waiting matters.",
       activeTimersTitle: "Active timers",
       activeTimersCopy: "Compact timer status for mission, cooldown and passive production.",
       noActiveTimers: "No active timer is running.",
@@ -483,6 +529,11 @@
       todoOnCooldown: "På cooldown",
       todoWaitingProduction: "Venter på produktion",
       todoCompleted: "Afsluttet",
+      todoCategoryDoNow: "Gør nu",
+      todoCategoryStatus: "Status",
+      todoCategoryWhileWaiting: "Mens du venter",
+      todoCategoryMaintenance: "Vedligeholdelse",
+      todoCategoryPassive: "Passiv produktion",
       todoStartAfterDelivery: "Start når levering er afsluttet",
       todoRecommendedWaiting: "Anbefalet mens passiv produktion kører",
       todoActiveWaiting: "Aktiv ventetid",
@@ -490,6 +541,44 @@
       todoResupplyFollowup: "Resupply check efter Trader delivery.",
       todoMissionInProgress: "Mission i gang",
       todoNoTasks: "Generer en plan for at se din to-do liste.",
+      monthlyBonusOverviewTitle: "Månedlige bonusser",
+      fixedMonthlyBonusLabel: "Faste månedlige data",
+      currentBusinessStatusTitle: "Aktuel business-status",
+      moonshineBatchReadyLabel: "Moonshine batch klar",
+      moonshineProductionRunningLabel: "Produktion kører",
+      moonshineStrengthLabel: "Moonshine styrke",
+      moonshineRemainingLabel: "Resterende produktionstid",
+      moonshineRestartedLabel: "Mash/production er lige startet",
+      moonshineWeak: "Weak",
+      moonshineAverage: "Average",
+      moonshineStrong: "Strong",
+      traderMaterialsLabel: "Trader materialer",
+      traderSuppliesLabel: "Trader supplies",
+      traderGoodsAmountLabel: "Trader goods amount",
+      traderGoodsReadyLabel: "Goods klar",
+      materialsEmpty: "Empty",
+      materialsLow: "Low",
+      materialsOk: "OK",
+      materialsFull: "Full",
+      suppliesNeeds: "Needs resupply",
+      suppliesSupplied: "Supplied / production running",
+      markMaterialsFull: "Skind/materialer fyldt op",
+      resetMaterials: "Nulstil materialer",
+      markResupplyDone: "Resupply udført",
+      resetResupply: "Nulstil resupply",
+      markGoodsReady: "Goods klar",
+      resetGoods: "Nulstil goods",
+      markBatchReady: "Marker batch klar",
+      startMoonshineProduction: "Start production",
+      resetBatch: "Nulstil batch",
+      markMoonshineDelivered: "Marker leveret",
+      moonshineReadyReason: "Moonshine batch er klar. Lever den før passiv ventetid.",
+      traderReadyReason: "Trader goods er klar. Kør wagon delivery før passiv production waiting.",
+      traderResupplyNeededTitle: "Trader Resupply",
+      traderResupplyNeededReason: "Supplies kræver resupply før Cripps production kan fortsætte.",
+      traderMaterialsNeededTitle: "Fyld Trader materialer",
+      traderMaterialsNeededReason: "Materialer er low eller empty. Fyld skind/materialer op før du venter på Trader production.",
+      traderProductionBlocked: "Trader production kræver materialer eller resupply før passiv waiting giver mening.",
       activeTimersTitle: "Aktive timere",
       activeTimersCopy: "Kompakt timerstatus for mission, cooldown og passiv production.",
       noActiveTimers: "Ingen aktiv timer kører.",
@@ -543,6 +632,13 @@
     saveCashTravel: false,
     naturalistLegendaryAccess: false,
     moonshineBatchReady: true,
+    moonshineProductionRunning: false,
+    moonshineStrength: "strong",
+    moonshineRemainingMinutes: 60,
+    moonshineJustRestarted: false,
+    traderMaterialsStatus: "ok",
+    traderSuppliesStatus: "supplied",
+    traderGoodsAmount: 100,
     traderGoodsReady: true,
     legendaryBountyOnCooldown: false,
     priority: "balanced",
@@ -638,10 +734,50 @@
     return customBonusMultiplierValues.has(normalized) ? Number(normalized) : 1;
   }
 
+  function normalizeMoonshineStrength(value) {
+    return moonshineStrengthIds.has(value) ? value : "strong";
+  }
+
+  function normalizeTraderMaterialsStatus(value) {
+    return traderMaterialStatusIds.has(value) ? value : "ok";
+  }
+
+  function normalizeTraderSuppliesStatus(value) {
+    return traderSupplyStatusIds.has(value) ? value : "supplied";
+  }
+
   function settingValue(id) {
     const definition = timerSettingDefinitions.find((item) => item.id === id);
     const fallback = defaultTimerSettings[id] ?? 1;
     return clampNumber(state.timerSettings[id], definition?.min ?? 1, definition?.max ?? 300, fallback);
+  }
+
+  function moonshineProductionMinutesForStrength(strength = state.setup.moonshineStrength) {
+    const normalized = normalizeMoonshineStrength(strength);
+    if (normalized === "weak") return settingValue("moonshineWeakProductionMinutes");
+    if (normalized === "average") return settingValue("moonshineAverageProductionMinutes");
+    return settingValue("moonshineStrongProductionMinutes");
+  }
+
+  function traderFullGoods() {
+    return settingValue("traderFullGoods");
+  }
+
+  function traderGoodsAmount(setup = state.setup) {
+    return clampNumber(setup.traderGoodsAmount, 0, traderFullGoods(), setup.traderGoodsReady ? traderFullGoods() : 0);
+  }
+
+  function traderGoodsRemainingMinutes(setup = state.setup) {
+    const remainingGoods = Math.max(0, traderFullGoods() - traderGoodsAmount(setup));
+    return Math.max(1, remainingGoods * settingValue("traderGoodMinutes"));
+  }
+
+  function traderNeedsResupply(setup = state.setup) {
+    return normalizeTraderSuppliesStatus(setup.traderSuppliesStatus) === "needs";
+  }
+
+  function traderMaterialsNeedWork(setup = state.setup) {
+    return ["empty", "low"].includes(normalizeTraderMaterialsStatus(setup.traderMaterialsStatus));
   }
 
   function normalizeLegendaryBountyMode(value) {
@@ -733,6 +869,31 @@
     return output;
   }
 
+  function normalizeBusinessStatus(setup, saved = {}) {
+    setup.moonshineStrength = normalizeMoonshineStrength(setup.moonshineStrength);
+    setup.moonshineRemainingMinutes = clampNumber(
+      setup.moonshineRemainingMinutes,
+      0,
+      180,
+      moonshineProductionMinutesForStrength(setup.moonshineStrength)
+    );
+    setup.moonshineProductionRunning = Boolean(setup.moonshineProductionRunning);
+    setup.moonshineJustRestarted = Boolean(setup.moonshineJustRestarted);
+    setup.traderMaterialsStatus = normalizeTraderMaterialsStatus(setup.traderMaterialsStatus);
+    setup.traderSuppliesStatus = normalizeTraderSuppliesStatus(setup.traderSuppliesStatus);
+    if (saved?.traderGoodsAmount === undefined && saved?.traderGoodsReady === false) {
+      setup.traderGoodsAmount = 0;
+    }
+    setup.traderGoodsAmount = clampNumber(setup.traderGoodsAmount, 0, traderFullGoods(), setup.traderGoodsReady ? traderFullGoods() : 0);
+    setup.traderGoodsReady = Boolean(setup.traderGoodsReady) || setup.traderGoodsAmount >= traderFullGoods();
+    if (setup.traderGoodsReady) setup.traderGoodsAmount = traderFullGoods();
+    if (setup.moonshineBatchReady) {
+      setup.moonshineProductionRunning = false;
+      setup.moonshineJustRestarted = false;
+    }
+    return setup;
+  }
+
   function mergeTimerSettings(saved) {
     const output = structuredClone(defaultTimerSettings);
     if (!saved || typeof saved !== "object") return output;
@@ -770,6 +931,7 @@
       const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "{}");
       state.setup = deepMerge(defaultSetup, saved.setup);
       state.timerSettings = mergeTimerSettings(saved.timerSettings);
+      normalizeBusinessStatus(state.setup, saved.setup || {});
       state.activeMission = sanitizeActiveMission(saved.activeMission);
       state.timers = saved.timers && typeof saved.timers === "object" ? saved.timers : {};
       state.lastPlan = saved.lastPlan || null;
@@ -932,6 +1094,13 @@
     dom.form.saveCashTravel.checked = Boolean(setup.saveCashTravel);
     dom.form.naturalistLegendaryAccess.checked = Boolean(setup.naturalistLegendaryAccess);
     if (dom.form.moonshineBatchReady) dom.form.moonshineBatchReady.checked = Boolean(setup.moonshineBatchReady);
+    if (dom.form.moonshineProductionRunning) dom.form.moonshineProductionRunning.checked = Boolean(setup.moonshineProductionRunning);
+    if (dom.form.moonshineStrength) dom.form.moonshineStrength.value = normalizeMoonshineStrength(setup.moonshineStrength);
+    if (dom.form.moonshineRemainingMinutes) dom.form.moonshineRemainingMinutes.value = clampNumber(setup.moonshineRemainingMinutes, 0, 180, moonshineProductionMinutesForStrength(setup.moonshineStrength));
+    if (dom.form.moonshineJustRestarted) dom.form.moonshineJustRestarted.checked = Boolean(setup.moonshineJustRestarted);
+    if (dom.form.traderMaterialsStatus) dom.form.traderMaterialsStatus.value = normalizeTraderMaterialsStatus(setup.traderMaterialsStatus);
+    if (dom.form.traderSuppliesStatus) dom.form.traderSuppliesStatus.value = normalizeTraderSuppliesStatus(setup.traderSuppliesStatus);
+    if (dom.form.traderGoodsAmount) dom.form.traderGoodsAmount.value = traderGoodsAmount(setup);
     if (dom.form.traderGoodsReady) dom.form.traderGoodsReady.checked = Boolean(setup.traderGoodsReady);
     if (dom.form.legendaryBountyOnCooldown) dom.form.legendaryBountyOnCooldown.checked = Boolean(setup.legendaryBountyOnCooldown);
     dom.form.useMonthlyBonuses.checked = Boolean(setup.useMonthlyBonuses);
@@ -962,7 +1131,19 @@
     setup.saveCashTravel = dom.form.saveCashTravel.checked;
     setup.naturalistLegendaryAccess = dom.form.naturalistLegendaryAccess.checked;
     setup.moonshineBatchReady = dom.form.moonshineBatchReady ? dom.form.moonshineBatchReady.checked : true;
-    setup.traderGoodsReady = dom.form.traderGoodsReady ? dom.form.traderGoodsReady.checked : true;
+    setup.moonshineProductionRunning = dom.form.moonshineProductionRunning ? dom.form.moonshineProductionRunning.checked : false;
+    setup.moonshineStrength = normalizeMoonshineStrength(dom.form.moonshineStrength?.value);
+    setup.moonshineRemainingMinutes = clampNumber(dom.form.moonshineRemainingMinutes?.value, 0, 180, moonshineProductionMinutesForStrength(setup.moonshineStrength));
+    setup.moonshineJustRestarted = dom.form.moonshineJustRestarted ? dom.form.moonshineJustRestarted.checked : false;
+    setup.traderMaterialsStatus = normalizeTraderMaterialsStatus(dom.form.traderMaterialsStatus?.value);
+    setup.traderSuppliesStatus = normalizeTraderSuppliesStatus(dom.form.traderSuppliesStatus?.value);
+    setup.traderGoodsAmount = clampNumber(dom.form.traderGoodsAmount?.value, 0, traderFullGoods(), setup.traderGoodsReady ? traderFullGoods() : 0);
+    setup.traderGoodsReady = dom.form.traderGoodsReady ? dom.form.traderGoodsReady.checked || setup.traderGoodsAmount >= traderFullGoods() : setup.traderGoodsAmount >= traderFullGoods();
+    normalizeBusinessStatus(setup, setup);
+    if (dom.form.traderGoodsReady) dom.form.traderGoodsReady.checked = Boolean(setup.traderGoodsReady);
+    if (dom.form.traderGoodsAmount && Number(dom.form.traderGoodsAmount.value) !== setup.traderGoodsAmount) dom.form.traderGoodsAmount.value = setup.traderGoodsAmount;
+    if (dom.form.moonshineProductionRunning) dom.form.moonshineProductionRunning.checked = Boolean(setup.moonshineProductionRunning);
+    if (dom.form.moonshineJustRestarted) dom.form.moonshineJustRestarted.checked = Boolean(setup.moonshineJustRestarted);
     setup.legendaryBountyOnCooldown = dom.form.legendaryBountyOnCooldown ? dom.form.legendaryBountyOnCooldown.checked : false;
     setup.roleFocus = dom.roleFocus.value || "bountyHunter";
     setup.useMonthlyBonuses = dom.form.useMonthlyBonuses.checked;
@@ -1000,6 +1181,22 @@
         rankInput.value = "0";
       }
     });
+  }
+
+  function syncBusinessFormBeforeRead(target) {
+    if (!target || !dom.form) return;
+    if (target.id === "traderGoodsAmount" && dom.form.traderGoodsReady && Number(target.value) < traderFullGoods()) {
+      dom.form.traderGoodsReady.checked = false;
+    }
+    if (target.id === "traderGoodsReady" && target.checked && dom.form.traderGoodsAmount) {
+      dom.form.traderGoodsAmount.value = traderFullGoods();
+    }
+    if (target.id === "moonshineProductionRunning" && target.checked && dom.form.moonshineBatchReady) {
+      dom.form.moonshineBatchReady.checked = false;
+    }
+    if (target.id === "moonshineBatchReady" && target.checked && dom.form.moonshineProductionRunning) {
+      dom.form.moonshineProductionRunning.checked = false;
+    }
   }
 
   function handleRoleControlChange(event) {
@@ -1117,6 +1314,7 @@
     const status = timerWorkflowStatus("moonshineProduction");
     if (status === "ready") return true;
     if (timerBlocksReady("moonshineProduction")) return false;
+    if (setup.moonshineProductionRunning) return false;
     return Boolean(setup.moonshineBatchReady);
   }
 
@@ -1124,7 +1322,7 @@
     const status = timerWorkflowStatus("traderGoods");
     if (status === "ready") return true;
     if (timerBlocksReady("traderGoods")) return false;
-    return Boolean(setup.traderGoodsReady);
+    return Boolean(setup.traderGoodsReady) || traderGoodsAmount(setup) >= traderFullGoods();
   }
 
   function legendaryBountyOnCooldown(setup = state.setup) {
@@ -1179,6 +1377,14 @@
     }
 
     if (activity.activityType === "trader_delivery" && !traderGoodsReady(setup)) {
+      reasons.push(t("businessNotReady"));
+    }
+
+    if (activity.id === "trader_production_wait" && (traderGoodsReady(setup) || traderNeedsResupply(setup) || traderMaterialsNeedWork(setup))) {
+      reasons.push(t("traderProductionBlocked"));
+    }
+
+    if (activity.id === "trader_resupply" && !traderNeedsResupply(setup)) {
       reasons.push(t("businessNotReady"));
     }
 
@@ -1271,6 +1477,10 @@
     if (activity.beginnerFriendly) score += weights.beginner * 35;
     if (activity.riskLevel === "low") score += weights.lowRisk * 42;
     if (activity.tags?.includes("passive") || activity.tags?.includes("delivery")) score += weights.passive * 34;
+    if (activity.id === "moonshine_delivery" && moonshineBatchReady(setup)) score += ["cash", "balanced", "passive"].includes(setup.priority) ? 1200 : 520;
+    if (activity.activityType === "trader_delivery" && traderGoodsReady(setup)) score += ["cash", "balanced", "passive"].includes(setup.priority) ? 1050 : 460;
+    if (activity.id === "trader_resupply" && traderNeedsResupply(setup)) score += 900;
+    if (activity.tags?.includes("passive") && (moonshineBatchReady(setup) || traderGoodsReady(setup) || traderNeedsResupply(setup) || traderMaterialsNeedWork(setup))) score -= 1400;
     if (setup.saveCashTravel && activity.tags?.includes("route")) score -= 12;
     if (setup.useFastTravel && activity.tags?.includes("route")) score += 10;
 
@@ -1314,6 +1524,8 @@
   function activeWaitAdvice() {
     const lines = [];
     if (state.setup.roles.moonshiner?.owned && !moonshineBatchReady()) lines.push(t("moonshineWaiting"));
+    if (state.setup.roles.trader?.owned && traderNeedsResupply()) lines.push(t("traderResupplyNeededReason"));
+    if (state.setup.roles.trader?.owned && traderMaterialsNeedWork()) lines.push(t("traderMaterialsNeededReason"));
     if (state.setup.roles.trader?.owned && (!traderGoodsReady() || isTimerRunning("traderResupply"))) lines.push(t("traderWaiting"));
     if (legendaryBountyOnCooldown()) lines.push(t("legendaryCooldown"));
     if (!lines.length) lines.push(t("noWaitWindow"));
@@ -1502,6 +1714,25 @@
     return { key, label: labels[key] || labels.notReady, detail };
   }
 
+  function todoCategoryLabel(category) {
+    const labels = {
+      doNow: t("todoCategoryDoNow"),
+      status: t("todoCategoryStatus"),
+      whileWaiting: t("todoCategoryWhileWaiting"),
+      maintenance: t("todoCategoryMaintenance"),
+      passive: t("todoCategoryPassive")
+    };
+    return labels[category] || labels.doNow;
+  }
+
+  function categoryForActivity(activity) {
+    if (activity.id === "trader_resupply") return "maintenance";
+    if (activity.id === "moonshine_delivery" || activity.activityType === "trader_delivery") return "doNow";
+    if (activity.tags?.includes("passive")) return "passive";
+    if (activity.tags?.includes("filler")) return "whileWaiting";
+    return "doNow";
+  }
+
   function missionTodoStatus(missionId) {
     const definition = missionDefinition(missionId);
     const current = state.activeMission?.id === missionId;
@@ -1550,6 +1781,8 @@
       deferredTimer: Boolean(options.deferredTimer),
       title: options.title || activityName(activity),
       typeLabel: roleLabel(activity.role),
+      category: options.category || categoryForActivity(activity),
+      categoryLabel: todoCategoryLabel(options.category || categoryForActivity(activity)),
       duration: `${activityTodoMinutes(activity)} min`,
       durationLabel: activity.id === "regular_bounty" ? t("todoReminder") : t("todoDuration"),
       estimate: activityEstimateLine(item),
@@ -1561,6 +1794,9 @@
   }
 
   function buildTimerTask(timerId, index, options = {}) {
+    const status = timerTodoStatus(timerId, Boolean(options.deferredTimer));
+    const definition = timerDefinitions.find((item) => item.id === timerId);
+    const category = options.category || (status.key === "running" || status.key === "paused" || status.key === "cooldown" ? "status" : definition?.kind === "production" ? "passive" : "status");
     return {
       id: options.id || `timer-${timerId}-${index}`,
       type: "timer",
@@ -1568,17 +1804,80 @@
       deferredTimer: Boolean(options.deferredTimer),
       title: options.title || timerLabel(timerId),
       typeLabel: options.typeLabel || t("activeTimersTitle"),
+      category,
+      categoryLabel: todoCategoryLabel(category),
       duration: `${timerDefaultMinutes(timerId)} min`,
       durationLabel: t("todoDuration"),
       estimate: "",
       reason: options.reason || t("todoProductionFollowup"),
-      status: timerTodoStatus(timerId, Boolean(options.deferredTimer))
+      status
+    };
+  }
+
+  function buildBusinessActionTask(config, index) {
+    const category = config.category || "maintenance";
+    return {
+      id: config.id,
+      type: "business",
+      businessAction: true,
+      actions: config.actions || [],
+      title: config.title,
+      typeLabel: t("currentBusinessStatusTitle"),
+      category,
+      categoryLabel: todoCategoryLabel(category),
+      duration: config.duration || "--",
+      durationLabel: t("todoStatus"),
+      estimate: "",
+      reason: config.reason,
+      status: todoStatus("ready"),
+      index
     };
   }
 
   function shouldPromoteLegendaryBounty() {
     const selectedMode = legendaryBountySelectedMode();
     return selectedMode !== "balanced" || ["xp", "roleXp", "gold"].includes(state.setup.priority);
+  }
+
+  function readyDeliveryItems(scored) {
+    const items = [];
+    const moonshine = scored.find((item) => item.activity.id === "moonshine_delivery");
+    if (moonshine && moonshineBatchReady()) {
+      items.push({ item: moonshine, reason: t("moonshineReadyReason"), priority: ["cash", "balanced", "passive"].includes(state.setup.priority) ? 0 : 1 });
+    }
+    const trader = scored.find((item) => item.activity.activityType === "trader_delivery");
+    if (trader && traderGoodsReady()) {
+      items.push({ item: trader, reason: t("traderReadyReason"), priority: ["cash", "balanced", "passive"].includes(state.setup.priority) ? 1 : 0 });
+    }
+    return items.sort((a, b) => a.priority - b.priority || b.item.score - a.item.score);
+  }
+
+  function businessMaintenanceTasks(index = 0) {
+    const tasks = [];
+    if (!state.setup.roles.trader?.owned || traderGoodsReady()) return tasks;
+    if (traderNeedsResupply()) {
+      tasks.push(buildBusinessActionTask({
+        id: "business-trader-resupply-needed",
+        title: t("traderResupplyNeededTitle"),
+        reason: t("traderResupplyNeededReason"),
+        actions: [
+          { id: "markResupplyDone", label: t("markResupplyDone") },
+          { id: "resetResupply", label: t("resetResupply") }
+        ]
+      }, index + tasks.length));
+    }
+    if (traderMaterialsNeedWork()) {
+      tasks.push(buildBusinessActionTask({
+        id: "business-trader-materials-needed",
+        title: t("traderMaterialsNeededTitle"),
+        reason: t("traderMaterialsNeededReason"),
+        actions: [
+          { id: "markMaterialsFull", label: t("markMaterialsFull") },
+          { id: "resetMaterials", label: t("resetMaterials") }
+        ]
+      }, index + tasks.length));
+    }
+    return tasks;
   }
 
   function addUniqueTask(tasks, task, counts) {
@@ -1623,30 +1922,60 @@
       const activity = state.activities.find((item) => item.id === definition?.activityId);
       const item = activity ? scored.find((entry) => entry.activity.id === activity.id) || scoreActivity(activity, state.setup) : null;
       if (item) {
-        addUniqueTask(tasks, buildActivityTask(item, 0, { reason: t("missionContinue") }), counts);
+        addUniqueTask(tasks, buildActivityTask(item, 0, { reason: t("missionContinue"), category: "doNow" }), counts);
       }
     }
 
-    activeTimerTasks(tasks.length).forEach((task) => addUniqueTask(tasks, task, counts));
+    const readyDeliveries = readyDeliveryItems(scored);
+    readyDeliveries.forEach((entry, index) => {
+      addUniqueTask(tasks, buildActivityTask(entry.item, index, { reason: entry.reason, category: "doNow" }), counts);
+    });
+
+    businessMaintenanceTasks(tasks.length).forEach((task) => addUniqueTask(tasks, task, counts));
 
     if (!isMissionActive() && shouldPromoteLegendaryBounty()) {
       const legendaryItem = scored.find((item) => item.activity.id === "legendary_bounty");
-      if (legendaryItem) addUniqueTask(tasks, buildActivityTask(legendaryItem, 1, { reason: legendaryBountyRecommendationText() }), counts);
+      if (legendaryItem) addUniqueTask(tasks, buildActivityTask(legendaryItem, 1, { reason: legendaryBountyRecommendationText(), category: "doNow" }), counts);
     }
 
     const timeline = makeTimeline(120, scored);
     const source = timeline.length ? timeline : scored.slice(0, 6).map((item) => item);
-    source.forEach((item, index) => {
-      if (tasks.length >= 8) return;
-      const reason = item.activity.tags?.includes("filler") ? t("todoRecommendedWaiting") : undefined;
-      addUniqueTask(tasks, buildActivityTask(item, index + 1, { reason }), counts);
-      followupTasksFor(item, index + 1).forEach((task) => addUniqueTask(tasks, task, counts));
+    const activeSource = source.filter((item) => {
+      if (item.activity.tags?.includes("passive")) return false;
+      if (item.activity.id === "moonshine_delivery" || item.activity.activityType === "trader_delivery") return false;
+      if (item.activity.id === "trader_resupply" && traderNeedsResupply()) return false;
+      return true;
     });
+    activeSource.forEach((item, index) => {
+      if (tasks.length >= 8) return;
+      const category = item.activity.tags?.includes("filler") ? "whileWaiting" : "doNow";
+      const reason = category === "whileWaiting" ? t("todoRecommendedWaiting") : undefined;
+      addUniqueTask(tasks, buildActivityTask(item, index + 1, { reason, category }), counts);
+    });
+
+    activeTimerTasks(tasks.length).forEach((task) => addUniqueTask(tasks, Object.assign(task, { category: "status", categoryLabel: todoCategoryLabel("status") }), counts));
+
+    readyDeliveries.forEach((entry, index) => {
+      followupTasksFor(entry.item, index + 1).forEach((task) => addUniqueTask(tasks, Object.assign(task, { category: "passive", categoryLabel: todoCategoryLabel("passive") }), counts));
+    });
+
+    source
+      .filter((item) => item.activity.tags?.includes("passive"))
+      .forEach((item, index) => {
+        if (tasks.length >= 8) return;
+        addUniqueTask(tasks, buildActivityTask(item, index + 1, { category: "passive", reason: t("todoProductionFollowup") }), counts);
+      });
 
     return tasks.slice(0, 8);
   }
 
   function renderTodoActions(task) {
+    if (task.businessAction) {
+      return (task.actions || [])
+        .map((action) => `<button class="btn" type="button" data-business-action="${escapeHtml(action.id)}">${escapeHtml(action.label)}</button>`)
+        .join("");
+    }
+
     if (task.missionId) {
       const definition = missionDefinition(task.missionId);
       const current = state.activeMission?.id === task.missionId;
@@ -1696,6 +2025,7 @@
             <div class="todo-main">
               <div class="todo-title-row">
                 <div>
+                  <span class="todo-category is-${escapeHtml(task.category || "doNow")}">${escapeHtml(task.categoryLabel || todoCategoryLabel(task.category || "doNow"))}</span>
                   <span class="todo-type">${escapeHtml(task.typeLabel)}</span>
                   <h3>${escapeHtml(task.title)}</h3>
                 </div>
@@ -1747,6 +2077,7 @@
         id: task.id,
         title: task.title,
         type: task.type,
+        category: task.category || null,
         missionId: task.missionId || null,
         timerId: task.timerId || null,
         status: task.status.key
@@ -1823,7 +2154,35 @@
     `;
   }
 
+  function renderBonusOverview() {
+    if (!dom.bonusOverview) return;
+    const setup = state.setup;
+    const active = activeBonuses();
+    const customActive = Boolean(setup.useCustomBonus);
+    const target = customBonusTargetLabel(setup.customBonusTarget || "all");
+    const multipliers = [
+      `RDO$: ${multiplierLabel(setup.customCashMultiplier)}`,
+      `XP: ${multiplierLabel(setup.customXpMultiplier)}`,
+      `Role XP: ${multiplierLabel(setup.customRoleXpMultiplier)}`,
+      `Gold: ${multiplierLabel(setup.customGoldMultiplier)}`
+    ].join(" | ");
+    const note = selectedCustomBonusNote(setup);
+    const fixedLine = active.length
+      ? active.map((bonus) => bonus.eventName || t("activeBonus")).join(", ")
+      : t("noActiveBonus");
+
+    dom.bonusOverview.classList.toggle("is-active", customActive || active.length > 0);
+    dom.bonusOverview.innerHTML = `
+      <strong>${escapeHtml(t("monthlyBonusOverviewTitle"))}: ${escapeHtml(customActive ? t("manualBonusActive") : t("manualBonusInactive"))}</strong>
+      <p>${escapeHtml(t("manualBonusTarget"))}: ${escapeHtml(target)}</p>
+      <p>${escapeHtml(t("manualBonusMultipliers"))}: ${escapeHtml(multipliers)}</p>
+      ${note ? `<p>${escapeHtml(note)}</p>` : `<p>${escapeHtml(t("manualBonusHint"))}</p>`}
+      <p>${escapeHtml(t("fixedMonthlyBonusLabel"))}: ${escapeHtml(fixedLine)}</p>
+    `;
+  }
+
   function renderBonusStatus() {
+    renderBonusOverview();
     renderCustomBonusSummary();
     const active = activeBonuses();
     const status = dom.bonusStatus;
@@ -2132,6 +2491,18 @@
         endAt: null,
         pausedByMission: state.activeMission.id
       };
+      if (id === "moonshineProduction") {
+        state.setup.moonshineBatchReady = false;
+        state.setup.moonshineProductionRunning = true;
+        state.setup.moonshineRemainingMinutes = minutes;
+      }
+      if (id === "traderGoods") {
+        state.setup.traderGoodsReady = false;
+        state.setup.traderGoodsAmount = Math.min(traderGoodsAmount(), traderFullGoods() - 1);
+      }
+      if (id === "traderResupply") {
+        state.setup.traderSuppliesStatus = "supplied";
+      }
       if (!state.activeMission.pausedPassiveTimers.includes(id)) state.activeMission.pausedPassiveTimers.push(id);
       saveState();
       renderTimers();
@@ -2146,6 +2517,18 @@
       running: true,
       endAt: Date.now() + remaining
     };
+    if (id === "moonshineProduction") {
+      state.setup.moonshineBatchReady = false;
+      state.setup.moonshineProductionRunning = true;
+      state.setup.moonshineRemainingMinutes = minutes;
+    }
+    if (id === "traderGoods") {
+      state.setup.traderGoodsReady = false;
+      state.setup.traderGoodsAmount = Math.min(traderGoodsAmount(), traderFullGoods() - 1);
+    }
+    if (id === "traderResupply") {
+      state.setup.traderSuppliesStatus = "supplied";
+    }
     saveState();
     renderTimers();
     renderMissionDashboard();
@@ -2167,7 +2550,18 @@
   }
 
   function resetTimer(id) {
+    const view = timerState(state.timers[id]);
+    if (id === "moonshineProduction" && view.status === "ready") {
+      state.setup.moonshineBatchReady = true;
+      state.setup.moonshineProductionRunning = false;
+      state.setup.moonshineJustRestarted = false;
+    }
+    if (id === "traderGoods" && view.status === "ready") {
+      state.setup.traderGoodsAmount = traderFullGoods();
+      state.setup.traderGoodsReady = true;
+    }
     delete state.timers[id];
+    restoreForm();
     saveState();
     renderTimers();
     renderMissionDashboard();
@@ -2239,14 +2633,19 @@
     }
 
     if (definition.id === "traderDelivery") {
+      state.setup.traderGoodsAmount = 0;
       state.setup.traderGoodsReady = false;
-      startTimerWithMinutes("traderGoods", settingValue("traderFullMinutes"));
+      state.setup.traderSuppliesStatus = "supplied";
+      startTimerWithMinutes("traderGoods", traderGoodsRemainingMinutes());
       startTimerWithMinutes("traderResupply", settingValue("traderResupplyMinutes"));
     }
 
     if (definition.id === "moonshineDelivery") {
       state.setup.moonshineBatchReady = false;
-      startTimerWithMinutes("moonshineProduction", settingValue("moonshineStrongProductionMinutes"));
+      state.setup.moonshineProductionRunning = true;
+      state.setup.moonshineRemainingMinutes = moonshineProductionMinutesForStrength();
+      state.setup.moonshineJustRestarted = true;
+      startTimerWithMinutes("moonshineProduction", state.setup.moonshineRemainingMinutes);
       delete state.timers.moonshineDeliveryReady;
     }
 
@@ -2272,13 +2671,78 @@
     saveState();
   }
 
+  function refreshAfterBusinessAction() {
+    normalizeBusinessStatus(state.setup, state.setup);
+    restoreForm();
+    saveState();
+    renderMissionDashboard();
+    renderTimers();
+    renderBonusStatus();
+    generatePlan();
+  }
+
+  function handleBusinessAction(action) {
+    readForm();
+    if (action === "markMaterialsFull") {
+      state.setup.traderMaterialsStatus = "full";
+    }
+    if (action === "resetMaterials") {
+      state.setup.traderMaterialsStatus = "empty";
+    }
+    if (action === "markResupplyDone") {
+      state.setup.traderSuppliesStatus = "supplied";
+      startTimerWithMinutes("traderResupply", settingValue("traderResupplyMinutes"));
+      if (!traderGoodsReady() && !traderMaterialsNeedWork()) {
+        startTimerWithMinutes("traderGoods", traderGoodsRemainingMinutes());
+      }
+    }
+    if (action === "resetResupply") {
+      state.setup.traderSuppliesStatus = "needs";
+      delete state.timers.traderResupply;
+    }
+    if (action === "markGoodsReady") {
+      state.setup.traderGoodsAmount = traderFullGoods();
+      state.setup.traderGoodsReady = true;
+      delete state.timers.traderGoods;
+    }
+    if (action === "resetGoods") {
+      state.setup.traderGoodsAmount = 0;
+      state.setup.traderGoodsReady = false;
+      delete state.timers.traderGoods;
+    }
+    if (action === "markBatchReady") {
+      state.setup.moonshineBatchReady = true;
+      state.setup.moonshineProductionRunning = false;
+      state.setup.moonshineJustRestarted = false;
+      delete state.timers.moonshineProduction;
+    }
+    if (action === "startMoonshineProduction" || action === "markMoonshineDelivered") {
+      const minutes = action === "markMoonshineDelivered" ? moonshineProductionMinutesForStrength() : clampNumber(state.setup.moonshineRemainingMinutes, 1, 180, moonshineProductionMinutesForStrength());
+      state.setup.moonshineBatchReady = false;
+      state.setup.moonshineProductionRunning = true;
+      state.setup.moonshineRemainingMinutes = minutes;
+      state.setup.moonshineJustRestarted = action !== "markMoonshineDelivered";
+      startTimerWithMinutes("moonshineProduction", minutes);
+      delete state.timers.moonshineDeliveryReady;
+    }
+    if (action === "resetBatch") {
+      state.setup.moonshineBatchReady = false;
+      state.setup.moonshineProductionRunning = false;
+      state.setup.moonshineJustRestarted = false;
+      delete state.timers.moonshineProduction;
+      delete state.timers.moonshineDeliveryReady;
+    }
+    refreshAfterBusinessAction();
+  }
+
   function bindEvents() {
     dom.form.addEventListener("submit", (event) => {
       event.preventDefault();
       generatePlan();
     });
 
-    dom.form.addEventListener("input", () => {
+    dom.form.addEventListener("input", (event) => {
+      syncBusinessFormBeforeRead(event.target);
       readForm();
       renderComparison(scoredActivities());
       renderBonusStatus();
@@ -2291,6 +2755,7 @@
       if (event.target.matches("[data-role-owned]")) {
         syncRoleRankControls();
       }
+      syncBusinessFormBeforeRead(event.target);
       readForm();
       generatePlan();
       renderBonusStatus();
@@ -2318,6 +2783,7 @@
       const timerStart = event.target.closest("[data-timer-start]");
       const timerPause = event.target.closest("[data-timer-pause]");
       const timerReset = event.target.closest("[data-timer-reset]");
+      const businessAction = event.target.closest("[data-business-action]");
 
       if (priority) {
         state.setup.priority = priority.dataset.priority;
@@ -2349,6 +2815,7 @@
       if (timerStart) startTimer(timerStart.dataset.timerStart);
       if (timerPause) pauseTimer(timerPause.dataset.timerPause);
       if (timerReset) resetTimer(timerReset.dataset.timerReset);
+      if (businessAction) handleBusinessAction(businessAction.dataset.businessAction);
     });
 
     window.addEventListener("gch:languagechange", () => {
@@ -2379,6 +2846,7 @@
     dom.form = document.querySelector("#income-planner-form");
     dom.roleGrid = document.querySelector("#role-grid");
     dom.roleFocus = document.querySelector("#roleFocus");
+    dom.bonusOverview = document.querySelector("#bonus-overview");
     dom.bonusStatus = document.querySelector("#bonus-status");
     dom.customBonusSummary = document.querySelector("#custom-bonus-summary");
     dom.output = document.querySelector("#planner-output");
