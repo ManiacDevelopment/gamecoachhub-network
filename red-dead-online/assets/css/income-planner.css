@@ -306,39 +306,113 @@ body[data-site="rdo"] {
 
 .business-status-grid {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: 1fr;
+  gap: 14px;
   margin-top: 14px;
 }
 
 .business-status-card {
   min-width: 0;
-  padding: 12px;
+  display: grid;
+  gap: 12px;
+  padding: 14px;
   border: 1px solid var(--gch-line);
   border-radius: var(--gch-radius);
-  background: rgba(255, 255, 255, 0.044);
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.055), rgba(255, 255, 255, 0.024)),
+    rgba(7, 4, 3, 0.28);
 }
 
 .business-status-card h4 {
-  margin: 0 0 10px;
+  margin: 0;
   color: var(--gch-text);
+}
+
+.business-status-group {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid rgba(230, 183, 95, 0.15);
+  border-radius: var(--gch-radius);
+  background: rgba(0, 0, 0, 0.16);
+}
+
+.business-status-group h5 {
+  margin: 0;
+  color: var(--gch-muted);
+  font-size: 0.74rem;
+  font-weight: 950;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.business-field-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  min-width: 0;
+}
+
+.business-field-full {
+  min-width: 0;
 }
 
 .compact-input-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
-.business-inline-toggle {
-  align-self: end;
-  min-height: 42px;
-  padding: 0 10px;
-  border: 1px solid var(--gch-line);
+.business-status-panel .field-group label {
+  line-height: 1.28;
+}
+
+.business-status-panel .field-group input,
+.business-status-panel .field-group select {
+  box-sizing: border-box;
+  min-height: 46px;
+  min-width: 0;
+  padding-inline: 12px 34px;
+  text-overflow: ellipsis;
+}
+
+.business-status-panel .field-group input {
+  padding-inline: 12px;
+}
+
+.business-toggle-row {
+  min-height: 46px;
+  padding: 10px 11px;
+  border: 1px solid rgba(230, 183, 95, 0.14);
   border-radius: var(--gch-radius);
   background: rgba(7, 4, 3, 0.45);
+  line-height: 1.34;
+}
+
+.business-inline-toggle {
+  align-self: stretch;
+  align-items: center;
 }
 
 .status-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   margin-top: 12px;
+  gap: 8px;
+}
+
+.status-actions-single {
+  grid-template-columns: 1fr;
+}
+
+.status-actions .btn {
+  box-sizing: border-box;
+  justify-content: center;
+  min-height: 44px !important;
+  min-width: 0;
+  padding: 9px 10px !important;
+  text-align: center;
+  white-space: normal;
+  line-height: 1.18;
 }
 
 .bonus-actions {
@@ -863,13 +937,22 @@ body[data-site="rdo"] {
   .timer-settings-grid,
   .mission-grid,
   .legendary-mode-grid,
-  .business-status-grid,
   .comparison-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .plan-grid {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (min-width: 820px) and (max-width: 1080px) {
+  .business-status-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .business-field-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -932,6 +1015,17 @@ body[data-site="rdo"] {
 
   .todo-title-row {
     display: grid;
+  }
+
+  .business-status-card,
+  .business-status-group {
+    padding: 12px;
+  }
+
+  .business-status-panel .field-group select {
+    padding-inline: 10px 24px;
+    font-size: 0.82rem;
+    font-weight: 900;
   }
 
   .todo-actions,

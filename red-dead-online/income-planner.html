@@ -71,6 +71,8 @@
         "status.title": "Current business status",
         "status.copy": "Set Trader and Moonshine state before generating the plan. Timers still override manual status while they are running.",
         "status.moonshine": "Moonshine",
+        "status.moonshineBatchGroup": "Moonshine batch",
+        "status.moonshineProductionGroup": "Moonshine production",
         "status.moonshineReady": "Moonshine batch ready",
         "status.moonshineRunning": "Production running",
         "status.moonshineStrength": "Strength",
@@ -80,14 +82,17 @@
         "status.moonshineRemaining": "Remaining production time",
         "status.moonshineRestarted": "Mash/production just restarted",
         "status.trader": "Trader",
+        "status.traderMaterialsGroup": "Trader materials",
         "status.traderMaterials": "Trader materials",
         "status.materialsEmpty": "Empty",
         "status.materialsLow": "Low",
         "status.materialsOk": "OK",
         "status.materialsFull": "Full",
+        "status.traderSuppliesGroup": "Trader supplies",
         "status.traderSupplies": "Trader supplies",
         "status.suppliesNeeds": "Needs resupply",
         "status.suppliesSupplied": "Supplied / production running",
+        "status.traderGoodsGroup": "Trader goods",
         "status.traderGoods": "Goods amount",
         "status.traderReady": "Goods ready",
         "status.legendaryCooldown": "Legendary Bounty is on cooldown",
@@ -198,6 +203,8 @@
         "status.title": "Aktuel business-status",
         "status.copy": "Sæt Trader og Moonshine status før planen genereres. Timere overstyrer stadig manuel status mens de kører.",
         "status.moonshine": "Moonshine",
+        "status.moonshineBatchGroup": "Moonshine batch",
+        "status.moonshineProductionGroup": "Moonshine production",
         "status.moonshineReady": "Moonshine batch klar",
         "status.moonshineRunning": "Produktion kører",
         "status.moonshineStrength": "Styrke",
@@ -207,14 +214,17 @@
         "status.moonshineRemaining": "Resterende produktionstid",
         "status.moonshineRestarted": "Mash/production er lige startet",
         "status.trader": "Trader",
+        "status.traderMaterialsGroup": "Trader materialer",
         "status.traderMaterials": "Trader materialer",
         "status.materialsEmpty": "Empty",
         "status.materialsLow": "Low",
         "status.materialsOk": "OK",
         "status.materialsFull": "Full",
+        "status.traderSuppliesGroup": "Trader supplies",
         "status.traderSupplies": "Trader supplies",
         "status.suppliesNeeds": "Needs resupply",
         "status.suppliesSupplied": "Supplied / production running",
+        "status.traderGoodsGroup": "Trader goods",
         "status.traderGoods": "Goods amount",
         "status.traderReady": "Goods klar",
         "status.legendaryCooldown": "Legendary Bounty er på cooldown",
@@ -392,45 +402,52 @@
             <div class="business-status-grid">
               <div class="business-status-card">
                 <h4 data-page-i18n="status.moonshine">Moonshine</h4>
-                <div class="toggle-stack">
-                  <label class="toggle-row">
+                <div class="business-status-group">
+                  <h5 data-page-i18n="status.moonshineBatchGroup">Moonshine batch</h5>
+                  <label class="toggle-row business-toggle-row">
                     <input id="moonshineBatchReady" name="moonshineBatchReady" type="checkbox" checked data-planner-input>
                     <span data-page-i18n="status.moonshineReady">Moonshine batch ready</span>
                   </label>
-                  <label class="toggle-row">
+                  <div class="planner-actions status-actions">
+                    <button class="btn" type="button" data-business-action="markBatchReady" data-page-i18n="status.markBatchReady">Mark batch ready</button>
+                    <button class="btn" type="button" data-business-action="resetBatch" data-page-i18n="status.resetBatch">Reset batch</button>
+                    <button class="btn" type="button" data-business-action="markMoonshineDelivered" data-page-i18n="status.markDelivered">Mark delivered</button>
+                  </div>
+                </div>
+                <div class="business-status-group">
+                  <h5 data-page-i18n="status.moonshineProductionGroup">Moonshine production</h5>
+                  <label class="toggle-row business-toggle-row">
                     <input id="moonshineProductionRunning" name="moonshineProductionRunning" type="checkbox" data-planner-input>
                     <span data-page-i18n="status.moonshineRunning">Production running</span>
                   </label>
-                </div>
-                <div class="input-grid compact-input-grid field-spaced">
-                  <div class="field-group">
-                    <label for="moonshineStrength" data-page-i18n="status.moonshineStrength">Strength</label>
-                    <select id="moonshineStrength" name="moonshineStrength" data-planner-input>
-                      <option value="weak" data-page-i18n="status.moonshineWeak">Weak</option>
-                      <option value="average" data-page-i18n="status.moonshineAverage">Average</option>
-                      <option value="strong" data-page-i18n="status.moonshineStrong">Strong</option>
-                    </select>
+                  <div class="business-field-grid">
+                    <div class="field-group">
+                      <label for="moonshineStrength" data-page-i18n="status.moonshineStrength">Strength</label>
+                      <select id="moonshineStrength" name="moonshineStrength" data-planner-input>
+                        <option value="weak" data-page-i18n="status.moonshineWeak">Weak</option>
+                        <option value="average" data-page-i18n="status.moonshineAverage">Average</option>
+                        <option value="strong" data-page-i18n="status.moonshineStrong">Strong</option>
+                      </select>
+                    </div>
+                    <div class="field-group">
+                      <label for="moonshineRemainingMinutes" data-page-i18n="status.moonshineRemaining">Remaining production time</label>
+                      <input id="moonshineRemainingMinutes" name="moonshineRemainingMinutes" type="number" min="0" max="180" value="60" data-planner-input>
+                    </div>
                   </div>
-                  <div class="field-group">
-                    <label for="moonshineRemainingMinutes" data-page-i18n="status.moonshineRemaining">Remaining production time</label>
-                    <input id="moonshineRemainingMinutes" name="moonshineRemainingMinutes" type="number" min="0" max="180" value="60" data-planner-input>
+                  <label class="toggle-row business-toggle-row">
+                    <input id="moonshineJustRestarted" name="moonshineJustRestarted" type="checkbox" data-planner-input>
+                    <span data-page-i18n="status.moonshineRestarted">Mash/production just restarted</span>
+                  </label>
+                  <div class="planner-actions status-actions status-actions-single">
+                    <button class="btn" type="button" data-business-action="startMoonshineProduction" data-page-i18n="status.startProduction">Start production</button>
                   </div>
-                </div>
-                <label class="toggle-row field-spaced">
-                  <input id="moonshineJustRestarted" name="moonshineJustRestarted" type="checkbox" data-planner-input>
-                  <span data-page-i18n="status.moonshineRestarted">Mash/production just restarted</span>
-                </label>
-                <div class="planner-actions status-actions">
-                  <button class="btn" type="button" data-business-action="markBatchReady" data-page-i18n="status.markBatchReady">Mark batch ready</button>
-                  <button class="btn" type="button" data-business-action="startMoonshineProduction" data-page-i18n="status.startProduction">Start production</button>
-                  <button class="btn" type="button" data-business-action="resetBatch" data-page-i18n="status.resetBatch">Reset batch</button>
-                  <button class="btn" type="button" data-business-action="markMoonshineDelivered" data-page-i18n="status.markDelivered">Mark delivered</button>
                 </div>
               </div>
               <div class="business-status-card">
                 <h4 data-page-i18n="status.trader">Trader</h4>
-                <div class="input-grid compact-input-grid">
-                  <div class="field-group">
+                <div class="business-status-group">
+                  <h5 data-page-i18n="status.traderMaterialsGroup">Trader materials</h5>
+                  <div class="field-group business-field-full">
                     <label for="traderMaterialsStatus" data-page-i18n="status.traderMaterials">Trader materials</label>
                     <select id="traderMaterialsStatus" name="traderMaterialsStatus" data-planner-input>
                       <option value="empty" data-page-i18n="status.materialsEmpty">Empty</option>
@@ -439,29 +456,41 @@
                       <option value="full" data-page-i18n="status.materialsFull">Full</option>
                     </select>
                   </div>
-                  <div class="field-group">
+                  <div class="planner-actions status-actions">
+                    <button class="btn" type="button" data-business-action="markMaterialsFull" data-page-i18n="status.markMaterialsFull">Materials filled</button>
+                    <button class="btn" type="button" data-business-action="resetMaterials" data-page-i18n="status.resetMaterials">Reset materials</button>
+                  </div>
+                </div>
+                <div class="business-status-group">
+                  <h5 data-page-i18n="status.traderSuppliesGroup">Trader supplies</h5>
+                  <div class="field-group business-field-full">
                     <label for="traderSuppliesStatus" data-page-i18n="status.traderSupplies">Trader supplies</label>
                     <select id="traderSuppliesStatus" name="traderSuppliesStatus" data-planner-input>
                       <option value="needs" data-page-i18n="status.suppliesNeeds">Needs resupply</option>
                       <option value="supplied" data-page-i18n="status.suppliesSupplied">Supplied / production running</option>
                     </select>
                   </div>
-                  <div class="field-group">
-                    <label for="traderGoodsAmount" data-page-i18n="status.traderGoods">Goods amount</label>
-                    <input id="traderGoodsAmount" name="traderGoodsAmount" type="number" min="0" max="100" value="100" data-planner-input>
+                  <div class="planner-actions status-actions">
+                    <button class="btn" type="button" data-business-action="markResupplyDone" data-page-i18n="status.markResupplyDone">Resupply done</button>
+                    <button class="btn" type="button" data-business-action="resetResupply" data-page-i18n="status.resetResupply">Reset resupply</button>
                   </div>
-                  <label class="toggle-row business-inline-toggle">
-                    <input id="traderGoodsReady" name="traderGoodsReady" type="checkbox" checked data-planner-input>
-                    <span data-page-i18n="status.traderReady">Goods ready</span>
-                  </label>
                 </div>
-                <div class="planner-actions status-actions">
-                  <button class="btn" type="button" data-business-action="markMaterialsFull" data-page-i18n="status.markMaterialsFull">Materials filled</button>
-                  <button class="btn" type="button" data-business-action="resetMaterials" data-page-i18n="status.resetMaterials">Reset materials</button>
-                  <button class="btn" type="button" data-business-action="markResupplyDone" data-page-i18n="status.markResupplyDone">Resupply done</button>
-                  <button class="btn" type="button" data-business-action="resetResupply" data-page-i18n="status.resetResupply">Reset resupply</button>
-                  <button class="btn" type="button" data-business-action="markGoodsReady" data-page-i18n="status.markGoodsReady">Goods ready</button>
-                  <button class="btn" type="button" data-business-action="resetGoods" data-page-i18n="status.resetGoods">Reset goods</button>
+                <div class="business-status-group">
+                  <h5 data-page-i18n="status.traderGoodsGroup">Trader goods</h5>
+                  <div class="business-field-grid">
+                    <div class="field-group">
+                      <label for="traderGoodsAmount" data-page-i18n="status.traderGoods">Goods amount</label>
+                      <input id="traderGoodsAmount" name="traderGoodsAmount" type="number" min="0" max="100" value="100" data-planner-input>
+                    </div>
+                    <label class="toggle-row business-toggle-row business-inline-toggle">
+                      <input id="traderGoodsReady" name="traderGoodsReady" type="checkbox" checked data-planner-input>
+                      <span data-page-i18n="status.traderReady">Goods ready</span>
+                    </label>
+                  </div>
+                  <div class="planner-actions status-actions">
+                    <button class="btn" type="button" data-business-action="markGoodsReady" data-page-i18n="status.markGoodsReady">Goods ready</button>
+                    <button class="btn" type="button" data-business-action="resetGoods" data-page-i18n="status.resetGoods">Reset goods</button>
+                  </div>
                 </div>
               </div>
             </div>
