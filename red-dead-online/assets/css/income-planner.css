@@ -304,6 +304,43 @@ body[data-site="rdo"] {
   margin-top: 12px;
 }
 
+.business-status-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.business-status-card {
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid var(--gch-line);
+  border-radius: var(--gch-radius);
+  background: rgba(255, 255, 255, 0.044);
+}
+
+.business-status-card h4 {
+  margin: 0 0 10px;
+  color: var(--gch-text);
+}
+
+.compact-input-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.business-inline-toggle {
+  align-self: end;
+  min-height: 42px;
+  padding: 0 10px;
+  border: 1px solid var(--gch-line);
+  border-radius: var(--gch-radius);
+  background: rgba(7, 4, 3, 0.45);
+}
+
+.status-actions {
+  margin-top: 12px;
+}
+
 .bonus-actions {
   margin-top: 12px;
 }
@@ -390,6 +427,7 @@ body[data-site="rdo"] {
   margin: 4px 0 0;
 }
 
+.todo-category,
 .todo-type,
 .todo-status {
   width: fit-content;
@@ -403,6 +441,26 @@ body[data-site="rdo"] {
   font-size: 0.72rem;
   font-weight: 950;
   text-transform: uppercase;
+}
+
+.todo-category {
+  margin-right: 6px;
+  border-color: rgba(230, 183, 95, 0.34);
+  color: var(--gch-accent);
+  background: rgba(230, 183, 95, 0.1);
+}
+
+.todo-category.is-maintenance {
+  border-color: rgba(201, 84, 57, 0.34);
+  color: #f3b19b;
+  background: rgba(201, 84, 57, 0.12);
+}
+
+.todo-category.is-status,
+.todo-category.is-whileWaiting,
+.todo-category.is-passive {
+  color: var(--gch-muted);
+  background: rgba(255, 255, 255, 0.052);
 }
 
 .todo-status {
@@ -805,6 +863,7 @@ body[data-site="rdo"] {
   .timer-settings-grid,
   .mission-grid,
   .legendary-mode-grid,
+  .business-status-grid,
   .comparison-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -845,6 +904,8 @@ body[data-site="rdo"] {
   .timer-settings-grid,
   .mission-grid,
   .legendary-mode-grid,
+  .business-status-grid,
+  .compact-input-grid,
   .comparison-grid,
   .activity-stats {
     grid-template-columns: 1fr;
